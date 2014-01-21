@@ -1,0 +1,36 @@
+
+@import url(http://fonts.googleapis.com/css?family=Quattrocento:400,700);
+
+body {
+    font-family: 'Quattrocento', serif;
+    background-color: #D3D3D3;
+}
+
+body > * {
+    background-color: #D3D3D3;
+}
+
+section.bibliographies {
+    background-color: #FFFFFF;
+}
+
+input.search {
+    border-color: #B22222;
+}
+
+section.browse header {
+    color: #B22222;
+}
+
+ul.browse {
+    border-color: #B22222;
+    background-color: #FFFFFF;
+}
+
+#theme-form {
+    color: #B22222;
+}
+
+div.asterism {
+    background-color: #FFFFFF;
+}
