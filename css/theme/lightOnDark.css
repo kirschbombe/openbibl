@@ -1,18 +1,18 @@
 
-@import url(http://fonts.googleapis.com/css?family=Quattrocento:400,700);
+@import url(http://fonts.googleapis.com/css?family=Gafata);
 
 body {
-    font-family: 'Quattrocento', serif;
+    font-family: 'Gafata', serif;
     background-color: #7b7f80;
-    color: #080808;
+    color: #FFFFFF;
 }
 
 menu.about, menu.search {
-    background-color: #c1c1bf;
+    background-color: #7b7f80;
 }
 
 section.bibliographies {
-    background-color: #FFFFFF;
+    background-color: #000000;
 }
 
 input.search {
@@ -28,10 +28,10 @@ ul.browse {
     background-color: #FFFFFF;
 }
 
-.theme {
+form.theme {
     color: #913633;
 }
 
 div.asterism {
-    background-color: #FFFFFF;
+    background-color: #000000;
 }

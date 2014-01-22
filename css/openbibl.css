@@ -6,10 +6,10 @@ body > * {
     position: absolute;
 }
 
-body                    {                               /* width: 980px; */         }
+body                    {                               /* width: 1160px; */         }
 menu.about              {   top: 0px;   left: 0px;      width: 200px; height: 100%; }
-section.bibliographies  {   top: 0px;   left: 200px;    width: 580px; height: 100%; }
-menu.search             {   top: 0px;   left: 780px;    width: 200px; height: 100%; }
+section.bibliographies  {   top: 0px;   left: 200px;    width: 960px; height: 100%; }
+menu.search             {   top: 0px;   left: 1160px;    width: 200px; height: 100%; }
 
 section.bibliographies > * {
     margin-left: 2em;
@@ -109,14 +109,19 @@ i {
     margin-top: 2em;
 }
 
-#theme-form {
+form.theme {
     text-align: center;
 }
 
-#theme-form label {
+label.theme {
     font-weight: bold;
 }
 
 td {
     width: 150px;
+}
+
+.collapse {
+    overflow:hidden;
+    height: 0em;
 }
