@@ -11,27 +11,20 @@ menu.about, menu.search {
     background-color: #c1c1bf;
 }
 
-section.bibliographies {
+section#bibliographies, 
+div#asterism, 
+ul.browse
+{
     background-color: #FFFFFF;
 }
 
-input.search {
+input.search, 
+ul.browse,
+.theme
+{
     border-color: #913633;
 }
 
 section.browse header {
     color: #913633;
-}
-
-ul.browse {
-    border-color: #913633;
-    background-color: #FFFFFF;
-}
-
-.theme {
-    color: #913633;
-}
-
-div.asterism {
-    background-color: #FFFFFF;
 }
