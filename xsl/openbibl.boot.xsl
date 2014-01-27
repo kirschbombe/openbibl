@@ -14,8 +14,10 @@
 
     <xsl:preserve-space elements="*"/>
 
-    <xsl:param name="obp-root" select="'../..'"/>    
-    <xsl:param name="saxon-nocache" select="'js/saxon-ce/1.1/Saxonce.nocache.js'"/>
+    <xsl:param name="obp-root"            select="'../..'"/>    
+    <xsl:param name="saxon-nocache-prod"  select="'js/saxon-ce/1.1/Saxonce.nocache.js'"/>
+    <xsl:param name="saxon-nocache-debug" select="'js/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
+    <xsl:param name="saxon-nocache"       select="$saxon-nocache-prod"/>
 
     <xsl:template match="/">
         <html>
@@ -30,7 +32,6 @@
 
     <xsl:template name="head-content">
         <meta charset="UTF-8" />
-        <link rel="stylesheet" type="text/css" href="../../css/reset.css" />
         <link rel="stylesheet" type="text/css" href="../../css/openbibl.css" />
         <link rel="stylesheet" type="text/css" id="theme-css" href="../../css/theme/default.css" />
         <title><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/></title>
@@ -47,24 +48,47 @@
         <xsl:text disable-output-escaping="yes" xml:space="preserve">
         <![CDATA[
         <script type="text/javascript" language="javascript">
+        
+            function handle_hover() {
+                // add event handler for 'hover' for the <head>
+                // and <biblStruct> elements, to unhide/expand 
+                // the content for the following elements
+                $(document).find('div.expand').each(function() {
+                    var $expanded = $(this);
+                    var $collapsed = $expanded.next('.collapse');
+                    /*
+                    if ( $collapsed.length ) {
+                        var collapsed_height = $collapsed.height();
+                        $expanded.hover(
+                            function (e) {
+                                $collapsed.animate({
+                                    height: "100%"
+                                }, 150, "swing"
+                           )},
+                           function(e) {
+                                $collapsed.animate({
+                                    height: collapsed_height
+                                }, 150, "swing"
+                           )}
+                       );
+                    }
+                    */
+                });
+            }
+        
             var xml_dir = document.location.href.replace(/[^\/]+$/, ""); // directory containing xml file, with trailing /
             function onSaxonLoad() {
                 var xsl = Saxon.requestXML(xml_dir + "../../xsl/openbibl.xsl");   // openbibl.xsl 2.0 stylesheet
                 var xml = Saxon.requestXML(document.location.href);               // reload the XML file being handled here
                 var proc = Saxon.newXSLT20Processor(xsl);
                 proc.setSuccess(function(data) {
-console.log(data.getResultDocument());
                     var children = data.getResultDocument().querySelector("#result").childNodes;
-console.log(children);
                     var bibliographies_wrapper = document.getElementById("bibliographies");
-                    console.log("length: " + children.length);
-                    for (var i = 0; i < children.length; i++) {
-console.log(children.item(i).cloneNode(true));
+                    for (var i = 0; i < children.length; i++)
                         bibliographies_wrapper.appendChild(children[i].cloneNode(true));
-                    }
-                    console.log(bibliographies_wrapper);
+                    //handle_hover();
                 });
-                proc.transformToFragment(xml);
+                proc.transformToDocument(xml);
             }
         </script>
         ]]>
@@ -76,16 +100,17 @@ console.log(children.item(i).cloneNode(true));
         <header></header>
         -->
         <!-- about box (left of bibl) -->
-        <menu type="toolbar" class="about"></menu>
+        <menu type="toolbar" id="about"></menu>
+        
         <!-- search/browse menu (right of bibl) -->
-        <menu type="toolbar" class="search" id="control">
+        <menu type="toolbar" id="control">
 
             <!-- theme -->
-            <form class="theme">
+            <form id="theme-form" class="theme">
                 <label class="theme">Theme</label>
-                <select id="theme-form">
-                    <option value="default.css" label="Default"></option>
-                    <option value="lightOnDark.css" label="Light on Dark"></option>
+                <select id="theme-form-select">
+                    <option value="default.css" label="Default">Default</option>
+                    <option value="lightOnDark.css" label="Light on Dark">Light on Dark</option>
                 </select>
             </form>
 
@@ -95,18 +120,18 @@ console.log(children.item(i).cloneNode(true));
             </form>
 
             <!-- browse -->
-            <section class="browse">
-                <header>Browse</header>
+            <div id="browse" class="browse">
+                <header class="browse">Browse</header>
                 <ul class="browse">
                     <li class="browse" id="browse-people">People</li>
                     <li class="browse" id="browse-places">Places</li>
                     <li class="browse" id="browse-dates">Dates</li>
                 </ul>
-            </section>
+            </div>
         </menu>
 
         <!-- bibliographies -->
-        <section id="bibliographies"></section>
+        <div id="bibliographies" class="bibliographies"></div>
 
         <!--
         <footer></footer>

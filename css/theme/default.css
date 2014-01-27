@@ -2,17 +2,21 @@
 @import url(http://fonts.googleapis.com/css?family=Quattrocento:400,700);
 
 body {
+    font-size: 12pt;
     font-family: 'Quattrocento', serif;
     background-color: #7b7f80;
     color: #080808;
 }
 
-menu.about, menu.search {
+#about, 
+#control
+{
     background-color: #c1c1bf;
 }
 
-section#bibliographies, 
-div#asterism, 
+#bibliographies, 
+#asterism,
+#asterism-rule,
 ul.browse
 {
     background-color: #FFFFFF;
@@ -22,9 +26,10 @@ input.search,
 ul.browse,
 .theme
 {
+    color: #913633;
     border-color: #913633;
 }
 
-section.browse header {
+header.browse {
     color: #913633;
 }
