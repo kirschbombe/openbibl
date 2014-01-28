@@ -9,14 +9,15 @@ body {
 }
 
 #about, 
-#control
+#control,
+#footer
 {
     background-color: #c1c1bf;
 }
 
-#bibliographies, 
+.bibliographies,
+.bibliography,
 #asterism,
-#asterism-rule,
 ul.browse
 {
     background-color: #FFFFFF;
@@ -33,3 +34,18 @@ ul.browse,
 header.browse {
     color: #913633;
 }
+
+#footer {
+    color: #913633;
+    border-top-color: #913633;
+}
+
+/*.browsed { This doesn't work in Chrome */
+span[class~="browsed"] {
+    border-style: dashed;
+    border-width: 1px;
+}
+
+span[class~="yellow"]   { background-color: #FAFAD2; }
+span[class~="pink"]  { background-color: #FFF0F5; }
+span[class~="purple"] { background-color: #CCCCFF; }

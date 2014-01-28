@@ -23,10 +23,10 @@
     <xsl:template match="//tei:titleStmt/tei:author"/>
     
     <xsl:template match="//tei:fileDesc/tei:publicationStmt/descendant-or-self::*"/>
-    <xsl:template match="//tei:fileDesc/tei:publicationStmt" mode="footer"/>
+    <xsl:template match="//tei:fileDesc/tei:publicationStmt" mode="web"/>
     
 <!--
-    <xsl:template match="" mode="footer">
+    <xsl:template match="" mode="web">
         
     </xsl:template>
 -->
@@ -44,49 +44,49 @@
             <xsl:value-of select="tei:head"/>
         </h2>
         
-        <div class="bibliography expand" xml:space="collapse">
-            <xsl:value-of select="tei:biblStruct/tei:monogr/tei:author"/>.
+        <div class="bibliography expand">
+            <xsl:apply-templates select="tei:biblStruct/tei:monogr/tei:author" mode="web"/>.
             <xsl:value-of select="tei:biblStruct/tei:monogr/tei:title"/>.&#x0020;
             <i>
-                <xsl:value-of select="tei:biblStruct/tei:monogr/tei:imprint/tei:pubPlace"/>,&#x0020; 
+                <xsl:apply-templates select="tei:biblStruct/tei:monogr/tei:imprint/tei:pubPlace" mode="web"/>,&#x0020; 
                 <xsl:value-of select="tei:biblStruct/tei:monogr/tei:imprint/tei:publisher"/>,&#x0020;
-                <xsl:value-of select="tei:biblStruct/tei:monogr/tei:imprint/tei:date"/>
+                <xsl:apply-templates select="tei:biblStruct/tei:monogr/tei:imprint/tei:date" mode="web"/>
             </i>
         </div>
         
 
-        <div class="bibliography collapse" xml:space="collapse">
-            <xsl:apply-templates select="tei:msDesc/tei:physDesc/tei:objectDesc" mode="physDesc"/>.&#x0020;
-            <xsl:apply-templates select="tei:msDesc/tei:history" mode="physDesc"/>.&#x0020;
-            <xsl:apply-templates select="tei:msDesc/tei:physDesc/tei:bindingDesc" mode="physDesc"/>.
-        </div>
-        
-        <div class="bibliography collapse" xml:space="collapse">
-            <xsl:apply-templates select="tei:note" mode="note"/>
-        </div>
-
-        <div class="bibliography collapse" xml:space="collapse">
-            References: <xsl:apply-templates select="tei:listBibl/tei:bibl" mode="note"/>
+        <div class="bibliography collapse">
+            <xsl:apply-templates select="tei:msDesc/tei:physDesc/tei:objectDesc" mode="web"/>.&#x0020;
+            <xsl:apply-templates select="tei:msDesc/tei:history" mode="web"/>.&#x0020;
+            <xsl:apply-templates select="tei:msDesc/tei:physDesc/tei:bindingDesc" mode="web"/>.
         </div>
         
         <div class="bibliography collapse">
-            <xsl:apply-templates select="tei:msDesc/tei:msIdentifier" mode="msIdentifier"/>
+            <xsl:apply-templates select="tei:note" mode="web"/>
+        </div>
+
+        <div class="bibliography collapse">
+            References: <xsl:apply-templates select="tei:listBibl/tei:bibl" mode="web"/>
+        </div>
+        
+        <div class="bibliography collapse">
+            <xsl:apply-templates select="tei:msDesc/tei:msIdentifier" mode="web"/>
         </div>
 
     </xsl:template>
     
     <xsl:template match="//tei:msDesc/descendant-or-self::*"/>
-    <xsl:template match="//tei:msDesc/descendant-or-self::*" mode="physDesc">
+    <xsl:template match="//tei:msDesc/descendant-or-self::*" mode="web">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
 
     <xsl:template match="//tei:div[@type='entry']/tei:note"/>
-    <xsl:template match="//tei:div[@type='entry']/tei:note" mode="note">
+    <xsl:template match="//tei:div[@type='entry']/tei:note" mode="web">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
     
     <xsl:template match="//tei:div[@type='entry']/tei:listBibl/descendant-or-self::*"/>
-    <xsl:template match="//tei:div[@type='entry']/tei:listBibl/tei:bibl" mode="note">
+    <xsl:template match="//tei:div[@type='entry']/tei:listBibl/tei:bibl" mode="web">
         <xsl:value-of select="."/>
         <xsl:if test="following-sibling::tei:bibl">
             <xsl:text>; </xsl:text>
@@ -94,7 +94,7 @@
     </xsl:template>
 
     <xsl:template match="tei:msDesc/tei:msIdentifier/descendant-or-self::*"/>
-    <xsl:template match="tei:msDesc/tei:msIdentifier" mode="msIdentifier">
+    <xsl:template match="tei:msDesc/tei:msIdentifier" mode="web">
         <xsl:value-of select="tei:idno"/>
         <xsl:text>&#x2003;&#x2003;&#x2003;</xsl:text>
         <xsl:value-of select="count(parent::tei:msIdentifier/preceding-sibling::tei:msIdentifier) + 1"/>
@@ -102,5 +102,22 @@
         <xsl:value-of select="tei:collection"/>        
     </xsl:template>
     
+    <xsl:template match="tei:date[parent::tei:imprint|parent::tei:publicationStatement]" mode="web">
+        <span itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+            <span itemprop="datePublished"><xsl:value-of select="."/></span>
+        </span>
+    </xsl:template>
+    
+    <xsl:template match="tei:pubPlace[parent::tei:imprint]" mode="web">
+        <span itemscope="itemscope" itemtype="http://schema.org/Place">
+            <span itemprop="location"><xsl:value-of select="."/></span>
+        </span>
+    </xsl:template>
+
+    <xsl:template match="tei:biblStruct/tei:monogr/tei:author" mode="web">
+        <div itemscope="itemscope" itemtype="http://schema.org/Person">
+            <span itemprop="name"><xsl:value-of select="."/></span>
+        </div>
+    </xsl:template>
 
 </xsl:stylesheet>

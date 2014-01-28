@@ -5,10 +5,12 @@
     exclude-result-prefixes="tei"
     version="1.0">
 
-    <xsl:output 
-        method="html"
+    <!-- for HTML5: 
         doctype-public="html"
         doctype-system="about:legacy-compat"
+    -->
+    <xsl:output 
+        method="html"
         encoding="utf-8"
         indent="yes"/>
 
@@ -18,9 +20,12 @@
     <xsl:param name="saxon-nocache-prod"  select="'js/saxon-ce/1.1/Saxonce.nocache.js'"/>
     <xsl:param name="saxon-nocache-debug" select="'js/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
     <xsl:param name="saxon-nocache"       select="$saxon-nocache-prod"/>
+    
+    <xsl:param name="jquery-js-src" select="'../../js/jquery/1.10.2/jquery.min.js'"/>
+    <xsl:param name="openbibl-js-src" select="'../../js/openbibl.js'"/>
 
     <xsl:template match="/">
-        <html>
+        <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
                <xsl:call-template name="head-content"/>
             </head>
@@ -34,15 +39,14 @@
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" href="../../css/openbibl.css" />
         <link rel="stylesheet" type="text/css" id="theme-css" href="../../css/theme/default.css" />
-        <title><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/></title>
+        
+        <title>
+            <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+        </title>
 
-        <xsl:element name="script">
-            <xsl:attribute name="type">text/javascript</xsl:attribute>
-            <xsl:attribute name="language">javascript</xsl:attribute>
-            <xsl:attribute name="src">
-                <xsl:value-of select="concat($obp-root,'/',$saxon-nocache)"/>
-            </xsl:attribute>
-        </xsl:element>
+        <xsl:call-template name="js-script-elt">
+            <xsl:with-param name="source" select="concat($obp-root,'/',$saxon-nocache)"/>
+        </xsl:call-template>
 
         <!-- onload callback for Saxon-CE, which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
         <xsl:text disable-output-escaping="yes" xml:space="preserve">
@@ -78,6 +82,7 @@
         
             var xml_dir = document.location.href.replace(/[^\/]+$/, ""); // directory containing xml file, with trailing /
             function onSaxonLoad() {
+            debugger;
                 var xsl = Saxon.requestXML(xml_dir + "../../xsl/openbibl.xsl");   // openbibl.xsl 2.0 stylesheet
                 var xml = Saxon.requestXML(document.location.href);               // reload the XML file being handled here
                 var proc = Saxon.newXSLT20Processor(xsl);
@@ -96,9 +101,13 @@
     </xsl:template>
 
     <xsl:template name="body-content">
-        <!--
-        <header></header>
+        
+        <!-- header 
+        <header id="#header">
+            <xsl:value-of select="//tei:"/>
+        </header>
         -->
+
         <!-- about box (left of bibl) -->
         <menu type="toolbar" id="about"></menu>
         
@@ -128,17 +137,51 @@
                     <li class="browse" id="browse-dates">Dates</li>
                 </ul>
             </div>
+            
+            <!--
+            <div id="save">
+                <button name="save" id="save-button">Save</button>
+                <select id="">
+                    <option value="TXT" label="TXT">HTML</option>
+                    <option value="PDF" label="PDF">PDF</option>
+                    <option value="TXT" label="TXT">TXT</option>
+                </select>
+            </div>
+            -->
         </menu>
 
         <!-- bibliographies -->
         <div id="bibliographies" class="bibliographies"></div>
 
-        <!--
-        <footer></footer>
-        -->
-        <script src="../../js/jquery/1.10.2/jquery.min.js"></script>
-        <script type="application/javascript" src="../../js/openbibl.js"></script>
+        <!-- footer: <publicationStmt> -->
+        <footer id="footer">
+            <span>
+                <xsl:value-of select="//tei:publicationStmt/tei:date"/>,&#x0020;
+                <xsl:value-of select="//tei:publicationStmt/tei:authority"/>,&#x0020;
+                <xsl:value-of select="//tei:publicationStmt/tei:pubPlace"/>
+            </span>
+            |
+            <span>Published using the Open &lt;bibl&gt; Project</span>
+        </footer>
+                
+        <xsl:call-template name="js-script-elt">
+            <xsl:with-param name="source" select="$jquery-js-src"/>
+        </xsl:call-template>
+        <xsl:call-template name="js-script-elt">
+            <xsl:with-param name="source" select="$openbibl-js-src"/>
+        </xsl:call-template>
+        
+    </xsl:template>
 
+    <xsl:template name="js-script-elt">
+        <xsl:param name="source"/>
+        <xsl:element name="script">
+            <xsl:attribute name="type">text/javascript</xsl:attribute>
+            <xsl:attribute name="language">javascript</xsl:attribute>
+            <xsl:attribute name="src">
+                <xsl:value-of select="$source"/>
+            </xsl:attribute>
+        </xsl:element>
     </xsl:template>
 
 </xsl:stylesheet>

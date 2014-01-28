@@ -1,8 +1,8 @@
 
-@import url('reset.css'  ) all;
-@import url('layout.css' ) all;
+@import url(  'reset.css') all;
+@import url( 'layout.css') all;
+@import url( 'inline.css') all;
 @import url('control.css') all;
-@import url('inline.css' ) all;
 
 #bibliographies { 
     overflow: scroll;
@@ -57,11 +57,26 @@
     margin-bottom: 0em;
     border-top-style: inset;
     border-top-width: 2px;
-    font-size: 14px;
+    font-size: 14pt;
     line-height: 14px;
 }
 
+/*
 div.collapse {
     overflow: hidden;
     height: 0%;
+}
+*/
+
+#footer {
+    text-align: center;
+    font-size: 11pt;
+    padding-top: 1em;
+    border-top-style: solid;
+    border-top-width: 1px;
+}
+
+#about {
+    border-right-style: solid;
+    border-right-width: 1px;
 }

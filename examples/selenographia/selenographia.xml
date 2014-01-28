@@ -7,8 +7,8 @@
     <teiHeader>
         <fileDesc>
             <titleStmt>
-                <title>Printing from the Other Europe: Central and East European Printing from 1484
-                    to 1697 in the Lilly Library</title>
+                <title>Printing from the Other Europe: Central and East European Printing from <date>1484</date>
+                    to <date>1697</date> in the Lilly Library</title>
                 <author>
                     <persName>Dawn Childress</persName>
                 </author>
@@ -109,17 +109,18 @@
                         could map the planets and constellations just as cartographers were mapping
                         the geography of the earth. As the closest object to the earth, the moon
                         quickly became a favorite object of study for many astronomers. One of the
-                        greatest of these astronomers was Jan Hevelius (1611-1687), born in Gdansk.
-                        In Selenographia, Hevelius created an authoritative atlas and study of the
-                        moon derived from his own observations. Hevelius had one of the most
-                        well-equiped observatories in Europe, covering the rooftops of several
-                        buildings, complete with a revolving observation hut, telescopes and
-                        astronomical intruments which he made himself, and even a printing press to
-                        produce his copperplate engravings. The majority of plates were engraved by
-                        Hevelius in his observatory where he could produce the most detailed and
-                        accurate illustrations. The volume contains 133 engraved plates depicting
-                        the moon and its phases, as well as illustrations of the instruments he
-                        created. This is perhaps Hevelius’ greatest work.</p>
+                        greatest of these astronomers was Jan Hevelius
+                            (<date>1611</date>-<date>1687</date>), born in Gdansk. In Selenographia,
+                        Hevelius created an authoritative atlas and study of the moon derived from
+                        his own observations. Hevelius had one of the most well-equiped
+                        observatories in Europe, covering the rooftops of several buildings,
+                        complete with a revolving observation hut, telescopes and astronomical
+                        intruments which he made himself, and even a printing press to produce his
+                        copperplate engravings. The majority of plates were engraved by Hevelius in
+                        his observatory where he could produce the most detailed and accurate
+                        illustrations. The volume contains 133 engraved plates depicting the moon
+                        and its phases, as well as illustrations of the instruments he created. This
+                        is perhaps Hevelius’ greatest work.</p>
                 </note>
 
                 <!-- References -->

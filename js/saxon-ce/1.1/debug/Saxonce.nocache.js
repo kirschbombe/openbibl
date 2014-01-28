@@ -334,6 +334,6 @@ function Saxonce() {
     o && o({
         moduleName: Q, sessionId: p, subSystem: R, evtGroup: Nb, millis:(new Date).getTime(), type: T
     });
-    n.write(Zb)
+    n.write(Zb);
 }
 Saxonce();
