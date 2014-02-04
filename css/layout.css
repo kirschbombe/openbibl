@@ -4,7 +4,19 @@ body > * {
     display: block;
 }
 
-#about          {   top: 0px;                left: 0px;      width: 200px; height: 100%; }
-#bibliographies {   top: 0px;                left: 200px;    width: 960px; height: 95%;  }
-#control        {   top: 0px;                left: 1160px;   width: 200px; height: 100%; }
-#footer         {   top: 95%;   bottom: 0px; left: 200px;    width: 960px; height: 5%;   }
+@media (min-width: 1000px) {
+    #control        {   top: 0px;   left: 0px;       width: 20%; height: 100%; }
+    #bibliographies {   top: 0px;   left: 20%;                   height: 100%; }
+    
+    #bibliographies {
+        max-width: 60em;
+        width: 800px;
+    }
+} /* @media (min-width: 1000px) */
+
+@media (max-width: 1000px) {
+
+    #control        {   top: 0px;   left: 0px;  height: 90px; width: 100%; }
+    #bibliographies {   top: 90px; left: 0px;  height: auto;  width: 100%; }
+    
+} /* @media (max-width: 1000px) */

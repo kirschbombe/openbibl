@@ -1,11 +1,7 @@
 
-#search-form, 
-input.search 
-{
-    text-align: center;
-    border-radius: 15px;
-    -moz-border-radius: 15px; 
-	-webkit-border-radius:15px; 
+
+label.theme {
+    font-weight: bold;
 }
 
 #search-input {
@@ -15,29 +11,22 @@ input.search
     border-width: 2px;
 }
 
-#browse {
-    width: 75%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 3em;
-}
-
 header.browse {
     text-align: center;
     font-weight: bold;
 }
 
-ul.browse {
-    border-style: solid;
-    border-width: 2px;    
+#search-form, 
+input.search 
+{
+    text-align: center;
+    border-radius: 15px;
+    -moz-border-radius: 15px; 
+	-webkit-border-radius:15px; 
 }
 
-li.browse {
-    margin-left: 0.5em;
-    margin-top: 0.5em;
-}
-li.browse:last-child {
-    margin-bottom: 0.5em;
+#theme-form {
+    text-align: center;
 }
 
 li.browse:hover {
@@ -49,15 +38,69 @@ li.browse:hover {
     border-right-style: solid;
 }
 
-
 #control > * {
     margin-top: 2em;
 }
 
-#theme-form {
-    text-align: center;
+ul.browse {
+    border-style: solid;
+    border-width: 2px;    
 }
 
-label.theme {
-    font-weight: bold;
+#theme-form {
+    margin-top: 4.5em;
+}
+
+#browse,
+#theme-form,
+#search-form
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+li.browse {
+    margin-left: 0.5em;
+    margin-top: 0.5em;
+}
+li.browse:last-child {
+    margin-bottom: 0.5em;
+}
+
+/* WIDE */
+@media (min-width: 1000px) {
+
+    #theme-form     { left: 0;   top: 0; width: 66%; }
+    #search-form    { left: 0;   top: 0; width: 66%; }
+    #browse         { left: 50%; top: 0; width: 66%; }
+
+}
+
+/* NARROW */
+@media (max-width: 1000px) {
+    #control > * { 
+        position: absolute;
+        margin-top: 1em;
+        overflow-y: scroll;
+    }
+
+    #theme-form     { left: 0;   top: 0;    width: 40%; }
+    #search-form    { left: 0;   top: 2em;  width: 40%; }
+    #browse         { left: 50%; top: 0;    width: 40%; }
+    
+    #control {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+    }
+    
+    ul.browse {
+        text-align: center;
+        list-style-type: none;
+    }
+    li.browse {
+        display: inline;
+        margin-right: auto;
+        margin-left: auto;
+        padding: 1em;
+    }
 }

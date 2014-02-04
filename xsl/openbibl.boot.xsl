@@ -89,8 +89,9 @@
                 proc.setSuccess(function(data) {
                     var children = data.getResultDocument().querySelector("#result").childNodes;
                     var bibliographies_wrapper = document.getElementById("bibliographies");
+                    var footer = document.getElementById("footer");
                     for (var i = 0; i < children.length; i++)
-                        bibliographies_wrapper.appendChild(children[i].cloneNode(true));
+                        bibliographies_wrapper.insertBefore(children[i].cloneNode(true),footer);
                     //handle_hover();
                 });
                 proc.transformToDocument(xml);
@@ -108,11 +109,8 @@
         </header>
         -->
 
-        <!-- about box (left of bibl) -->
-        <menu type="toolbar" id="about"></menu>
-        
-        <!-- search/browse menu (right of bibl) -->
-        <menu type="toolbar" id="control">
+        <!-- search/browse menu (left of bibl) -->
+        <div id="control">
 
             <!-- theme -->
             <form id="theme-form" class="theme">
@@ -148,21 +146,24 @@
                 </select>
             </div>
             -->
-        </menu>
+        </div>
 
         <!-- bibliographies -->
-        <div id="bibliographies" class="bibliographies"></div>
+        <div id="bibliographies" class="bibliographies">
 
-        <!-- footer: <publicationStmt> -->
-        <footer id="footer">
-            <span>
-                <xsl:value-of select="//tei:publicationStmt/tei:date"/>,&#x0020;
-                <xsl:value-of select="//tei:publicationStmt/tei:authority"/>,&#x0020;
-                <xsl:value-of select="//tei:publicationStmt/tei:pubPlace"/>
-            </span>
-            |
-            <span>Published using the Open &lt;bibl&gt; Project</span>
-        </footer>
+            <!-- footer: <publicationStmt> -->
+            <div id="footer">
+                <span>
+                    <xsl:value-of select="//tei:publicationStmt/tei:date"/>,&#x0020;
+                    <xsl:value-of select="//tei:publicationStmt/tei:authority"/>,&#x0020;
+                    <xsl:value-of select="//tei:publicationStmt/tei:pubPlace"/>
+                </span>
+                |
+                <span>Published using the Open &lt;bibl&gt; Project</span>
+            </div>
+
+        </div>
+
                 
         <xsl:call-template name="js-script-elt">
             <xsl:with-param name="source" select="$jquery-js-src"/>

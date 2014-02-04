@@ -4,13 +4,11 @@
 body {
     font-size: 12pt;
     font-family: 'Quattrocento', serif;
-    background-color: #7b7f80;
     color: #080808;
 }
 
 #about, 
-#control,
-#footer
+#control
 {
     background-color: #c1c1bf;
 }
@@ -34,12 +32,12 @@ ul.browse,
 header.browse {
     color: #913633;
 }
-
+/*
 #footer {
     color: #913633;
     border-top-color: #913633;
 }
-
+*/
 /*.browsed { This doesn't work in Chrome */
 span[class~="browsed"] {
     border-style: dashed;
