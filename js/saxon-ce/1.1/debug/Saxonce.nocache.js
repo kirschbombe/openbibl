@@ -334,6 +334,11 @@ function Saxonce() {
     o && o({
         moduleName: Q, sessionId: p, subSystem: R, evtGroup: Nb, millis:(new Date).getTime(), type: T
     });
-    n.write(Zb);
+    // workaround for Firefox
+    // n.write(Zb);
+    var script=document.createElement("script");
+    script.setAttribute("defer", "defer");
+    script.innerHTML="Saxonce.onInjectionDone('Saxonce')";
+    n.getElementsByTagName("head")[0].appendChild(script)
 }
 Saxonce();
