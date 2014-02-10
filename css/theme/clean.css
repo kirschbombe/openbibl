@@ -1,0 +1,98 @@
+
+@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700,300,200);
+@import url(http://fonts.googleapis.com/css?family=Gafata);
+
+body {
+   font-size: 16px;
+   font-family: Gafata;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 22px;
+}
+
+h1 {
+    color: rgba(61, 58, 58, 1);
+    font-family: "Yanone Kaffeesatz";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 35px;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: none;
+}
+
+h2 {
+    border-style: dotted;
+    border-width: 0px 0px 1px 0px;
+    color: rgba(0,0,0,1);
+    font-size: 26px;
+    font-family: "Yanone Kaffeesatz";
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 2px;
+    margin: 45px 0px 40px 0px;
+    text-align: center;
+}
+
+p {
+   font-size: 16px;
+   line-height: 22px;
+   font-family: Gafata;
+   font-weight: 400;
+   font-style: normal;
+   text-align: left;
+   margin: 0px 0px 15px 0px;
+}
+
+/*
+span {
+   font-family: "Yanone Kaffeesatz";
+   font-weight: 400;
+   font-style: normal;
+   font-size: 22px;
+}
+*/
+
+div {
+   font-family: Gafata;
+   font-weight: 400;
+   font-style: normal;
+   font-size: 16px;
+   line-height: 22px;
+   /*margin: 0px 80px;*/
+}
+
+#asterism {
+    margin-top: -12px; 
+    width: 40px;
+    font-size: 14pt;
+    background-color: #FFFFFF;
+}
+
+#asterism-rule {
+    width: 50%;
+    font-size: 14pt;
+    line-height: 14px;
+    border-top: 1px solid #000000;
+}
+
+a {
+   color: rgba(15, 120, 155, 1);
+   border-style: none;
+}
+
+a a {
+   text-decoration: none;
+   color: inherit;
+}
+
+a a:hover {
+   color: inherit;
+}
+
+a a:visited {
+   color: inherit;
+}
+

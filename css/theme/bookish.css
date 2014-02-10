@@ -1,0 +1,88 @@
+
+ 
+@import url(http://fonts.googleapis.com/css?family=Ovo);/* for cambria
+ * @import url(http://fonts.googleapis.com/css?family=Antic+Didone); font-family: 'Antic Didone', serif;
+ * @import url(http://fonts.googleapis.com/css?family=Oranienbaum);    font-family: 'Oranienbaum', serif;
+ */
+@import url(http://fonts.googleapis.com/css?family=Gilda+Display); /* for Rameau; also:
+ * @import url(http://fonts.googleapis.com/css?family=Fenix); font-family: 'Fenix', serif;
+ * @import url(http://fonts.googleapis.com/css?family=Donegal+One); font-family: 'Donegal One', serif;
+ * @import url(http://fonts.googleapis.com/css?family=EB+Garamond); font-family: 'EB Garamond', serif;
+ */
+
+
+body {
+    /*font-family: 'Cambria W01 Regular';*/
+    font-family: 'Ovo', serif;
+    font-size: 16px;
+    line-height: 25.875px;
+    background-color: rgba(237, 236, 232, 1);
+}
+
+h1 {
+    color: rgba(63, 61, 61, 1);
+    /*font-family: "Rameau W01 Regular";*/
+    font-family: 'Gilda Display', serif;
+    font-size: 29px;
+    letter-spacing: 1px;
+    line-height: 39px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+h2 {
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    /*font-family: "Rameau W01 Regular";*/
+    font-family: 'Gilda Display', serif;
+    color: rgba(112, 112, 112, 1);
+    letter-spacing: 1px;
+    line-height: 33px;
+    margin: 45px 0px 15px 0px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+p {
+   margin-bottom: 15px;
+   /*font-family: 'Cambria W01 Regular';*/
+   font-family: 'Ovo', serif;
+   font-size: 16px;
+   line-height: 22px;
+   letter-spacing: 0px;
+   text-align: left;
+   border-width: 0px;
+   color: rgba(48, 45, 45, 1);
+}
+
+a {
+   color: rgba(137, 20, 20, 1);
+}
+
+a a {
+   text-decoration: none;
+}
+
+ul {
+   margin: 10px 20px;
+   padding: 10px 20px;
+}
+
+li {
+   width: 253px;
+}
+
+#asterism {
+    margin-top: -12px; 
+    width: 40px;
+    font-size: 14pt;
+    background-color: rgba(237, 236, 232, 1);;
+}
+
+#asterism-rule {
+    width: 50%;
+    font-size: 14pt;
+    line-height: 14px;
+    border-top: 1px solid #000000;
+}
+

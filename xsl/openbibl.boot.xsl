@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet 
+<xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
-    exclude-result-prefixes="tei"
+    xmlns:obp="http://openbibl.github.io"
+    exclude-result-prefixes="tei obp"
     version="1.0">
 
-    <!-- for HTML5: 
+    <!-- for HTML5:
         doctype-public="html"
         doctype-system="about:legacy-compat"
     -->
-    <xsl:output 
+    <xsl:output
         method="html"
         encoding="utf-8"
         indent="yes"/>
 
     <xsl:preserve-space elements="*"/>
 
-    <xsl:param name="obp-root"            select="'../..'"/>    
+    <!-- TODO: parameters; values to be externalized -->
+    <xsl:param name="obp-root"            select="'../../'"/>
     <xsl:param name="saxon-nocache-prod"  select="'js/saxon-ce/1.1/Saxonce.nocache.js'"/>
     <xsl:param name="saxon-nocache-debug" select="'js/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
-    <xsl:param name="saxon-nocache"       select="$saxon-nocache-prod"/>
-    
-    <xsl:param name="jquery-js-src" select="'../../js/jquery/1.10.2/jquery.min.js'"/>
-    <xsl:param name="openbibl-js-src" select="'../../js/openbibl.js'"/>
+    <xsl:param name="saxon-nocache"       select="concat($obp-root, $saxon-nocache-prod)"/>
+
+    <xsl:param name="jquery-js-src"        select="concat($obp-root, 'js/jquery/1.10.2/jquery.min.js')"/>
+    <xsl:param name="openbibl-js-src"      select="concat($obp-root, 'js/openbibl.js')"/>
+    <xsl:param name="openbibl-js-saxon"    select="concat($obp-root, 'js/openbibl.saxon.js')"/>
+
+    <xsl:param name="openbibl-css"                 select="concat($obp-root, 'css/openbibl.css')"/>
+    <xsl:param name="openbibl-default-theme-css"   select="concat($obp-root, 'css/theme/clean.css')"/>
+    <xsl:param name="openbibl-default-theme-label" select="concat($obp-root, 'Clean')"/>
+    <obp:css-themes>
+        <option value="clean.css"   label="Clean" selected="selected">Clean</option>
+        <option value="bookish.css" label="Bookish">Bookish</option>
+        <option value="fiche.css"   label="Fiche">Fiche</option>
+    </obp:css-themes>
 
     <xsl:template match="/">
         <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,78 +44,36 @@
             <body>
                 <xsl:call-template name="body-content"/>
             </body>
-        </html> 
+        </html>
     </xsl:template>
 
+    <!-- /html/head -->
     <xsl:template name="head-content">
         <meta charset="UTF-8" />
-        <link rel="stylesheet" type="text/css" href="../../css/openbibl.css" />
-        <link rel="stylesheet" type="text/css" id="theme-css" href="../../css/theme/default.css" />
-        
+        <link rel="stylesheet" type="text/css" href="{$openbibl-css}" />
+        <link rel="stylesheet" type="text/css" id="theme-css" href="{$openbibl-default-theme-css}" />
+
+        <!-- load jquery and obp libs -->
+        <script type="text/javascript" language="javascript" src="{$jquery-js-src}"></script>
+        <script type="text/javascript" language="javascript" src="{$openbibl-js-src}"></script>
+
+        <!-- load Saxon; declare onload callback for Saxon-CE,
+            which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
+        <script type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
+        <script type="text/javascript" language="javascript">
+            var onSaxonLoad = function() { window.obp.onSaxonLoad(Saxon) }
+        </script>
+
+        <!-- page title, from TEI document -->
         <title>
             <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
         </title>
-
-        <xsl:call-template name="js-script-elt">
-            <xsl:with-param name="source" select="concat($obp-root,'/',$saxon-nocache)"/>
-        </xsl:call-template>
-
-        <!-- onload callback for Saxon-CE, which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
-        <xsl:text disable-output-escaping="yes" xml:space="preserve">
-        <![CDATA[
-        <script type="text/javascript" language="javascript">
-        
-            function handle_hover() {
-                // add event handler for 'hover' for the <head>
-                // and <biblStruct> elements, to unhide/expand 
-                // the content for the following elements
-                $(document).find('div.expand').each(function() {
-                    var $expanded = $(this);
-                    var $collapsed = $expanded.next('.collapse');
-                    /*
-                    if ( $collapsed.length ) {
-                        var collapsed_height = $collapsed.height();
-                        $expanded.hover(
-                            function (e) {
-                                $collapsed.animate({
-                                    height: "100%"
-                                }, 150, "swing"
-                           )},
-                           function(e) {
-                                $collapsed.animate({
-                                    height: collapsed_height
-                                }, 150, "swing"
-                           )}
-                       );
-                    }
-                    */
-                });
-            }
-        
-            var xml_dir = document.location.href.replace(/[^\/]+$/, ""); // directory containing xml file, with trailing /
-            function onSaxonLoad() {
-            debugger;
-                var xsl = Saxon.requestXML(xml_dir + "../../xsl/openbibl.xsl");   // openbibl.xsl 2.0 stylesheet
-                var xml = Saxon.requestXML(document.location.href);               // reload the XML file being handled here
-                var proc = Saxon.newXSLT20Processor(xsl);
-                proc.setSuccess(function(data) {
-                    var children = data.getResultDocument().querySelector("#result").childNodes;
-                    var bibliographies_wrapper = document.getElementById("bibliographies");
-                    var footer = document.getElementById("footer");
-                    for (var i = 0; i < children.length; i++)
-                        bibliographies_wrapper.insertBefore(children[i].cloneNode(true),footer);
-                    //handle_hover();
-                });
-                proc.transformToDocument(xml);
-            }
-        </script>
-        ]]>
-        </xsl:text>
     </xsl:template>
 
+    <!-- /html/body -->
     <xsl:template name="body-content">
-        
-        <!-- header 
+
+        <!-- header
         <header id="#header">
             <xsl:value-of select="//tei:"/>
         </header>
@@ -116,8 +86,18 @@
             <form id="theme-form" class="theme">
                 <label class="theme">Theme</label>
                 <select id="theme-form-select">
-                    <option value="default.css" label="Default">Default</option>
-                    <option value="lightOnDark.css" label="Light on Dark">Light on Dark</option>
+                    <xsl:for-each select="document('')/*/obp:css-themes/option">
+                        <xsl:element name="option">
+                            <xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute>
+                            <xsl:attribute name="label"><xsl:value-of select="@label"/></xsl:attribute>
+                            <xsl:if test="@selected = 'selected'">
+                                <xsl:attribute name="selected">
+                                    <xsl:text>selected</xsl:text>
+                                </xsl:attribute>
+                            </xsl:if>
+                            <xsl:value-of select="@label"/>
+                        </xsl:element>
+                    </xsl:for-each>
                 </select>
             </form>
 
@@ -135,17 +115,7 @@
                     <li class="browse" id="browse-dates">Dates</li>
                 </ul>
             </div>
-            
-            <!--
-            <div id="save">
-                <button name="save" id="save-button">Save</button>
-                <select id="">
-                    <option value="TXT" label="TXT">HTML</option>
-                    <option value="PDF" label="PDF">PDF</option>
-                    <option value="TXT" label="TXT">TXT</option>
-                </select>
-            </div>
-            -->
+
         </div>
 
         <!-- bibliographies -->
@@ -155,7 +125,9 @@
             <div id="footer">
                 <span>
                     <xsl:value-of select="//tei:publicationStmt/tei:date"/>,&#x0020;
-                    <xsl:value-of select="//tei:publicationStmt/tei:authority"/>,&#x0020;
+                    <xsl:if test="//tei:publicationStmt/tei:authority != ''">
+                        <xsl:value-of select="//tei:publicationStmt/tei:authority"/>,&#x0020;
+                    </xsl:if>
                     <xsl:value-of select="//tei:publicationStmt/tei:pubPlace"/>
                 </span>
                 |
@@ -164,25 +136,6 @@
 
         </div>
 
-                
-        <xsl:call-template name="js-script-elt">
-            <xsl:with-param name="source" select="$jquery-js-src"/>
-        </xsl:call-template>
-        <xsl:call-template name="js-script-elt">
-            <xsl:with-param name="source" select="$openbibl-js-src"/>
-        </xsl:call-template>
-        
-    </xsl:template>
-
-    <xsl:template name="js-script-elt">
-        <xsl:param name="source"/>
-        <xsl:element name="script">
-            <xsl:attribute name="type">text/javascript</xsl:attribute>
-            <xsl:attribute name="language">javascript</xsl:attribute>
-            <xsl:attribute name="src">
-                <xsl:value-of select="$source"/>
-            </xsl:attribute>
-        </xsl:element>
     </xsl:template>
 
 </xsl:stylesheet>

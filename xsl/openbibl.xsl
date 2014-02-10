@@ -45,7 +45,7 @@
         </h2>
         
         <div class="bibliography expand">
-            <xsl:apply-templates select="tei:biblStruct/tei:monogr/tei:author" mode="web"/>.
+            <xsl:apply-templates select="tei:biblStruct/tei:monogr/tei:author" mode="web"/>
             <xsl:value-of select="tei:biblStruct/tei:monogr/tei:title"/>.&#x0020;
             <i>
                 <xsl:apply-templates select="tei:biblStruct/tei:monogr/tei:imprint/tei:pubPlace" mode="web"/>,&#x0020; 
@@ -115,9 +115,13 @@
     </xsl:template>
 
     <xsl:template match="tei:biblStruct/tei:monogr/tei:author" mode="web">
-        <div itemscope="itemscope" itemtype="http://schema.org/Person">
-            <span itemprop="name"><xsl:value-of select="."/></span>
-        </div>
+        <xsl:if test=". != ''">
+            <span itemscope="itemscope" itemtype="http://schema.org/Person">
+                <span itemprop="name"><xsl:value-of select="."/></span>
+            </span>
+            <!-- config: author-following punct -->
+            <xsl:text>. </xsl:text>
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>
