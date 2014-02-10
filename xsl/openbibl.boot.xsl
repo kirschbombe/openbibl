@@ -27,6 +27,7 @@
     <xsl:param name="openbibl-js-src"      select="concat($obp-root, 'js/openbibl.js')"/>
     <xsl:param name="openbibl-js-saxon"    select="concat($obp-root, 'js/openbibl.saxon.js')"/>
 
+    <xsl:param name="openbibl-xsl"                 select="concat($obp-root, 'xsl/openbibl.xsl')"/>
     <xsl:param name="openbibl-css"                 select="concat($obp-root, 'css/openbibl.css')"/>
     <xsl:param name="openbibl-default-theme-css"   select="concat($obp-root, 'css/theme/clean.css')"/>
     <xsl:param name="openbibl-default-theme-label" select="concat($obp-root, 'Clean')"/>
@@ -61,7 +62,14 @@
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
         <script type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
         <script type="text/javascript" language="javascript">
-            var onSaxonLoad = function() { window.obp.onSaxonLoad(Saxon) }
+            var onSaxonLoad = function() {
+                window.obp.onSaxonLoad(
+                    Saxon,                                      // pass reference to avoid scoping issues
+                    '<xsl:value-of select="$openbibl-xsl"/>',   // openbibl.xsl stylesheet path
+                    document.location.href,                     // TEI XML document path
+                    {}                                          // openbibl.xsl stylesheet parameters
+                );
+            }
         </script>
 
         <!-- page title, from TEI document -->

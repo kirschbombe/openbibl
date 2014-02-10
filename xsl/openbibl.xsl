@@ -96,10 +96,12 @@
     <xsl:template match="tei:msDesc/tei:msIdentifier/descendant-or-self::*"/>
     <xsl:template match="tei:msDesc/tei:msIdentifier" mode="web">
         <xsl:value-of select="tei:idno"/>
-        <xsl:text>&#x2003;&#x2003;&#x2003;</xsl:text>
-        <xsl:value-of select="count(parent::tei:msIdentifier/preceding-sibling::tei:msIdentifier) + 1"/>
-        <xsl:text>) </xsl:text>
-        <xsl:value-of select="tei:collection"/>        
+        <xsl:if test="tei:collection != ''">
+            <xsl:text>&#x2003;&#x2003;&#x2003;</xsl:text>
+            <xsl:value-of select="count(parent::tei:msIdentifier/preceding-sibling::tei:msIdentifier) + 1"/>
+            <xsl:text>) </xsl:text>
+            <xsl:value-of select="tei:collection"/>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="tei:date[parent::tei:imprint|parent::tei:publicationStatement]" mode="web">
