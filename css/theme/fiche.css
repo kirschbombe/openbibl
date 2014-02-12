@@ -16,7 +16,6 @@ h1 {
     font-family: 'Cantarell';
     font-size: 26px;
     line-height: 42px;
-    margin-bottom: 45px;
     text-align: center;
     letter-spacing: 0px;
     color: rgba(242, 201, 53, 1);
@@ -41,13 +40,13 @@ div {
 }
 
 p {
-   margin-bottom: 25px;
-   width: 782px;
-   text-align: left;
-   /*font-family: mf-neue-helvetica-arabic-218485;*/
-font-family: 'Quattrocento Sans', sans-serif;
-   font-size: 16px;
-   padding: 0px 10px;
+    margin-bottom: 25px;
+    width: 782px;
+    text-align: left;
+    /*font-family: mf-neue-helvetica-arabic-218485;*/
+    font-family: 'Quattrocento Sans', sans-serif;
+    font-size: 16px;
+    padding: 0px 10px;
 }
 
 a {
@@ -58,17 +57,11 @@ a a {
    text-decoration: none;
 }
 
-#asterism {
-    margin-top: -12px; 
-    width: 40px;
-    font-size: 14pt;
-    background-color: rgba(68, 68, 68, 1);
-    color: rgba(156, 199, 237, 1);
-}
-
+#asterism,
 #asterism-rule {
-    width: 50%;
-    font-size: 14pt;
-    line-height: 14px;
-    border-top: 1px solid rgba(156, 199, 237, 1); 
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    border: 0;
+    margin: 0;
 }
