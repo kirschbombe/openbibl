@@ -19,11 +19,11 @@
 
     <!-- TODO: parameters; values to be externalized -->
     <xsl:param name="obp-root"            select="'../../'"/>
-    <xsl:param name="saxon-nocache-prod"  select="'js/saxon-ce/1.1/Saxonce.nocache.js'"/>
-    <xsl:param name="saxon-nocache-debug" select="'js/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
+    <xsl:param name="saxon-nocache-prod"  select="'js/lib/saxon-ce/1.1/Saxonce.nocache.js'"/>
+    <xsl:param name="saxon-nocache-debug" select="'js/lib/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
     <xsl:param name="saxon-nocache"       select="concat($obp-root, $saxon-nocache-prod)"/>
 
-    <xsl:param name="jquery-js-src"        select="concat($obp-root, 'js/jquery/1.10.2/jquery.min.js')"/>
+    <xsl:param name="jquery-js-src"        select="concat($obp-root, 'js/lib/jquery/1.10.2/jquery.min.js')"/>
     <xsl:param name="openbibl-js-src"      select="concat($obp-root, 'js/openbibl.js')"/>
     <xsl:param name="openbibl-js-saxon"    select="concat($obp-root, 'js/openbibl.saxon.js')"/>
 
@@ -80,12 +80,6 @@
 
     <!-- /html/body -->
     <xsl:template name="body-content">
-
-        <!-- header
-        <header id="#header">
-            <xsl:value-of select="//tei:"/>
-        </header>
-        -->
 
         <!-- search/browse menu (left of bibl) -->
         <div id="control">
