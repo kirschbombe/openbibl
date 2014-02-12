@@ -23,7 +23,7 @@
     <xsl:param name="saxon-nocache-debug" select="'js/lib/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
     <xsl:param name="saxon-nocache"       select="concat($obp-root, $saxon-nocache-prod)"/>
 
-    <xsl:param name="jquery-js-src"        select="concat($obp-root, 'js/lib/jquery/1.10.2/jquery.min.js')"/>
+    <xsl:param name="jquery-js-src"        select="concat($obp-root, 'js/lib/jquery.1-10-2.min.js')"/>
     <xsl:param name="openbibl-js-cls"      select="concat($obp-root, 'js/openbibl.js')"/>
     <xsl:param name="openbibl-js-dr"       select="concat($obp-root, 'js/openbibl.docready.js')"/>
     <xsl:param name="openbibl-js-saxon"    select="concat($obp-root, 'js/openbibl.saxon.js')"/>
