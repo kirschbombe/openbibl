@@ -24,7 +24,8 @@
     <xsl:param name="saxon-nocache"       select="concat($obp-root, $saxon-nocache-prod)"/>
 
     <xsl:param name="jquery-js-src"        select="concat($obp-root, 'js/lib/jquery/1.10.2/jquery.min.js')"/>
-    <xsl:param name="openbibl-js-src"      select="concat($obp-root, 'js/openbibl.js')"/>
+    <xsl:param name="openbibl-js-cls"      select="concat($obp-root, 'js/openbibl.js')"/>
+    <xsl:param name="openbibl-js-dr"       select="concat($obp-root, 'js/openbibl.docready.js')"/>
     <xsl:param name="openbibl-js-saxon"    select="concat($obp-root, 'js/openbibl.saxon.js')"/>
 
     <xsl:param name="openbibl-xsl"                 select="concat($obp-root, 'xsl/openbibl.xsl')"/>
@@ -56,7 +57,8 @@
 
         <!-- load jquery and obp libs -->
         <script type="text/javascript" language="javascript" src="{$jquery-js-src}"></script>
-        <script type="text/javascript" language="javascript" src="{$openbibl-js-src}"></script>
+        <script type="text/javascript" language="javascript" src="{$openbibl-js-cls}"></script>
+        <script type="text/javascript" language="javascript" src="{$openbibl-js-dr}"></script>
 
         <!-- load Saxon; declare onload callback for Saxon-CE,
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
