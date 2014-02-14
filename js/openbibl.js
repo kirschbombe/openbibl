@@ -68,6 +68,11 @@
         for (var i = 0; i < children.length; i++)
             bibliographies_wrapper.insertBefore(children[i].cloneNode(true),footer);
     };
+    Openbibl.prototype.changetheme = function(stylesheet) {
+        var parts = $('#theme-css').attr('href').split('/');
+        parts[parts.length-1] = stylesheet;
+        $('#theme-css').attr('href', parts.join('/'));
+    }
     window.obp = new Openbibl();
 
 })();

@@ -1,8 +1,12 @@
 
 /*@import url(  'reset.css') all;*/
-@import url( 'layout.css') all;
+/*@import url( 'layout.css') all;*/
 @import url( 'inline.css') all;
-@import url('control.css') all;
+/*@import url('menu.css') all;*/
+
+div.bibliographies {
+    max-width: 750px;
+}
 
 h1 {
     margin-top: 3em;
@@ -17,12 +21,6 @@ h2 {
     font-variant: small-caps;
 }
 
-.bibliographies { 
-    overflow-x: hidden;
-   width: 783px;
-}
-
-
 .bibliographies > * {
     margin-left: 2em;
     margin-right: 2em;
@@ -32,13 +30,6 @@ h2 {
     margin-bottom: 1em;
     text-align: justify;
 }
-
-/*
-#bibliographies {
-    font-size: 12pt;
-    line-height: 20px;
-}
-*/
 
 #asterism {
     text-align: center;

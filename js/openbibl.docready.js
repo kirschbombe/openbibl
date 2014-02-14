@@ -22,18 +22,36 @@
             });
         }
 
-        // update css stylesheet on change of theme form
-        $('#theme-form').change(function(){
-            var parts = $('#theme-css').attr('href').split('/');
-            parts[parts.length-1] = $('#theme-form-select').children('option:selected').attr('value');
-            $('#theme-css').attr('href', parts.join('/'));
-        });
-
         // menu offcanvas (bootstrap)
         $('[data-toggle=offcanvas]').click(function() {
             $('.row-offcanvas').toggleClass('active');
         });
-
+        
+        // typeahead
+        var typeahead_file = document.location.href.replace(/[^\/]+$/,"") + 'typeahead.json';
+        var typeahead_list_len = 100;
+        $.ajax({
+            "url":      typeahead_file,
+            "type":     "GET",
+            "dataType": "json",
+            "success":  function(data) {
+                var words = Object.keys(data);
+                $('.search-input').each(function() {
+                    $(this).typeahead({
+                        "items": typeahead_list_len,
+                        "matcher": function(item) {
+                            //return new RegExp("^" + this.query, "i").test(item);
+                            return new RegExp("^" + this.query, "").test(item);
+                        },
+                        "source": words
+                    });
+                });
+            },
+            "error" : function(jqXHR, textStatus, errorThrown) {
+                console.log("Typeahead ajax error: " + textStatus);
+            }
+        });
+         
     }); // end document-ready callback
 
 })();

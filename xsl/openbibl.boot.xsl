@@ -6,11 +6,9 @@
     exclude-result-prefixes="tei obp"
     version="1.0">
 
-    <!-- for HTML5:
+    <xsl:output
         doctype-public="html"
         doctype-system="about:legacy-compat"
-    -->
-    <xsl:output
         method="html"
         encoding="utf-8"
         indent="yes"/>
@@ -23,7 +21,14 @@
     <xsl:param name="saxon-nocache-debug" select="'js/lib/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
     <xsl:param name="saxon-nocache"       select="concat($obp-root, $saxon-nocache-prod)"/>
 
-    <xsl:param name="jquery-js-src"        select="concat($obp-root, 'js/lib/jquery.1-10-2.min.js')"/>
+    <xsl:param name="jquery-js"         select="concat($obp-root, 'js/lib/jquery-1.10.2.min.js')"/>
+    <xsl:param name="bootstrap-js"      select="concat($obp-root, 'js/lib/bootstrap-3.0.1.min.js')"/>
+    <xsl:param name="offcanvas-js"      select="concat($obp-root, 'js/lib/bootstrap-offcanvas-3.0.0.js')"/>
+    <xsl:param name="typeahead-js"      select="concat($obp-root, 'js/lib/bootstrap-typeahead-2.3.2.js')"/>
+    
+    <xsl:param name="bootstrap-css"     select="concat($obp-root, 'css/lib/bootstrap.css')"/>
+    <xsl:param name="navmenu-css"       select="concat($obp-root, 'css/lib/navmenu.css')"/>
+    
     <xsl:param name="openbibl-js-cls"      select="concat($obp-root, 'js/openbibl.js')"/>
     <xsl:param name="openbibl-js-dr"       select="concat($obp-root, 'js/openbibl.docready.js')"/>
     <xsl:param name="openbibl-js-saxon"    select="concat($obp-root, 'js/openbibl.saxon.js')"/>
@@ -33,7 +38,7 @@
     <xsl:param name="openbibl-default-theme-css"   select="concat($obp-root, 'css/theme/clean.css')"/>
     <xsl:param name="openbibl-default-theme-label" select="concat($obp-root, 'Clean')"/>
     <obp:css-themes>
-        <option value="clean.css"   label="Clean" selected="selected">Clean</option>
+        <option value="clean.css"   label="Clean">Clean</option>
         <option value="bookish.css" label="Bookish">Bookish</option>
         <option value="fiche.css"   label="Fiche">Fiche</option>
     </obp:css-themes>
@@ -51,14 +56,38 @@
 
     <!-- /html/head -->
     <xsl:template name="head-content">
-        <meta charset="UTF-8" />
-        <link rel="stylesheet" type="text/css" href="{$openbibl-css}" />
-        <link rel="stylesheet" type="text/css" id="theme-css" href="{$openbibl-default-theme-css}" />
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta name="description" content="openbibl bibliography"></meta>
+        <meta name="author" content="TEI author"></meta>
+        <!-- TODO: icon -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png"></link>
+        
+        <link href="{$bootstrap-css}" rel="stylesheet"></link>
+        <link href="{$navmenu-css}" rel="stylesheet"></link>
+        <xsl:text disable-output-escaping="yes">
+            <![CDATA[
+                <!--[if lt IE 9]>
+            ]]>
+        </xsl:text>
+                <script src="js/lib/html5shiv.js"></script>
+                <script src="js/lib/respond.min.js"></script>
+        <xsl:text disable-output-escaping="yes">
+            <![CDATA[
+                <![endif]-->
+            ]]>
+        </xsl:text>
+        <script type="text/javascript" language="javascript" src="{$jquery-js}"></script>
+        <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
+        <script type="text/javascript" language="javascript" src="{$offcanvas-js}"></script>
+        <script type="text/javascript" language="javascript" src="{$typeahead-js}"></script>
 
-        <!-- load jquery and obp libs -->
-        <script type="text/javascript" language="javascript" src="{$jquery-js-src}"></script>
+
         <script type="text/javascript" language="javascript" src="{$openbibl-js-cls}"></script>
         <script type="text/javascript" language="javascript" src="{$openbibl-js-dr}"></script>
+        
+        <link rel="stylesheet" type="text/css" href="{$openbibl-css}" />
+        <link rel="stylesheet" type="text/css" id="theme-css" href="{$openbibl-default-theme-css}" />
 
         <!-- load Saxon; declare onload callback for Saxon-CE,
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
@@ -78,68 +107,104 @@
         <title>
             <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
         </title>
+        
     </xsl:template>
 
     <!-- /html/body -->
     <xsl:template name="body-content">
+        <body>
+            <xsl:call-template name="menu"/>
+            <xsl:call-template name="bibliographies"/>
+        </body>
+    </xsl:template>
 
-        <!-- search/browse menu (left of bibl) -->
-        <div id="control">
-
-            <!-- theme -->
-            <form id="theme-form" class="theme">
-                <label class="theme">Theme</label>
-                <select id="theme-form-select">
-                    <xsl:for-each select="document('')/*/obp:css-themes/option">
-                        <xsl:element name="option">
-                            <xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute>
-                            <xsl:attribute name="label"><xsl:value-of select="@label"/></xsl:attribute>
-                            <xsl:if test="@selected = 'selected'">
-                                <xsl:attribute name="selected">
-                                    <xsl:text>selected</xsl:text>
-                                </xsl:attribute>
-                            </xsl:if>
-                            <xsl:value-of select="@label"/>
-                        </xsl:element>
-                    </xsl:for-each>
-                </select>
-            </form>
-
-            <!-- search -->
-            <form id="search-form" class="search">
-                <input id="search-input" type="search" class="search" placeholder="Search" />
-            </form>
-
-            <!-- browse -->
-            <div id="browse" class="browse">
-                <header class="browse">Browse</header>
-                <ul class="browse">
-                    <li class="browse" id="browse-people">People</li>
-                    <li class="browse" id="browse-places">Places</li>
-                    <li class="browse" id="browse-dates">Dates</li>
+    <!-- sidebar menu -->
+    <xsl:template name="menu">
+        
+        <!-- sidebar menu -->
+        <nav id="sidebar-menu" class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
+            <a class="navmenu-brand" href="#"></a>
+            <ul class="nav navmenu-nav">
+                <li><a href="#">Openbibl</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Theme <b class="caret"></b></a>
+                    <ul class="dropdown-menu navmenu-nav">
+                        <xsl:for-each select="document('')/*/obp:css-themes/option">
+                            <li>
+                                <a href="#" onclick="javascript:window.obp.changetheme('{@value}')">
+                                    <xsl:value-of select="@label"/>
+                                </a>
+                            </li>
+                        </xsl:for-each>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse <b class="caret"></b></a>
+                    <ul class="dropdown-menu navmenu-nav">
+                        <li><a href="#">People</a></li>
+                        <li><a href="#">Places</a></li>
+                        <li><a href="#">Dates</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <form class="navbar-form">
+                        <input class="search-input" type="text" data-items="2" data-provide="typeahead" autocomplete="off" placeholder="Search" />
+                    </form>
+                </li> 
+            </ul>
+        </nav>
+        
+        <!-- button for sidebar menu -->
+        <div class="navbar navbar-default navbar-collapse navbar-fixed-top visible-sm visible-xs visible-md visible-lg">
+            <button id="offcanvas-toggle" type="button" class="navbar-toggle visible-md visible-lg" data-toggle="offcanvas" data-target="#sidebar-menu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- header menu -->
+            <nav class="visible-sm visible-xs" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Openbibl</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Theme <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <xsl:for-each select="document('')/*/obp:css-themes/option">
+                                <li>
+                                    <a href="#" onclick="javascript:window.obp.changetheme('{@value}')">
+                                    <xsl:value-of select="@label"/>
+                                    </a>
+                                </li>
+                            </xsl:for-each>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse <b class="caret"></b></a>
+                        <ul class="dropdown-menu navmenu-nav">
+                            <li><a href="#">People</a></li>
+                            <li><a href="#">Places</a></li>
+                            <li><a href="#">Dates</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <form class="navbar-form">
+                            <input class="search-input" type="text" data-items="2" data-provide="typeahead" autocomplete="off" placeholder="Search" />
+                        </form>
+                    </li> 
                 </ul>
-            </div>
-
+            </nav>
         </div>
+    </xsl:template>
 
-        <!-- bibliographies -->
-        <div id="bibliographies" class="bibliographies">
-
-            <!-- footer: <publicationStmt> -->
-            <div id="footer">
-                <span>
-                    <xsl:value-of select="//tei:publicationStmt/tei:date"/>,&#x0020;
-                    <xsl:if test="//tei:publicationStmt/tei:authority != ''">
-                        <xsl:value-of select="//tei:publicationStmt/tei:authority"/>,&#x0020;
-                    </xsl:if>
-                    <xsl:value-of select="//tei:publicationStmt/tei:pubPlace"/>
-                </span>
-                |
-                <span>Published using the Open &lt;bibl&gt; Project</span>
+    <xsl:template name="bibliographies">
+        <div class="container">
+            <div id="bibliographies" class="bibliographies">
+                <!-- -->
+                <div id="footer">
+                    <span>2014, University Park, PA</span> | <span>Published using the Open
+                        &lt;bibl&gt; Project</span>
+                </div>
             </div>
-
-        </div>
-
+        </div>        
     </xsl:template>
 
 </xsl:stylesheet>
