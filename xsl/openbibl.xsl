@@ -5,6 +5,8 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     exclude-result-prefixes="xs" version="2.0">
 
+    <xsl:import href="openbibl.shared.xsl"/>
+
     <xsl:template match="/">
         <div id="result">
             <xsl:apply-templates/>            
@@ -19,18 +21,9 @@
         <!-- pull asterism from config file? -->
         <div id="asterism">&#x2766;</div>
     </xsl:template>
-    
-    <xsl:template match="//tei:titleStmt/tei:author"/>
-    
+        
     <xsl:template match="//tei:fileDesc/tei:publicationStmt/descendant-or-self::*"/>
     <xsl:template match="//tei:fileDesc/tei:publicationStmt" mode="web"/>
-    
-<!--
-    <xsl:template match="" mode="web">
-        
-    </xsl:template>
--->
-    
     <xsl:template match="//tei:fileDesc/tei:publicationStmt">
         <footer>
             <xsl:apply-templates/>
@@ -77,12 +70,12 @@
     
     <xsl:template match="//tei:msDesc/descendant-or-self::*"/>
     <xsl:template match="//tei:msDesc/descendant-or-self::*" mode="web">
-        <xsl:value-of select="normalize-space(.)"/>
+        <xsl:apply-templates mode="web"/>
     </xsl:template>
 
     <xsl:template match="//tei:div[@type='entry']/tei:note"/>
     <xsl:template match="//tei:div[@type='entry']/tei:note" mode="web">
-        <xsl:value-of select="normalize-space(.)"/>
+        <xsl:apply-templates mode="web"/>
     </xsl:template>
     
     <xsl:template match="//tei:div[@type='entry']/tei:listBibl/descendant-or-self::*"/>
@@ -111,19 +104,40 @@
     </xsl:template>
     
     <xsl:template match="tei:pubPlace[parent::tei:imprint]" mode="web">
+        <!--
         <span itemscope="itemscope" itemtype="http://schema.org/Place">
             <span itemprop="location"><xsl:value-of select="."/></span>
         </span>
+        -->
+        <xsl:apply-templates select="@*|node" mode="web"/>
     </xsl:template>
 
+    <xsl:template match="//tei:titleStmt/tei:author"/>
     <xsl:template match="tei:biblStruct/tei:monogr/tei:author" mode="web">
         <xsl:if test=". != ''">
+            <xsl:apply-templates select="@*|node()" mode="web"/>
+            <!--
             <span itemscope="itemscope" itemtype="http://schema.org/Person">
                 <span itemprop="name"><xsl:value-of select="."/></span>
             </span>
+            -->
             <!-- config: author-following punct -->
             <xsl:text>. </xsl:text>
         </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="//tei:back"/>
+
+    <!-- -->
+    <xsl:template match="*[@ref]" mode="web">
+        <span>
+        <xsl:attribute name="id">
+            <xsl:call-template name="global-ref-id">
+                <xsl:with-param name="ref-elt" select="."/>
+            </xsl:call-template>
+        </xsl:attribute>
+        <xsl:apply-templates mode="web"/>
+        </span>
     </xsl:template>
 
 </xsl:stylesheet>

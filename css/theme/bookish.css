@@ -12,7 +12,11 @@
 
 .navbar-default {
     background-color: rgba(237, 236, 232, 1);
-    border-color: #707070;
+    border-color: rgba(237, 236, 232, 1);
+}
+.navmenu.navmenu-default {
+    background-color: rgba(237, 236, 232, 1);
+    border-right-width: 0px;
 }
 
 body {

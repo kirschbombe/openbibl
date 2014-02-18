@@ -73,6 +73,15 @@
         parts[parts.length-1] = stylesheet;
         $('#theme-css').attr('href', parts.join('/'));
     }
+    Openbibl.prototype.scroll_to_id = function(ref_id,dlg_id) {
+        // close the dialog
+        $('#' + dlg_id).modal('hide');
+        // scroll to requested location in document
+        var $elt = $('#' + ref_id);
+        if ($elt.length == 0) return;
+        $('html body').scrollTop($elt.offset().top -
+            $('#bibliographies').offset().top);
+    }
     window.obp = new Openbibl();
 
 })();

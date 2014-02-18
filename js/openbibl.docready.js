@@ -51,7 +51,7 @@
                 console.log("Typeahead ajax error: " + textStatus);
             }
         });
-         
+
     }); // end document-ready callback
 
 })();

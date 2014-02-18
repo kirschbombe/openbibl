@@ -2,6 +2,10 @@
 @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700,300,200);
 @import url(http://fonts.googleapis.com/css?family=Gafata);
 
+.navbar-default {
+    border-color: #000000;
+}
+
 body {
    font-size: 16px;
    font-family: Gafata;
