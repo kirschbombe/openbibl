@@ -3,7 +3,11 @@
 @import url(http://fonts.googleapis.com/css?family=Gafata);
 
 .navbar-default {
-    border-color: #000000;
+    border-color: #FFFFFF;
+}
+
+.navmenu.navmenu-default {
+    border-right-width: 0px;
 }
 
 body {

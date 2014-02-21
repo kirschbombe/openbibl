@@ -1,9 +1,4 @@
 
-/*@import url(  'reset.css') all;*/
-/*@import url( 'layout.css') all;*/
-@import url( 'inline.css') all;
-/*@import url('menu.css') all;*/
-
 div.bibliographies {
     max-width: 750px;
 }
@@ -54,4 +49,18 @@ h2 {
     padding-top: 1em;
     border-top-style: solid;
     border-top-width: 1px;
+}
+
+i {
+    font-style: italic;
+}
+
+span.publication {
+    font-style: italic;
+}
+
+.ref-match {
+    font-weight: bold;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
 }

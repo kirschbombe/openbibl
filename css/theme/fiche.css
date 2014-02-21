@@ -11,6 +11,14 @@ body {
    background-color: rgba(68, 68, 68, 1);
 }
 
+.navbar-default {
+    border-bottom-color: rgba(68, 68, 68, 1);
+}
+
+.navmenu.navmenu-default {
+    border-right-width: 0px;
+}
+
 h1 {
     /*font-family: "Klint LT W01 Regular";*/
     font-family: 'Cantarell';
