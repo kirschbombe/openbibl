@@ -15,36 +15,17 @@
     <xsl:preserve-space elements="*"/>
     
     <xsl:include href="openbibl.shared.xsl"/>
+    <xsl:include href="openbibl.params.xsl"/>
     
-    <!-- TODO: parameters; values to be externalized -->
-    <xsl:param name="obp-root"            select="'../../'"/>
-    <xsl:param name="saxon-nocache-prod"  select="'js/lib/saxon-ce/1.1/Saxonce.nocache.js'"/>
-    <xsl:param name="saxon-nocache-debug" select="'js/lib/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
-    <xsl:param name="saxon-nocache"       select="concat($obp-root, $saxon-nocache-prod)"/>
-    
-    <xsl:param name="jquery-js"         select="concat($obp-root, 'js/lib/jquery-1.10.2.min.js')"/>
-    <xsl:param name="bootstrap-js"      select="concat($obp-root, 'js/lib/bootstrap-3.0.1.min.js')"/>
-    <xsl:param name="offcanvas-js"      select="concat($obp-root, 'js/lib/bootstrap-offcanvas-3.0.0.js')"/>
-    <xsl:param name="typeahead-js"      select="concat($obp-root, 'js/lib/bootstrap-typeahead-2.3.2.js')"/>
-    
-    <xsl:param name="bootstrap-css"     select="concat($obp-root, 'css/lib/bootstrap.css')"/>
-    <xsl:param name="navmenu-css"       select="concat($obp-root, 'css/lib/navmenu.css')"/>
-    
-    <xsl:param name="openbibl-js-cls"      select="concat($obp-root, 'js/openbibl.js')"/>
-    <xsl:param name="openbibl-js-dr"       select="concat($obp-root, 'js/openbibl.docready.js')"/>
-    <xsl:param name="openbibl-js-saxon"    select="concat($obp-root, 'js/openbibl.saxon.js')"/>
-    
-    <xsl:param name="openbibl-xsl"                 select="concat($obp-root, 'xsl/openbibl.xsl')"/>
-    <xsl:param name="openbibl-css"                 select="concat($obp-root, 'css/openbibl.css')"/>
-    <xsl:param name="openbibl-default-theme-css"   select="concat($obp-root, 'css/theme/clean.css')"/>
-    <xsl:param name="openbibl-default-theme-label" select="concat($obp-root, 'Clean')"/>
+    <!-- TODO: debug "document('openbibl.params.xsl)/*/obp:css-themes" issue 
+               unless it is resolved by externalizing params (probably
+               not due to node-set portability issues in XSLT 1.0)
+    -->
     <obp:css-themes>
         <option value="clean.css"   label="Clean">Clean</option>
         <option value="bookish.css" label="Bookish">Bookish</option>
         <option value="fiche.css"   label="Fiche">Fiche</option>
     </obp:css-themes>
-    <xsl:param name="context-text-length" select="30"/>
-    <xsl:variable name="nbsp" select="'&#x00A0;'"/>
     
     <xsl:template match="/">
         <html lang="en">
@@ -66,8 +47,11 @@
         <!-- TODO: icon -->
         <link rel="shortcut icon" href="assets/ico/favicon.png"></link>
         
+        <!-- TODO: remove once done debugging .less integration
         <link href="{$bootstrap-css}" rel="stylesheet"></link>
         <link href="{$navmenu-css}" rel="stylesheet"></link>
+        -->
+        
         <xsl:text disable-output-escaping="yes"><![CDATA[
                 <!--[if lt IE 9]>
         ]]></xsl:text>
@@ -80,7 +64,6 @@
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
         <script type="text/javascript" language="javascript" src="{$offcanvas-js}"></script>
         <script type="text/javascript" language="javascript" src="{$typeahead-js}"></script>
-        
         
         <script type="text/javascript" language="javascript" src="{$openbibl-js-cls}"></script>
         <script type="text/javascript" language="javascript" src="{$openbibl-js-dr}"></script>
@@ -124,7 +107,7 @@
         <nav id="sidebar-menu" class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
             <a class="navmenu-brand" href="#"></a>
             <ul class="nav navmenu-nav">
-                <li><a href="#">Openbibl</a></li>
+                <li><a class="brand" href="#">Openbibl</a></li>
                 <xsl:call-template name="make-theme-menu"/>
                 <xsl:call-template name="make-browse-menu"/>
                 <li class="dropdown">

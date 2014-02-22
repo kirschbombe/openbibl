@@ -1,0 +1,146 @@
+//
+// Variable Overrides for theme
+// --------------------------------------------------
+
+// --------------------------------------------------
+// fonts used by this theme
+// --------------------------------------------------
+
+@import url(http://fonts.googleapis.com/css?family=Ovo);/* for cambria
+ * @import url(http://fonts.googleapis.com/css?family=Antic+Didone); font-family: 'Antic Didone', serif;
+ * @import url(http://fonts.googleapis.com/css?family=Oranienbaum);    font-family: 'Oranienbaum', serif;
+ */
+@import url(http://fonts.googleapis.com/css?family=Gilda+Display); /* for Rameau; also:
+ * @import url(http://fonts.googleapis.com/css?family=Fenix); font-family: 'Fenix', serif;
+ * @import url(http://fonts.googleapis.com/css?family=Donegal+One); font-family: 'Donegal One', serif;
+ * @import url(http://fonts.googleapis.com/css?family=EB+Garamond); font-family: 'EB Garamond', serif;
+ */
+
+// --------------------------------------------------
+// bootstrap variable overrides
+// --------------------------------------------------
+
+@obp-body-bg:                   rgba(237, 236, 232, 1);
+@obp-text-color:                rgba(112, 112, 112, 1);
+@obp-link-color:                rgba(137, 20, 20, 1);
+@obp-navbar-default-color:      rgba(237, 236, 232, 1);
+
+@obp-font-family-sans-serif:    "Helvetica Neue";
+@obp-font-family-serif:         'Ovo', serif; // 'Cambria W01 Regular'
+@obp-font-family-monospace:     Menlo, Monaco, Consolas, "Courier New", monospace;
+@obp-font-family-base:          @obp-font-family-serif;
+
+@obp-font-size-base:            16px;
+@obp-font-size-h1:              29px;
+@obp-font-size-h2:              30px;
+@obp-font-size-h3:              ceil((@obp-font-size-base * 1.7));
+@obp-font-size-h4:              ceil((@obp-font-size-base * 1.25));
+@obp-font-size-h5:              @obp-font-size-base;
+@obp-font-size-h6:              ceil((@obp-font-size-base * 0.85));
+@obp-headings-color:            rgba(112, 112, 112, 1);
+@obp-headings-font-family:      "Gilda Display"; // preferred: "Rameau W01 Regular" 
+@obp-headings-font-weight:      400;
+@obp-headings-line-height:      35px;
+
+@obp-line-height-base:          1.428571429; // 20/14
+@obp-line-height-computed:      floor((@obp-font-size-base * @obp-line-height-base));
+
+@obp-input-color:               @obp-text-color;
+
+// Navs
+@obp-nav-tabs-border-color:                     @obp-body-bg;
+@obp-nav-disabled-link-color:                   @obp-body-bg;
+@obp-nav-disabled-link-hover-color:             @obp-body-bg;
+@obp-nav-tabs-link-hover-border-color:          @obp-body-bg;
+@obp-nav-link-hover-bg:                         @obp-body-bg;
+@obp-nav-tabs-active-link-hover-color:          @obp-body-bg;
+@obp-nav-tabs-active-link-hover-border-color:   @obp-body-bg;
+
+// Navmenu
+@obp-navmenu-margin-vertical:                   (0.5 * @obp-line-height-computed);
+@obp-navmenu-default-color:                     @obp-text-color;
+@obp-navmenu-default-bg:                        @obp-body-bg;
+@obp-navmenu-default-border:                    @obp-body-bg;
+
+@obp-navmenu-default-link-color:                #777;
+@obp-navmenu-default-link-hover-color:          #333;
+@obp-navmenu-default-link-hover-bg:             transparent;
+@obp-navmenu-default-link-active-color:         #555;
+@obp-navmenu-default-link-active-bg:            darken(@obp-navmenu-default-bg, 6.5%);
+@obp-navmenu-default-link-disabled-color:       #ccc;
+@obp-navmenu-default-link-disabled-bg:          transparent;
+
+// Navmenu brand label
+@obp-navmenu-default-brand-color:               @obp-navmenu-default-link-color;
+@obp-navmenu-default-brand-hover-color:         darken(@obp-navmenu-default-link-color, 10%);
+@obp-navmenu-default-brand-hover-bg:            transparent;
+
+// --------------------------------------------------
+// non-bootstrap settings
+// --------------------------------------------------
+
+@obp-asterism-display:          block;
+@obp-asterism-text-align:       center;
+@obp-asterism-width:            40px;   // TODO: compute
+@obp-asterism-margin-top:       -12px;  // TODO: compute
+@obp-asterism-margin-left:      auto;
+@obp-asterism-margin-right:     auto;
+
+@obp-asterism-rule-width:           50%;
+@obp-asterism-rule-line-width:      1px;
+@obp-asterism-rule-margin-bottom:   0;
+@obp-asterism-rule-margin-top:      1em;
+@obp-asterism-rule-style:           solid;
+@obp-asterism-rule-color:           @obp-text-color;
+
+// --------------------------------------------------
+// arbitrary css
+// --------------------------------------------------
+
+h1 {
+    letter-spacing:     1px;
+    line-height:        39px;
+    margin-bottom:      40px;
+    text-align:         center;
+    font-variant:       small-caps;
+}
+
+h2 {
+    border-style:       solid;
+    border-width:       0px 0px 1px 0px;
+    color:              rgba(112, 112, 112, 1);
+    letter-spacing:     1px;
+    line-height:        33px;
+    margin-top:         45px; 
+    margin-right:       1em;
+    margin-bottom:      15px;
+    margin-left:        1em;
+    text-align:         center;
+    text-transform:     uppercase;
+    font-variant:       small-caps;
+}
+
+p {
+   margin-bottom:       15px;
+   line-height:         22px;
+   letter-spacing:      0px;
+   border-width:        0px;
+}
+
+.navmenu.navmenu-default {
+    border-right-width: 0px;
+}
+
+ul {
+   margin:              10px 20px;
+   padding:             10px 20px;
+}
+
+#asterism:before {
+    content:            "❦"; // &#x2766;, "floral heart"
+}
+
+.bibliographies p {
+    margin-bottom:      1em;
+    text-align:         justify;
+}

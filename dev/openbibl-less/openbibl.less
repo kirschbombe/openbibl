@@ -2,9 +2,38 @@
 // see http://coding.smashingmagazine.com/2013/03/12/customizing-bootstrap/
 // for description of approach here
 //
+// load order is:
+// 0) bootstrap
+// 1) default jansy-bootstrap variables 
+// 2) obp default theme variables
+// 3) obp bootstrap variable overrides 
+// 4) obp jansy-bootstrap variables
+// 5) jansy-bootstrap navmenu, offcanvas
+// 6) bootstrap less utilities
+//
 
-@import "../bootstrap-3.1.1/less/bootstrap.less";
-@import "openbibl-variables.less";
-//@import "openbibl-other.less";
+// bootstrap framework components
+@import "openbibl-bootstrap.less";
+
+// jansy-bootstrap variables
+@import "../jasny-bootstrap-3.1.0/less/variables.less";
+
+// theme defaults for openbibl.css file; defines
+// some values for openbibl-variables-bootstrap.less
+@import "themes/clean.less";
+
+// openbibl declarations and overrides
+@import "openbibl-variables-bootstrap.less";
+
+// overrides for jasny-bootstrap navmenu & offscreen
+@import "openbibl-variables-jansy.less";
+
+// jasny-bootstrap offscreen and navmenu declarations
+@import "../jasny-bootstrap-3.1.0/less/navmenu.less";
+@import "../jasny-bootstrap-3.1.0/less/offcanvas.less";
+
+// openbibl layout 
+@import "openbibl-framework.less";
+
+// bootstrap framework utils
 @import "../bootstrap-3.1.1/less/utilities.less";
-

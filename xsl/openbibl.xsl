@@ -18,26 +18,27 @@
             <xsl:value-of select="."/>
         </h1>
         <hr id="asterism-rule" />
-        <!-- pull asterism from config file? -->
-        <div id="asterism">&#x2766;</div>
+        <div id="asterism"></div>
     </xsl:template>
         
     <xsl:template match="//tei:fileDesc/tei:publicationStmt/descendant-or-self::*"/>
     <xsl:template match="//tei:fileDesc/tei:publicationStmt" mode="web"/>
     <xsl:template match="//tei:fileDesc/tei:publicationStmt">
+<!--
         <footer>
             <xsl:apply-templates/>
         </footer>
+-->
     </xsl:template>
     
     <xsl:template match="//tei:text/tei:body/tei:div[@type='entry']">
         
         <!-- expand -->
-        <h2 class="bibliography expand">
+        <h2 class="bibliography">
             <xsl:value-of select="tei:head"/>
         </h2>
         
-        <div class="bibliography expand">
+        <p class="bibliography">
             <xsl:apply-templates select="tei:biblStruct/tei:monogr/tei:author" mode="web"/>
             <xsl:value-of select="tei:biblStruct/tei:monogr/tei:title"/>.&#x0020;
             <i>
@@ -45,26 +46,26 @@
                 <xsl:value-of select="tei:biblStruct/tei:monogr/tei:imprint/tei:publisher"/>,&#x0020;
                 <xsl:apply-templates select="tei:biblStruct/tei:monogr/tei:imprint/tei:date" mode="web"/>
             </i>
-        </div>
+        </p>
         
 
-        <div class="bibliography collapse">
+        <p class="bibliography">
             <xsl:apply-templates select="tei:msDesc/tei:physDesc/tei:objectDesc" mode="web"/>.&#x0020;
             <xsl:apply-templates select="tei:msDesc/tei:history" mode="web"/>.&#x0020;
             <xsl:apply-templates select="tei:msDesc/tei:physDesc/tei:bindingDesc" mode="web"/>.
-        </div>
+        </p>
         
-        <div class="bibliography collapse">
+        <p class="bibliography">
             <xsl:apply-templates select="tei:note" mode="web"/>
-        </div>
+        </p>
 
-        <div class="bibliography collapse">
+        <p class="bibliography">
             References: <xsl:apply-templates select="tei:listBibl/tei:bibl" mode="web"/>
-        </div>
+        </p>
         
-        <div class="bibliography collapse">
+        <p class="bibliography">
             <xsl:apply-templates select="tei:msDesc/tei:msIdentifier" mode="web"/>
-        </div>
+        </p>
 
     </xsl:template>
     

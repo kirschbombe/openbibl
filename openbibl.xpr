@@ -6,6 +6,7 @@
     </meta>
     <projectTree name="openbibl.xpr">
         <folder path="css/"/>
+        <folder path="dev/"/>
         <folder path="examples/"/>
         <folder path="js/"/>
         <folder path="TEI/"/>

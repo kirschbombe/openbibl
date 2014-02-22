@@ -1,0 +1,137 @@
+//
+// Variable Overrides for theme
+// --------------------------------------------------
+
+// --------------------------------------------------
+// fonts used by this theme
+// --------------------------------------------------
+
+@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700,300,200);
+@import url(http://fonts.googleapis.com/css?family=Gafata);
+
+// --------------------------------------------------
+// bootstrap variable overrides
+// --------------------------------------------------
+
+@obp-body-bg:                   #FFFFFF;
+@obp-text-color:                #333333;
+@obp-link-color:                rgba(137, 20, 20, 1);
+@obp-navbar-default-color:      #FFFFFF;
+
+@obp-font-family-sans-serif:    Gafata;
+@obp-font-family-serif:         Georgia, "Times New Roman", Times, serif;
+@obp-font-family-monospace:     Menlo, Monaco, Consolas, "Courier New", monospace;
+@obp-font-family-base:          @obp-font-family-sans-serif;
+
+@obp-font-size-base:            16px;
+@obp-font-size-h1:              32px;
+@obp-font-size-h2:              26px;
+@obp-font-size-h3:              ceil((@obp-font-size-base * 1.7));
+@obp-font-size-h4:              ceil((@obp-font-size-base * 1.25));
+@obp-font-size-h5:              @obp-font-size-base;
+@obp-font-size-h6:              ceil((@obp-font-size-base * 0.85));
+@obp-headings-color:            rgba(63, 61, 61, 1);
+@obp-headings-font-family:      "Yanone Kaffeesatz"; 
+@obp-headings-font-weight:      400;
+@obp-headings-line-height:      35px;
+
+@obp-line-height-base:          1.428571429; // 20/14
+@obp-line-height-computed:      floor((@obp-font-size-base * @obp-line-height-base));
+
+@obp-input-color:               @obp-text-color;
+
+// Navs
+@obp-nav-tabs-border-color:                     @obp-body-bg;
+@obp-nav-disabled-link-color:                   @obp-body-bg;
+@obp-nav-disabled-link-hover-color:             @obp-body-bg;
+@obp-nav-tabs-link-hover-border-color:          @obp-body-bg;
+@obp-nav-link-hover-bg:                         @obp-body-bg;
+@obp-nav-tabs-active-link-hover-color:          @obp-body-bg;
+@obp-nav-tabs-active-link-hover-border-color:   @obp-body-bg;
+
+
+// Navmenu
+@obp-navmenu-margin-vertical:           (0.5 * @obp-line-height-computed);
+@obp-navmenu-default-color:             @obp-text-color;
+@obp-navmenu-default-bg:                @obp-body-bg;
+@obp-navmenu-default-border:            @obp-body-bg;
+
+@obp-navmenu-default-link-color:                #777;
+@obp-navmenu-default-link-hover-color:          #333;
+@obp-navmenu-default-link-hover-bg:             transparent;
+@obp-navmenu-default-link-active-color:         #555;
+@obp-navmenu-default-link-active-bg:            darken(@obp-navmenu-default-bg, 6.5%);
+@obp-navmenu-default-link-disabled-color:       #ccc;
+@obp-navmenu-default-link-disabled-bg:          transparent;
+
+// Navmenu brand label
+@obp-navmenu-default-brand-color:               @obp-navmenu-default-link-color;
+@obp-navmenu-default-brand-hover-color:         darken(@obp-navmenu-default-link-color, 10%);
+@obp-navmenu-default-brand-hover-bg:            transparent;
+
+// --------------------------------------------------
+// non-bootstrap settings
+// --------------------------------------------------
+
+@obp-asterism-display:          block;
+@obp-asterism-text-align:       center;
+@obp-asterism-width:            40px;   // TODO: compute
+@obp-asterism-margin-top:       -14px - 1em;  // TODO: compute
+@obp-asterism-margin-left:      auto;
+@obp-asterism-margin-right:     auto;
+
+@obp-asterism-rule-width:           50%;
+@obp-asterism-rule-line-width:      1px;
+@obp-asterism-rule-margin-bottom:   0;
+@obp-asterism-rule-margin-top:      1em;
+@obp-asterism-rule-style:           solid;
+@obp-asterism-rule-color:           @obp-text-color;
+
+// --------------------------------------------------
+// arbitrary css
+// --------------------------------------------------
+
+h1 {
+    font-weight:        400;
+    font-variant:       small-caps;
+    letter-spacing:     0px;
+    line-height:        35px;
+    margin-bottom:      25px;
+    text-align:         center;
+    text-transform:     none;
+}
+
+h2 {
+    border-style:       dotted;
+    border-width:       0px 0px 1px 0px;
+    font-weight:        400;
+    letter-spacing:     2px;
+    margin-top:         45px; 
+    margin-right:       1em;
+    margin-bottom:      15px;
+    margin-left:        1em;
+    text-align:         center;
+    font-variant: small-caps;
+}
+
+p {
+   margin-bottom:       15px;
+   line-height:         22px;
+   letter-spacing:      0px;
+   border-width:        0px;
+}
+
+ul {
+   margin:              10px 20px;
+   padding:             10px 20px;
+}
+
+#asterism:before {
+    content: "❦";     // &#x2766;, "floral heart"
+}
+
+.bibliographies p {
+    margin-bottom: 1em;
+    text-align: justify;
+}
+
