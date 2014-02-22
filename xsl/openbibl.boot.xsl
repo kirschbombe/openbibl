@@ -64,6 +64,7 @@
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
         <script type="text/javascript" language="javascript" src="{$offcanvas-js}"></script>
         <script type="text/javascript" language="javascript" src="{$typeahead-js}"></script>
+        <script type="text/javascript" language="javascript" src="{$cookie-js}"></script>
         
         <script type="text/javascript" language="javascript" src="{$openbibl-js-cls}"></script>
         <script type="text/javascript" language="javascript" src="{$openbibl-js-dr}"></script>
