@@ -150,7 +150,7 @@
         <div class="visible-sm visible-xs">
             <nav id="obp-navbar-small" class="navbar-default navbar-collapse collapse" role="navigation">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Openbibl</a></li>
+                    <li><a class="brand" href="#">Openbibl</a></li>
                     <xsl:call-template name="make-theme-menu"/>
                     <xsl:call-template name="make-browse-menu"/>
                     <xsl:call-template name="make-search-field"/>
