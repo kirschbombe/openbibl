@@ -64,7 +64,7 @@
 //** By default, this inherits from the `<body>`.
 @headings-font-family:    @obp-headings-font-family;
 @headings-font-weight:    @obp-headings-font-weight;
-@headings-line-height:    1.1;
+@headings-line-height:    @obp-headings-line-height;
 @headings-color:          @obp-headings-color;
 
 
@@ -95,9 +95,9 @@
 @line-height-large:         1.33;
 @line-height-small:         1.5;
 
-@border-radius-base:        4px;
-@border-radius-large:       6px;
-@border-radius-small:       3px;
+@border-radius-base:        @obp-border-radius-base;
+@border-radius-large:       @obp-border-radius-large;
+@border-radius-small:       @obp-border-radius-small;
 
 //** Global color for active items (e.g., navs or dropdowns).
 @component-active-color:    #fff;
@@ -291,15 +291,14 @@
 //## Define your custom responsive grid.
 
 //** Number of columns in the grid.
-@grid-columns:              12;
+@grid-columns:              @obp-grid-columns;
 //** Padding between columns. Gets divided in half for the left and right.
-@grid-gutter-width:         30px;
+@grid-gutter-width:         @obp-grid-gutter-width;
 // Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
-@grid-float-breakpoint:     @screen-sm-min;
+@grid-float-breakpoint:     @obp-grid-float-breakpoint;
 //** Point at which the navbar begins collapsing.
-@grid-float-breakpoint-max: (@grid-float-breakpoint - 1);
-
+@grid-float-breakpoint-max: @obp-grid-float-breakpoint-max;
 
 //== Container sizes
 //
@@ -338,50 +337,48 @@
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
-@navbar-default-link-color:                #777;
-@navbar-default-link-hover-color:          #333;
-@navbar-default-link-hover-bg:             transparent;
-@navbar-default-link-active-color:         #555;
-@navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
-@navbar-default-link-disabled-color:       #ccc;
-@navbar-default-link-disabled-bg:          transparent;
+@navbar-default-link-color:			@obp-navbar-default-link-color;
+@navbar-default-link-hover-color:	@obp-navbar-default-link-hover-color;
+@navbar-default-link-hover-bg:		@obp-navbar-default-link-hover-bg;
+@navbar-default-link-active-color:	@obp-navbar-default-link-active-color;
+@navbar-default-link-active-bg:		@obp-navbar-default-link-active-bg;
+@navbar-default-link-disabled-color: @obp-navbar-default-link-disabled-color;
+@navbar-default-link-disabled-bg:	@obp-navbar-default-link-disabled-bg;
 
 // Navbar brand label
-@navbar-default-brand-color:               @navbar-default-link-color;
-@navbar-default-brand-hover-color:         darken(@navbar-default-brand-color, 10%);
-@navbar-default-brand-hover-bg:            transparent;
+@navbar-default-brand-color:		@obp-navbar-default-brand-color;
+@navbar-default-brand-hover-color:	@obp-navbar-default-brand-hover-color;
+@navbar-default-brand-hover-bg:		@obp-navbar-default-brand-hover-bg;
 
 // Navbar toggle
-@navbar-default-toggle-hover-bg:           #ddd;
-@navbar-default-toggle-icon-bar-bg:        #888;
-@navbar-default-toggle-border-color:       #ddd;
-
+@navbar-default-toggle-hover-bg:	 @obp-navbar-default-toggle-hover-bg;
+@navbar-default-toggle-icon-bar-bg:	 @obp-navbar-default-toggle-icon-bar-bg;
+@navbar-default-toggle-border-color: @obp-navbar-default-toggle-border-color;
 
 // Inverted navbar
 // Reset inverted navbar basics
-@navbar-inverse-color:                      @gray-light;
-@navbar-inverse-bg:                         #222;
-@navbar-inverse-border:                     darken(@navbar-inverse-bg, 10%);
+@navbar-inverse-color:			    @obp-navbar-inverse-color;
+@navbar-inverse-bg:			        @obp-navbar-inverse-bg;
+@navbar-inverse-border:			    @obp-navbar-inverse-border;
 
 // Inverted navbar links
-@navbar-inverse-link-color:                 @gray-light;
-@navbar-inverse-link-hover-color:           #fff;
-@navbar-inverse-link-hover-bg:              transparent;
-@navbar-inverse-link-active-color:          @navbar-inverse-link-hover-color;
-@navbar-inverse-link-active-bg:             darken(@navbar-inverse-bg, 10%);
-@navbar-inverse-link-disabled-color:        #444;
-@navbar-inverse-link-disabled-bg:           transparent;
+@navbar-inverse-link-color:			@obp-navbar-inverse-link-color;
+@navbar-inverse-link-hover-color:	@obp-navbar-inverse-link-hover-color;
+@navbar-inverse-link-hover-bg:		@obp-navbar-inverse-link-hover-bg;
+@navbar-inverse-link-active-color:	@obp-navbar-inverse-link-active-color;
+@navbar-inverse-link-active-bg:		@obp-navbar-inverse-link-active-bg;
+@navbar-inverse-link-disabled-color:@obp-navbar-inverse-link-disabled-color;
+@navbar-inverse-link-disabled-bg:	@obp-navbar-inverse-link-disabled-bg;
 
 // Inverted navbar brand label
-@navbar-inverse-brand-color:                @navbar-inverse-link-color;
-@navbar-inverse-brand-hover-color:          #fff;
-@navbar-inverse-brand-hover-bg:             transparent;
+@navbar-inverse-brand-color:		@obp-navbar-inverse-brand-color;
+@navbar-inverse-brand-hover-color:	@obp-navbar-inverse-brand-hover-color;
+@navbar-inverse-brand-hover-bg:		@obp-navbar-inverse-brand-hover-bg;
 
 // Inverted navbar toggle
-@navbar-inverse-toggle-hover-bg:            #333;
-@navbar-inverse-toggle-icon-bar-bg:         #fff;
-@navbar-inverse-toggle-border-color:        #333;
-
+@navbar-inverse-toggle-hover-bg:	@obp-navbar-inverse-toggle-hover-bg;
+@navbar-inverse-toggle-icon-bar-bg:	@obp-navbar-inverse-toggle-icon-bar-bg;
+@navbar-inverse-toggle-border-color: @obp-navbar-inverse-toggle-border-color;
 
 //== Navs
 //

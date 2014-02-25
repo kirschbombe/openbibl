@@ -10,4 +10,11 @@
         <xsl:value-of select="concat(string(count($ref-elt/preceding::*)),$val)"/>
     </xsl:template>
     
+    <!-- generates an @id value meant to be processor independent, since generate-id()
+         is not implementation-independent and will differ between saxon-ce and libxslt 
+    -->
+    <xsl:template name="generate-independent-id">
+        <xsl:number count="*" level="any" from="/*" format="1"/>
+    </xsl:template>
+    
 </xsl:stylesheet>

@@ -13,23 +13,11 @@
         </div>
     </xsl:template>
     
-    <xsl:template match="//tei:titleStmt/tei:title">
-        <h1 class="bibliographies">
-            <xsl:value-of select="."/>
-        </h1>
-        <hr id="asterism-rule" />
-        <div id="asterism"></div>
-    </xsl:template>
+    <xsl:template match="//tei:titleStmt/tei:title"/>
         
     <xsl:template match="//tei:fileDesc/tei:publicationStmt/descendant-or-self::*"/>
     <xsl:template match="//tei:fileDesc/tei:publicationStmt" mode="web"/>
-    <xsl:template match="//tei:fileDesc/tei:publicationStmt">
-<!--
-        <footer>
-            <xsl:apply-templates/>
-        </footer>
--->
-    </xsl:template>
+    <xsl:template match="//tei:fileDesc/tei:publicationStmt"/>
     
     <xsl:template match="//tei:text/tei:body/tei:div[@type='entry']">
         

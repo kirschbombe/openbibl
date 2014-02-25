@@ -45,35 +45,57 @@
 @obp-line-height-base:          1.428571429; // 20/14
 @obp-line-height-computed:      floor((@obp-font-size-base * @obp-line-height-base));
 
+@obp-border-radius-base:        4px;
+@obp-border-radius-large:       6px;
+@obp-border-radius-small:       3px;
+
 @obp-input-color:               @obp-text-color;
 
+// Navbar links
+@obp-navbar-default-link-color:                @obp-text-color;
+@obp-navbar-default-link-hover-color:          @obp-text-color;
+@obp-navbar-default-link-active-color:         @obp-text-color;
+@obp-navbar-default-link-disabled-color:       @obp-text-color;
+
+// Inverted navbar links
+@obp-navbar-inverse-link-color:                 @obp-text-color;
+@obp-navbar-inverse-link-hover-color:           @obp-text-color;
+@obp-navbar-inverse-link-active-color:          @obp-text-color;
+@obp-navbar-inverse-link-disabled-color:        @obp-text-color;
+
 // Navs
-@obp-nav-tabs-border-color:                     @obp-body-bg;
-@obp-nav-disabled-link-color:                   @obp-body-bg;
-@obp-nav-disabled-link-hover-color:             @obp-body-bg;
-@obp-nav-tabs-link-hover-border-color:          @obp-body-bg;
-@obp-nav-link-hover-bg:                         @obp-body-bg;
+@obp-nav-disabled-link-color:                   @obp-text-color;
+@obp-nav-disabled-link-hover-color:             @obp-text-color;
 @obp-nav-tabs-active-link-hover-color:          @obp-body-bg;
-@obp-nav-tabs-active-link-hover-border-color:   @obp-body-bg;
 
 // Navmenu
 @obp-navmenu-margin-vertical:                   (0.5 * @obp-line-height-computed);
 @obp-navmenu-default-color:                     @obp-text-color;
-@obp-navmenu-default-bg:                        @obp-body-bg;
-@obp-navmenu-default-border:                    @obp-body-bg;
 
-@obp-navmenu-default-link-color:                #777;
-@obp-navmenu-default-link-hover-color:          #333;
-@obp-navmenu-default-link-hover-bg:             transparent;
-@obp-navmenu-default-link-active-color:         #555;
-@obp-navmenu-default-link-active-bg:            darken(@obp-navmenu-default-bg, 6.5%);
-@obp-navmenu-default-link-disabled-color:       #ccc;
-@obp-navmenu-default-link-disabled-bg:          transparent;
+@obp-navmenu-default-link-color:                rgba(119, 119, 119, 1);
+@obp-navmenu-default-link-hover-color:          rgba(51, 51, 51, 1);
+@obp-navmenu-default-link-active-color:         rgba(85, 85, 85, 1);
+@obp-navmenu-default-link-disabled-color:       rgba(204, 204, 204, 1);
 
 // Navmenu brand label
 @obp-navmenu-default-brand-color:               @obp-navmenu-default-link-color;
-@obp-navmenu-default-brand-hover-color:         darken(@obp-navmenu-default-link-color, 10%);
-@obp-navmenu-default-brand-hover-bg:            transparent;
+@obp-navmenu-default-brand-hover-color:         @obp-navmenu-default-link-color;
+
+// Inverted navmenu
+@obp-navmenu-inverse-color:			            @obp-text-color;
+
+// Inverted navmenu links
+@obp-navmenu-inverse-link-color:			    @obp-navmenu-default-link-color;
+@obp-navmenu-inverse-link-hover-color:		    @obp-navmenu-default-link-color;
+@obp-navmenu-inverse-link-active-color:		    @obp-navmenu-default-link-color;
+@obp-navmenu-inverse-link-disabled-color:	    @obp-navmenu-default-link-color;
+
+// Inverted navmenu brand label
+@obp-navmenu-inverse-brand-color:			    @obp-text-color;
+@obp-navmenu-inverse-brand-hover-color:		    @obp-text-color;
+
+// Inverted navmenu search
+@obp-navmenu-inverse-search-placeholder-color:	@obp-text-color;
 
 // --------------------------------------------------
 // non-bootstrap settings

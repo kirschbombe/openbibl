@@ -16,6 +16,7 @@
     
     <xsl:include href="openbibl.shared.xsl"/>
     <xsl:include href="openbibl.params.xsl"/>
+    <xsl:include href="openbibl.browse.xsl"/>
     
     <!-- TODO: debug "document('openbibl.params.xsl)/*/obp:css-themes" issue 
                unless it is resolved by externalizing params (probably
@@ -47,11 +48,6 @@
         <!-- TODO: icon -->
         <link rel="shortcut icon" href="assets/ico/favicon.png"></link>
         
-        <!-- TODO: remove once done debugging .less integration
-        <link href="{$bootstrap-css}" rel="stylesheet"></link>
-        <link href="{$navmenu-css}" rel="stylesheet"></link>
-        -->
-        
         <xsl:text disable-output-escaping="yes"><![CDATA[
                 <!--[if lt IE 9]>
         ]]></xsl:text>
@@ -67,9 +63,7 @@
         <script type="text/javascript" language="javascript" src="{$cookie-js}"></script>
         
         <script type="text/javascript" language="javascript" src="{$openbibl-js-cls}"></script>
-        <script type="text/javascript" language="javascript" src="{$openbibl-js-dr}"></script>
-        
-        <link rel="stylesheet" type="text/css" href="{$openbibl-css}" />
+                
         <link rel="stylesheet" type="text/css" id="theme-css" href="{$openbibl-default-theme-css}" />
         
         <!-- load Saxon; declare onload callback for Saxon-CE,
@@ -81,7 +75,7 @@
                     Saxon,                                      // pass reference to avoid scoping issues
                     '<xsl:value-of select="$openbibl-xsl"/>',   // openbibl.xsl stylesheet path
                     document.location.href,                     // TEI XML document path
-                    {}                                          // openbibl.xsl stylesheet parameters
+                    {}                                          // openbibl.xsl stylesheet parameters                
                 );
             }
         </script>
@@ -96,103 +90,142 @@
     <!-- /html/body -->
     <xsl:template name="body-content">
         <body>
-            <xsl:call-template name="menu"/>
+            <xsl:call-template name="make-navigation"/>
             <xsl:call-template name="bibliographies"/>
         </body>
     </xsl:template>
     
-    <!-- sidebar menu -->
-    <xsl:template name="menu">
+    <!-- suppress <back>, which is handled later -->
+    <xsl:template match="//tei:back//*"/>
+    
+    <!-- wrapper for responsive navigation framework -->
+    <xsl:template name="make-navigation">
         
-        <!-- sidebar menu -->
+        <!-- call template to make large sidebar nav -->
+        <xsl:call-template name="make-large-nav"/>
+        
+        <!-- button for sidebar menu -->
+        <nav class="navbar navbar-default navbar-collapse navbar-fixed-top visible-sm visible-xs visible-md visible-lg">
+            <xsl:call-template name="make-menu-buttons"/>
+            <xsl:call-template name="make-small-nav"/>
+        </nav>
+        
+        <!-- make modal dialogs -->
+        <xsl:apply-templates select="//tei:back/tei:div[@type='editorial']/*" mode="browse"/>
+
+    </xsl:template>
+
+    <!-- toggle button for nav menus -->
+    <xsl:template name="make-menu-buttons">
+        <!-- large (offscreen sidebar menu)-->
+        <button id="offcanvas-toggle" type="button" class="navbar-toggle visible-md visible-lg" data-toggle="offcanvas" data-target="#sidebar-menu">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+        <!-- toggle button for small screen menu -->
+        <button id="navbar-navmenu-toggle" type="button" class="navbar-toggle collapsed visible-sm visible-xs" data-toggle="collapse" data-target="#obp-navbar-small">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>        
+    </xsl:template>
+
+    <!-- make offscreen navmenu -->
+    <xsl:template name="make-large-nav">
         <nav id="sidebar-menu" class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
             <a class="navmenu-brand" href="#"></a>
             <ul class="nav navmenu-nav">
                 <li><a class="brand" href="#">Openbibl</a></li>
                 <xsl:call-template name="make-theme-menu"/>
                 <xsl:call-template name="make-browse-menu"/>
-                <li class="dropdown">
-                    <form class="navbar-form">
-                        <input class="search-input" type="text" data-items="2" data-provide="typeahead" autocomplete="off" placeholder="Search" />
-                    </form>
-                </li> 
+                <xsl:call-template name="make-search-field"/>
             </ul>
         </nav>
-        
-        <!-- button for sidebar menu -->
-        <div class="navbar navbar-default navbar-collapse navbar-fixed-top visible-sm visible-xs visible-md visible-lg">
-            <button id="offcanvas-toggle" type="button" class="navbar-toggle visible-md visible-lg" data-toggle="offcanvas" data-target="#sidebar-menu">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <!-- header menu -->
-            <nav class="visible-sm visible-xs" role="navigation">
+    </xsl:template>
+
+    <!-- navbar <nav>igation for small screens -->
+    <xsl:template name="make-small-nav">
+        <div class="visible-sm visible-xs">
+            <nav id="obp-navbar-small" class="navbar-default navbar-collapse collapse" role="navigation">
                 <ul class="nav navbar-nav">
                     <li><a href="#">Openbibl</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Theme <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <xsl:for-each select="document('')/*/obp:css-themes/option">
-                                <li>
-                                    <a href="#" onclick="javascript:window.obp.changetheme('{@value}')">
-                                        <xsl:value-of select="@label"/>
-                                    </a>
-                                </li>
-                            </xsl:for-each>
-                        </ul>
-                    </li>
+                    <xsl:call-template name="make-theme-menu"/>
                     <xsl:call-template name="make-browse-menu"/>
-                    <li>
-                        <form class="navbar-form">
-                            <input class="search-input" type="text" data-items="2" data-provide="typeahead" autocomplete="off" placeholder="Search" />
-                        </form>
-                    </li> 
+                    <xsl:call-template name="make-search-field"/>
                 </ul>
             </nav>
         </div>
-        
-        <!-- make modal dialogs -->
-        <xsl:apply-templates select="//tei:back/tei:div[@type='editorial']/*"/>
     </xsl:template>
-    
+
+    <!-- search input field -->
+    <xsl:template name="make-search-field">
+        <li>
+            <form class="navbar-form navbar-left">
+                <input class="search-input" type="text" data-items="2" data-provide="typeahead" autocomplete="off" placeholder="Search">
+                    <i class="glyphicon glyphicon-search"></i>
+                </input>
+            </form>
+        </li> 
+    </xsl:template>
+
+    <!-- primary content container for bibliography entries -->
     <xsl:template name="bibliographies">
         <div class="container">
+            
+            <!-- target for div[@entry] items-->
             <div id="bibliographies" class="bibliographies">
-                <!-- -->
-                <div id="footer">
-                    <span>2014, University Park, PA</span> | <span>Published using the Open
-                        &lt;bibl&gt; Project</span>
-                </div>
+                <h1 class="bibliographies">
+                    <xsl:value-of select="//tei:titleStmt/tei:title"/>
+                </h1>
+                <hr id="asterism-rule" />
+                <div id="asterism"></div>
             </div>
-        </div>        
+            
+            <!-- publication statement following bibliographies -->
+            <!-- 
+            <span>2014, University Park, PA</span> | <span>Published using the Open
+            &lt;bibl&gt; Project</span>
+            -->
+            <div id="footer">
+                <span>2014, University Park, PA</span> | <span>Published using the Open
+                    &lt;bibl&gt; Project</span>
+            </div>
+        </div> 
     </xsl:template>
     
+    <!-- make the dropdown menu containing options for visual styles -->
     <xsl:template name="make-theme-menu">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Theme <b class="caret"></b></a>
             <ul class="dropdown-menu">
+                
+                <!-- TODO: make into external parameters -->
                 <xsl:for-each select="document('')/*/obp:css-themes/option">
                     <li>
-                        <a href="#" onclick="javascript:window.obp.changetheme('{@value}')">
+                        <a href="#" onclick="javascript:window.obp.change_theme('{@value}')">
                             <xsl:value-of select="@label"/>
                         </a>
                     </li>
                 </xsl:for-each>
             </ul>
         </li>
-        
     </xsl:template>
     
-    <!-- browse list -->
+    <!-- make dropdown menu containing items to browse (e.g., people, places) -->
     <xsl:template name="make-browse-menu">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse<b class="caret"></b></a>
             <ul class="dropdown-menu">
+                
+                <!-- one entry in the browse dropdown menu for each list* in div[@editorial] --> 
                 <xsl:for-each select="//tei:back/tei:div[@type='editorial']/*[contains(local-name(.),'list')]">
-                    <xsl:variable name="modal-dialog-id" select="generate-id(.)"/>
+                    <xsl:variable name="id">
+                        <xsl:call-template name="generate-independent-id"/>
+                    </xsl:variable>
                     <li>
-                        <a href="#" data-toggle="modal" data-target="{concat('#',$modal-dialog-id)}">
+                        <a href="#" data-toggle="modal" data-target="#{$id}">
                             <xsl:value-of select="tei:head"/>
                         </a>
                     </li>
@@ -200,116 +233,5 @@
             </ul>
         </li>
     </xsl:template>
-    
-    <!-- make modal dialog from listPerson/listPlace/etc -->
-    <xsl:template match="//tei:back/tei:div[@type='editorial']/*">
-        <xsl:variable name="modal-dialog-id" select="generate-id(.)"/>
-        <div class="modal fade" id="{$modal-dialog-id}">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&#x00D7;</button>
-                        <h4 class="modal-title" id=""><xsl:value-of select="tei:head"/></h4>
-                    </div>
-                    
-                    <xsl:for-each select="tei:head/following-sibling::*">
-                        <xsl:variable name="modal-entry-id" select="concat('modal-',@xml:id)"/>
-                        <div class="modal-body">
-                            <h4><xsl:apply-templates select="." mode="modal-title"/></h4>
-                            <div class="panel-group" id="{$modal-entry-id}">
-                                <div class="panel panel-default">
-                                    <xsl:call-template name="make-panel-entry">
-                                        <xsl:with-param name="dialog-id" select="$modal-dialog-id"/>
-                                    </xsl:call-template>
-                                </div>
-                            </div>
-                        </div>
-                    </xsl:for-each>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </xsl:template>
-    
-    <xsl:template match="tei:person" mode="modal-title">
-        <xsl:value-of select="concat(
-            tei:persName, ' (', tei:birth/@when, '&#x2013;', tei:death/@when, ')'
-           )"/>
-    </xsl:template>
-    <xsl:template match="tei:place" mode="modal-title">
-        <xsl:value-of select="tei:placeName"/>
-    </xsl:template>
-
-    <xsl:template name="make-panel-entry">
-        <xsl:param name="dialog-id"/>
-        <xsl:variable name="xml-id" select="@xml:id"/>
-        <xsl:variable name="xml-id-ref" select="concat('#',$xml-id)"/>
-        <xsl:for-each select="//tei:div[@type='entry'][descendant::*[@ref=$xml-id-ref]]">
-            <xsl:variable name="modal-entry-collapse-id" select="concat(generate-id(tei:head), '-', $xml-id)"/>
-            <div class="panel-heading">
-                <h5>
-                    <a data-toggle="collapse" data-parent="#people-accordion" href="{concat('#',$modal-entry-collapse-id)}">
-                        <xsl:value-of select="tei:head"/>
-                    </a>
-                </h5>
-            </div>
-            <div id="{$modal-entry-collapse-id}" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <xsl:variable name="entry-ref-id" select="generate-id(.)"/>
-                    <xsl:attribute name="id">
-                        <xsl:value-of select="$entry-ref-id"/>
-                    </xsl:attribute>
-                    <xsl:for-each select="descendant::*[@ref=$xml-id-ref]">
-                        <xsl:variable name="elt-with-ref" select="."/>
-                        
-                        <!-- @id value generated for the target in div@entry -->
-                        <xsl:variable name="scroll-target-id">
-                            <xsl:call-template name="global-ref-id">
-                                <xsl:with-param name="ref-elt" select="."/>
-                            </xsl:call-template>
-                        </xsl:variable>
-                        
-                        <!-- list item -->
-                        <xsl:element name="p">
-                            <!-- context before link -->
-                            <xsl:variable name="text-before" select="normalize-space($elt-with-ref/preceding-sibling::node()[1][self::text()])"/>
-                            <xsl:variable name="text-after" select="normalize-space($elt-with-ref/following-sibling::node()[1][self::text()])"/>
-
-                            <span class="fade-left">
-                                <xsl:value-of select="substring(
-                                    $text-before, string-length($text-before)- $context-text-length +1, $context-text-length
-                                )"/>
-                            </span>
-                            
-                            <!-- link -->
-                            <xsl:element name="a">
-                                <!-- onclick handler -->
-                                <xsl:attribute name="onclick">
-                                    <xsl:text>javascript:window.obp.scroll_to_id('</xsl:text>
-                                    <xsl:value-of select="$scroll-target-id"/>
-                                    <xsl:text>','</xsl:text>
-                                    <xsl:value-of select="$dialog-id"/>
-                                    <xsl:text>')</xsl:text>
-                                </xsl:attribute>
-                                <span class="ref-match"><xsl:value-of select="."/></span>
-                            </xsl:element>
-                            
-                            <!-- context after link -->
-                            <span class="fade-right">
-                                <xsl:value-of select="substring(
-                                    $text-after, 1, $context-text-length
-                                )"/>
-                            </span>
-                            
-                        </xsl:element>
-                    </xsl:for-each>
-                </div>
-            </div>
-        </xsl:for-each>
-    </xsl:template>
-    
 
 </xsl:stylesheet>

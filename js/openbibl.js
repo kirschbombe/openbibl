@@ -62,26 +62,32 @@
             // TODO: display error message to user
             return;
         }
+        // TODO: handle this incrementally?
         var children = result_wrapper.childNodes;
         var bibliographies_wrapper = document.getElementById("bibliographies");
-        var footer = document.getElementById("footer");
         for (var i = 0; i < children.length; i++)
-            bibliographies_wrapper.insertBefore(children[i].cloneNode(true),footer);
+            bibliographies_wrapper.appendChild(children[i].cloneNode(true));
     };
-    Openbibl.prototype.changetheme = function(stylesheet) {
+    Openbibl.prototype.change_theme = function(stylesheet) {
+        var $theme_css = $('#theme-css');
         this.update_cookie('theme-stylesheet',stylesheet);
-        var parts = $('#theme-css').attr('href').split('/');
+        var parts = $theme_css.attr('href').split('/');
         parts[parts.length-1] = stylesheet;
-        $('#theme-css').attr('href', parts.join('/'));
+        stylesheet = parts.join('/');
+        if ($theme_css.attr('href') !== stylesheet)
+            $('#theme-css').attr('href', stylesheet);
     }
     Openbibl.prototype.scroll_to_id = function(ref_id,dlg_id) {
-        // close the dialog
-        $('#' + dlg_id).modal('hide');
-        // scroll to requested location in document
-        var $elt = $('#' + ref_id);
-        if ($elt.length == 0) return;
-        $('html body').scrollTop($elt.offset().top -
-            $('#bibliographies').offset().top);
+        var $dlg = $('#' + dlg_id);
+        // bring attention to the mention once the dialog is closed
+        $dlg.on('hidden.bs.modal', function(e) {
+            var $elt = $('#' + ref_id);
+            if ($elt.length == 0) return;
+            $('html body').scrollTop($elt.offset().top -
+                $('#bibliographies').offset().top);
+            $elt.css('background-color', 'red').delay(10000).removeClass('obp-highlight');
+         });
+         $dlg.modal('hide');
     }
     Openbibl.prototype.retrieve_cookie = function(key) {
         return $.cookie(key);
@@ -93,7 +99,45 @@
         // check for a last-used theme in the cookies
         // and load it if found
         var stylesheet = this.retrieve_cookie('theme-stylesheet'); 
-        if (stylesheet !== undefined) this.changetheme(stylesheet);
+        if (stylesheet !== undefined) this.change_theme(stylesheet);
+        // auto-close offcanvas menu (jansy-bootstrap)
+        $('[data-toggle=offcanvas]').click(function() {
+            $('.row-offcanvas').toggleClass('active');
+        });
+        // fill data for "Search" input
+        this.load_typeahead_data();
+        // collapse the navmenu
+        $(document).on('click',function(){
+            $('.collapse').collapse('hide');
+        });
+    }
+    Openbibl.prototype.load_typeahead_data = function(){
+        var obp = this;
+        // TODO: parameterize these vars
+        var typeahead_file = document.location.href.replace(/[^\/]+$/,"") + 'typeahead.json';
+        var typeahead_list_len = 100;
+        $.ajax({
+            "url":      typeahead_file,
+            "async":    true,
+            "type":     "GET",
+            "dataType": "json",
+            "success":  function(data) {
+                var words = Object.keys(data);
+                $('.search-input').each(function() {
+                    $(this).typeahead({
+                        "items": typeahead_list_len,
+                        "matcher": function(item) {
+                            //return new RegExp("^" + this.query, "i").test(item);
+                            return new RegExp("^" + this.query, "").test(item);
+                        },
+                        "source": words
+                    });
+                });
+            },
+            "error" : function(jqXHR, textStatus, errorThrown) {
+                obp.console.log("Typeahead ajax error: " + textStatus);
+            }
+        });
     }
     window.obp = new Openbibl();
     $(document).ready(function() {

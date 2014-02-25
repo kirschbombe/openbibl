@@ -5,9 +5,9 @@ LESS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LESS_DIST_DIR="$LESS_DIR/dist"
 LESS_DIST_CSS="$LESS_DIST_DIR/openbibl.css"
 LESS_MASTER="$LESS_DIR/openbibl.less"
-LESS_THEME_TEMPLATE="$LESS_DIR/openbibl-theme-template.less"
 LESS_THEME_DIR="$LESS_DIR/themes"
 LESS_THEME_DIST_DIR="$LESS_DIST_DIR/themes"
+OBP_CSS_THEME_DIR="$LESS_DIR/../../css/theme"
 
 INC="$LESS_DIR:$LESS_DIR/../bootstrap-3.1.1/less"
 
@@ -24,21 +24,13 @@ case $opt in
 esac
 done
 
-# compile main style file
-lessc -O2 --include-path="$INC" "$LESS_MASTER" "$LESS_DIST_CSS" "$VERBOSE" "$COMPRESS"
-if [ -e  "$LESS_DIR/../../css/openbibl.css" ]; then
-    rm "$LESS_DIR/../../css/openbibl.css"
-fi
-mv "$LESS_DIST_CSS" "$LESS_DIR/../../css/"
-
 # compile theme files
 for f in `find "$LESS_THEME_DIR" -name "*.less"`; do
     LESS=`basename $f`
-    BASE=`basename -s ".less" $f`
-    lessc "$VERBOSE" "$COMPRESS" -O2 --global-var="themeFile=$LESS" "$LESS_THEME_TEMPLATE" "$LESS_THEME_DIST_DIR/${BASE}.css"
-    if [ -e "../../css/theme/${BASE}.css" ]; then
-        rm "../../css/theme/${BASE}.css"
+    CSS=`basename -s ".less" $f`.css
+    lessc -O2 --include-path="$INC" --global-var="themeFile=$LESS" "$LESS_MASTER" "$LESS_THEME_DIST_DIR/$CSS" "$COMPRESS" "$VERBOSE"
+    if [ -e "$OBP_CSS_THEME_DIR/$CSS" ]; then
+        rm "$OBP_CSS_THEME_DIR/$CSS"
     fi
-    mv "$LESS_THEME_DIST_DIR/${BASE}.css" "$LESS_DIR/../../css/theme/"
+    mv "$LESS_THEME_DIST_DIR/$CSS" "$OBP_CSS_THEME_DIR"
 done
-

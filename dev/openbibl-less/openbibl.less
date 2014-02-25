@@ -20,7 +20,16 @@
 
 // theme defaults for openbibl.css file; defines
 // some values for openbibl-variables-bootstrap.less
-@import "themes/clean.less";
+//@import "themes/clean.less";
+@import 'themes/@{themeFile}';
+
+// TODO: currently each theme gets the whole deal,
+// so this is not really a theme-restricted/factored
+// subset
+@import 'openbibl-theme-template.less';
+
+// openbibl framework-early
+@import "openbibl-nontheme.less";
 
 // openbibl declarations and overrides
 @import "openbibl-variables-bootstrap.less";
@@ -32,7 +41,7 @@
 @import "../jasny-bootstrap-3.1.0/less/navmenu.less";
 @import "../jasny-bootstrap-3.1.0/less/offcanvas.less";
 
-// openbibl layout 
+// openbibl framework-late 
 @import "openbibl-framework.less";
 
 // bootstrap framework utils

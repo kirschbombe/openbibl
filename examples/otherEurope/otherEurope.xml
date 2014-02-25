@@ -995,8 +995,8 @@
                         <note>Confessor of King Zigmunt II of Poland</note>
                     </person>
 
-                    <person>
-                        <persName xml:id="sigismund">Sigismund II Augustus I</persName>
+                    <person xml:id="sigismund">
+                        <persName>Sigismund II Augustus I</persName>
                         <occupation>King of Poland and Grand Duke of Lithuania</occupation>
                         <birth when="1520-08-01"/>
                         <death when="1572-07-07"/>
