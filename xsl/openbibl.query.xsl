@@ -14,6 +14,15 @@
     <!-- double-quote char for json strings -->
     <xsl:variable name="quot" select="'&quot;'"/>
 
+    <!-- construct json to use for search and browse interface -->
+    <xsl:template match="/">
+        <xsl:text>{ "search" : </xsl:text>
+        <xsl:call-template name="make-search-table"/>
+        <xsl:text>, "browse" : </xsl:text>
+        <xsl:call-template name="make-browse-table"/>
+        <xsl:text>}</xsl:text>
+    </xsl:template>
+
     <!-- poor man's tuple: sequence of search terms
         (tokens) zipped/interleaved with index of
         tei:div[type="entry"] in which the term
@@ -26,7 +35,7 @@
         <xsl:sequence select="
             for $entry in //tei:div[@type='entry'],
                 $tok in obp:tokenize-entry($entry)
-            return ($tok, count($entry/preceding-sibling::tei:div[@type='entry']) + 1)
+            return ($tok, count($entry/preceding-sibling::tei:div[@type='entry']))
         "/>
     </xsl:variable>
 
@@ -72,7 +81,7 @@
          a json pairwise list of search-term and index values, e.g.:
          [["also"],[1,5,8],["Although,"although"],[2,6], ... ]
     -->
-    <xsl:template match="/">
+    <xsl:template name="make-search-table">
         <!-- stqrt of wrapping json array -->
         <xsl:text>[</xsl:text>
 
@@ -82,8 +91,8 @@
             <xsl:variable name="ntok" as="xs:string" select="." />
             
             <!-- construct a sequnce of match terms mixed with indices; this
-                 is messy, sequences cannot be constructed in parallel without 
-                 additional looping over search terms; terms and indices 
+                 is messy, but sequences cannot be constructed in parallel 
+                 without additional looping over search terms; terms and indices 
                  are distinguished below by pattern (all digits or not)
             -->
             <xsl:variable name="matches" as="xs:string*">
@@ -121,15 +130,43 @@
         <xsl:text>]</xsl:text>
     </xsl:template>
 
-    <xsl:function name="obp:seq-is-numeric" as="xs:boolean">
-            <xsl:param name="seq" as="item()*"/>
-            <xsl:sequence select="
-                    every $i in $seq satisfies
-                        ($i castable as xs:integer or
-                         $i castable as xs:double or
-                         $i castable as xs:float)
-                "/>
-    </xsl:function>
+    <!-- TODO: avoid xsl:text -->
+    <xsl:template name="make-browse-table">
+        <xsl:text>{</xsl:text>
+        
+        <xsl:for-each select="//tei:back/tei:div[@type='editorial']/*">
+            <!-- "listPeople" : { -->
+            <xsl:value-of select="obp:json-quote(name(.))"/>
+            <xsl:text>: {</xsl:text>
+            
+            <!-- NOTE: this uses the first @xml:id found -->
+            <xsl:for-each select="tei:head/following-sibling::*">
+                <xsl:variable name="id" select=".//@xml:id"/>
+                <xsl:variable name="ref" select="concat('#',$id)"/>
+                <xsl:value-of select="obp:json-quote($id)"></xsl:value-of>
+                <xsl:text>: [</xsl:text>
+                
+                <!-- -->
+                <xsl:variable name="ids" as="xs:string*">
+                    <xsl:sequence select="distinct-values(
+                        for $div in //tei:div[@type='entry'][./descendant::*[@ref=$ref]]
+                        return string(count($div/preceding-sibling::tei:div[@type='entry']))
+                    )"/>
+                </xsl:variable>
+                <xsl:value-of select="string-join($ids,',')"/>
+                <xsl:text>]</xsl:text>
+                <xsl:if test="position()!=last()">
+                    <xsl:text>, </xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+            <xsl:text>}</xsl:text>
+            <xsl:if test="position()!=last()">
+                <xsl:text>,</xsl:text>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:text>}</xsl:text>
+    </xsl:template>
+
 
     <!-- wrap a string in double-quotes -->
     <xsl:function name="obp:json-quote" as="xs:string">

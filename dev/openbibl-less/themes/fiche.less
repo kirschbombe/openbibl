@@ -91,6 +91,14 @@
 // Inverted navmenu search
 @obp-navmenu-inverse-search-placeholder-color:	@obp-navmenu-default-bg;
 
+// Tooltips
+@obp-tooltip-max-width:           200px;
+@obp-tooltip-color:               #fff;
+@obp-tooltip-bg:                  #000;
+@obp-tooltip-opacity:             .9;
+@obp-tooltip-arrow-width:         5px;
+@obp-tooltip-arrow-color:         @obp-tooltip-bg;
+
 // --------------------------------------------------
 // non-bootstrap settings
 // --------------------------------------------------
@@ -142,6 +150,8 @@ p {
    line-height:         22px;
    letter-spacing:      0px;
    border-width:        0px;
+   margin-bottom:       1em;
+   text-align:          justify;
 }
 
 ul {
@@ -153,7 +163,7 @@ ul {
     content:            "❦";  // &#x2766;, "floral heart"
 }
 
-.bibliographies p {
-    margin-bottom:      1em;
-    text-align:         justify;
+.obp-match {
+    background-color: rgba(255,255,204,1) !important;
 }
+

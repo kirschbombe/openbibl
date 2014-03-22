@@ -170,7 +170,9 @@
     
     if (elements.index(this.$element) !== -1) this.$element.css(placement, -1 * offset)
 
-    this.disableScrolling()
+    // RND (2014-02-28): 
+    // allow user to scroll the bibliography entries with the menu open
+    // this.disableScrolling()
     
     var complete = function () {
       this.state = 'slid'
@@ -230,7 +232,8 @@
   }
 
   OffCanvas.prototype.recalc = function () {
-    if (this.state() !== 'slid' || this.$calcClone.css('display') === 'none') return
+    // RND (2014-02-28): state is a property, not a function
+    if (this.state !== 'slid' || this.$calcClone.css('display') === 'none') return
     
     var offset = -1 * this.offset()
     

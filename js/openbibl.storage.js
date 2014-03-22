@@ -9,6 +9,15 @@
         }
         return ret;
     }
+    // NOTE: assumes the only thing stored is bib entries
+    window.obp.storage.retrieve_all = function() {
+        var ret = [];
+        for (var key in this.cache) {
+            ret.push(this.cache[key]);
+            delete this.cache[key];
+        }
+        return ret;
+    }
     window.obp.storage.store = function(obj) {
         for (var key in obj) 
             this.cache[key] = obj[key];

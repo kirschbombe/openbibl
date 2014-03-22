@@ -25,6 +25,7 @@
     <!-- make modal dialog from listPerson/listPlace/etc -->
     <xsl:template match="//tei:back/tei:div[@type='editorial']/*" mode="browse">
         
+        <!--
         <xsl:variable name="modal-dialog-id">
             <xsl:call-template name="generate-independent-id"/>
         </xsl:variable>
@@ -57,6 +58,7 @@
                 </div>
             </div>
         </div>
+        -->
     </xsl:template>
     
     <xsl:template name="make-panel-entry">

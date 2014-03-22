@@ -28,7 +28,7 @@ done
 for f in `find "$LESS_THEME_DIR" -name "*.less"`; do
     LESS=`basename $f`
     CSS=`basename -s ".less" $f`.css
-    lessc -O2 --include-path="$INC" --global-var="themeFile=$LESS" "$LESS_MASTER" "$LESS_THEME_DIST_DIR/$CSS" "$COMPRESS" "$VERBOSE"
+    lessc --include-path="$INC" --global-var="themeFile=$LESS" "$LESS_MASTER" "$LESS_THEME_DIST_DIR/$CSS" "$COMPRESS" "$VERBOSE"
     if [ -e "$OBP_CSS_THEME_DIR/$CSS" ]; then
         rm "$OBP_CSS_THEME_DIR/$CSS"
     fi

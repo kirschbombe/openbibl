@@ -12,7 +12,9 @@ h1 {
 }
 
 /* override "display: inline" */
-.bibliographies > * {
+.bibliographies > *,
+p, h2
+{
     display:            block;
     margin-left:        2em;
     margin-right:       2em;
@@ -53,7 +55,28 @@ i {
   }
 }
 
-.ref-match {
-    padding-left: 0.25em;
-    padding-right: 0.25em;
+// override Boostrap default width on form borders
+.navbar-form {
+  border-top: 0;
+  border-bottom: 0;
+}
+
+// add a border to the bottom of the small-screen navbar
+#obp-navbar-small {
+    border-bottom: 1px solid;
+}
+
+.obp-search-form {
+    position: relative;
+}
+.obp-search-form  span {
+    position: absolute;
+    right: 1em;
+    padding: 4px 3px 0 0;
+    pointer-events: none;
+}
+
+/* enable vertical scrolling for sidebar menu items */
+#sidebar-menu {
+  overflow-y: scroll;
 }
