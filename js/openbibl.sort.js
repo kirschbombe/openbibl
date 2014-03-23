@@ -13,13 +13,10 @@
         if (key === undefined || key === null) { key = this.sort_key_default }
         this.current_sort_key = key;
         var $wrapper = $('#bibliographies');
-        var $sorted_entries = $wrapper.find('div.entry').sort(function(a,b) {
-            var a_val = a.getAttribute(key);
-            var b_val = b.getAttribute(key); 
-            return a_val > b_val ? 1 :
-                   a_val = b_val ? 0 :
-                                  -1 ;
+        var $entries = $wrapper.children('div.entry').remove();
+        $entries.sort(function(a,b) {
+            return a.getAttribute(key).localeCompare(b.getAttribute(key));
         });
-        $sorted_entries.appendTo($wrapper);
+        $wrapper.append($entries);
     }
 })();
