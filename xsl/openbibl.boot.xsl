@@ -51,8 +51,8 @@
         <xsl:text disable-output-escaping="yes"><![CDATA[
                 <!--[if lt IE 9]>
         ]]></xsl:text>
-        <script src="js/lib/html5shiv.js"></script>
-        <script src="js/lib/respond.min.js"></script>
+        <script type="text/javascript" language="javascript" src="{$html5shiv-js}"></script>
+        <script type="text/javascript" language="javascript" src="{$respond-js}"></script>        
         <xsl:text disable-output-escaping="yes"><![CDATA[
                 <![endif]-->
         ]]></xsl:text>

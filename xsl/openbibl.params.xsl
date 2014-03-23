@@ -19,7 +19,10 @@
     <xsl:param name="offcanvas-js"      select="concat($obp-root, 'js/lib/bootstrap-offcanvas-3.1.0.js')"/>
     <xsl:param name="typeahead-js"      select="concat($obp-root, 'js/lib/bootstrap-typeahead-2.3.2.js')"/>
     <xsl:param name="cookie-js"         select="concat($obp-root, 'js/lib/jquery.cookie.js')"/>
-    <xsl:param name="underscore-js"         select="concat($obp-root, 'js/lib/underscore-1.6.0.min.js')"/>
+    <xsl:param name="underscore-js"     select="concat($obp-root, 'js/lib/underscore-1.6.0.min.js')"/>
+    <xsl:param name="html5shiv-js"      select="concat($obp-root, 'js/lib/html5shiv-3.7.0.min.js')"/>
+    <xsl:param name="respond-js"        select="concat($obp-root, 'js/lib/respond-1.4.2.min.js')"/>
+    
     
     <xsl:param name="bootstrap-css"     select="concat($obp-root, 'css/lib/bootstrap.css')"/>
     <xsl:param name="navmenu-css"       select="concat($obp-root, 'css/lib/navmenu.css')"/>
