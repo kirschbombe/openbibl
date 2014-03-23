@@ -61,7 +61,11 @@
                 trigger   : "hover"
             });
         });
-
+        $('#obp-search-panel-input').on('change', function(e) {
+            // prevent the search field from causing a page
+            // reload when a typeahead suggestion is unavailable
+            event.preventDefault();
+        })
     }
     Openbibl.prototype.browse    = {};
     Openbibl.prototype.filter    = {};

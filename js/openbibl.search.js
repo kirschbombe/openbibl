@@ -84,7 +84,7 @@
         var filter          = window.obp.filter;
         var $list           = $(document.getElementById('search-results-list'));
         var result_indices  = filter.all_filter_indices();
-        var mode            = $list.find('.obp-filter-mode:checked').val();
+        var mode            = $list.closest('#obp-search-panel').find('.obp-filter-mode:checked').val();
 
         // TODO: make this search case-insensitive
         var terms = $.map($list.find('a'), function(n,i) {
@@ -101,7 +101,7 @@
                     list_indices = _.intersection(list_indices,item_indices);
                 }
             }
-            result_indices = _.intersection(result_indices, item_indices);
+            result_indices = _.intersection(result_indices, list_indices);
         }
         return result_indices;
     }

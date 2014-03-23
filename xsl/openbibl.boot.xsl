@@ -104,10 +104,8 @@
 
     <!-- /html/body -->
     <xsl:template name="body-content">
-        <body>
-            <xsl:call-template name="make-navigation"/>
-            <xsl:call-template name="bibliographies"/>
-        </body>
+        <xsl:call-template name="make-navigation"/>
+        <xsl:call-template name="bibliographies"/>
     </xsl:template>
 
     <!-- suppress <back>, which is handled later -->
@@ -269,7 +267,6 @@
                         
                         <div class="nav-form">
                             <form class="obp-search-form">
-                                <span class="glyphicon glyphicon-search"></span>
                                 <input
                                     id="obp-search-panel-input"
                                     autocomplete="off"
