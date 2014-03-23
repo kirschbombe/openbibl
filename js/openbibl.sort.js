@@ -18,5 +18,6 @@
             return a.getAttribute(key).localeCompare(b.getAttribute(key));
         });
         $wrapper.append($entries);
+        window.obp.event["target"].trigger(obp.event["events"]["obp:bibliography-added"]);
     }
 })();
