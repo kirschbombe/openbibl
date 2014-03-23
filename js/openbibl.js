@@ -61,7 +61,7 @@
                 trigger   : "hover"
             });
         });
-        $('#obp-search-panel-input').on('submit', function(event) {
+        $('.obp-search-form').on('submit', function(event) {
             // prevent the search field from causing a page
             // reload when a typeahead suggestion is unavailable
             event.preventDefault();
