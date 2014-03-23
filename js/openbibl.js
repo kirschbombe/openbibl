@@ -9,9 +9,10 @@
     Openbibl.prototype.event = {
         target: null,   // $(document.getElementsByTagName('body')[0]);
         events: {
-            "obp:filter-start"      : "obp:filter-start",
-            "obp:filter-change"     : "obp:filter-change",
-            "obp:filter-complete"   : "obp:filter-complete"
+            "obp:filter-start"          : "obp:filter-start",
+            "obp:filter-change"         : "obp:filter-change",
+            "obp:filter-complete"       : "obp:filter-complete",
+            "obp:bibliography-added"    : "obp:bibliography-added"
         }
     }
     // initial document-ready event
@@ -43,22 +44,24 @@
         $('.obp-filter-mode').change(function(){
             window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
         });
-        
         $('.obp-filter-clear').click(function(event){
             window.obp.browse.clear_browse_items($(event.target));
             window.obp.search.clear_search_items($(event.target));
             event.preventDefault();
         });
-    }
-    Openbibl.prototype.onSaxonSuccess = function() {
-        window.obp.onBibliographyAdded();
-    }
-    Openbibl.prototype.onBibliographyAdded = function() {
-        // have tooltip-classed items tooltip
-        $('[data-toggle="tooltip"]').tooltip({
-            placement : "top",
-            trigger   : "hover"
+        window.obp.event["target"].on(obp.event["events"]["obp:bibliography-added"], function() {
+            $('[data-toggle="tooltip"]').tooltip({
+                placement : "top",
+                trigger   : "hover"
+            });
         });
+        window.obp.event["target"].on(obp.event["events"]["obp:filter-complete"], function() {
+            $('[data-toggle="tooltip"]').tooltip({
+                placement : "top",
+                trigger   : "hover"
+            });
+        });
+
     }
     Openbibl.prototype.browse    = {};
     Openbibl.prototype.filter    = {};

@@ -75,6 +75,6 @@
         }
         obp.bibliographies.count = children.length;
         // obp callback for events to occur after saxon running
-        window.obp.onSaxonSuccess();
+        window.obp.event["target"].trigger(window.obp.event["events"]["obp:bibliography-added"]);
     };
 })();

@@ -261,7 +261,7 @@
                         Search
                     </a>
                 </div>   
-                <div id="search-collapse" class="panel-collapse collapse">
+                <div id="search-collapse" class="panel-collapse collapse obp-search">
                     <div class="panel-body">
                         
                         <!-- filter any/ filter all -->
