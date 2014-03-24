@@ -1,20 +1,143 @@
 (function() {
 "use strict";
-    window.obp.search.typeahead_list_len = 20;
-    window.obp.search.terms = null;
     // TODO: parameterize
-    window.obp.search.data = {};
-    window.obp.search.to_key = function(item) {
-        return String(item).toUpperCase();
-    };
-    window.obp.search.clear_search_items = function(target) {
-        var search = this;
-        $(target).closest('#obp-search-panel').find('.obp-search-item a').map(function(i,elt) {
-            search.remove_search_term(elt);
-        });        
+    window.obp.search.typeahead_list_len = 20;
+    window.obp.search.init = function() {
+        this.model.init();
+        this.view.init();
+        $('.obp-filter-mode').on('change', function() {
+            window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
+        });
+        $('.obp-search-form').on('submit', function(event) {
+            // prevent the search field from causing a page
+            // reload when a typeahead suggestion is unavailable
+            event.preventDefault();
+        });
+    }
+    window.obp.search.term_list_item_class = 'obp-search-item';
+    window.obp.search.filter_indices = function() {
+        return this.model.filter_indices();
+    }
+    window.obp.search.highlight_items = function() {
+        return this.model.highlight_items();
     }
     window.obp.search.handle_query_data = function(data) {
-        var obp_search = window.obp.search;
+        this.model.handle_query_data(data);
+    }
+    window.obp.search.remove_terms = function(terms) {
+        window.obp.search.model.remove_terms(terms);
+    }
+
+    // view for search terms -------------------------------------------------------
+    window.obp.search.view  = {};
+    window.obp.search.view.init = function() {
+        var search = window.obp.search;
+        this.retrieve_templates();
+        // typeahead
+        $('.search-input').typeahead({
+            "items":   search.typeahead_list_len,
+            "matcher": search.view.matcher,
+            "source":  search.view.source,
+            "updater": search.view.updater
+        });
+        window.obp.event["target"].on(obp.event["events"]["obp:search-term-change"], function() {
+            window.obp.search.view.search_change();
+        });
+    };
+    window.obp.search.view.compiled_templates = {
+        'search.term-li.handlebars': null   // string -> function
+    }
+    window.obp.search.view.retrieve_templates = function() {
+        var view = this;
+        var templates = Object.keys(view.compiled_templates);
+        for (var i = 0; i < templates.length; i++) {
+            view.retrieve_template(templates[i]);
+        }
+    }
+    window.obp.search.view.retrieve_template = function(template) {
+        var view = this;
+        var path = window.obp.config['template_dir'] + '/' + template;
+        $.ajax({
+            url:        path,
+            cache:      true,
+            success:    function(data) {
+                view.compiled_templates[template] =
+                    Handlebars.compile(data);
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                if (window.obp.debug) {
+                    window.obp.console.log(
+                        "Seach-template AJAX error for template '"
+                        + template
+                        +"': "
+                        + textStatus
+                    );
+                }
+            }
+        });
+    }
+    window.obp.search.view.search_change = function() {
+        var search = window.obp.search;
+        var active_search_terms = search.model.active_search_terms;
+        $('.' + search.term_list_item_class ).parent().remove();
+        var li = [];
+        for (var i = 0; i < search.model.active_search_terms.length; i++) {
+            var new_li = search.view.compiled_templates['search.term-li.handlebars']({
+                "cls"   : search.term_list_item_class,
+                "term"  : active_search_terms[i]
+            });
+            li.push(new_li);
+        }
+        if (li.length > 0) {
+            $('.obp-search-results-list').each(function(i,elt){
+                var $ul = $(elt);
+                $ul.append(li);
+            });
+            $('.' + search.term_list_item_class).click(function(e) {
+                var term = e.target.getAttribute('data-selection');
+                if (term) search.model.remove_term(term);
+            });
+        }
+    }
+    // return list of valid search terms, filtering out terms already
+    // entered
+    window.obp.search.view.source = function() {
+        var search = window.obp.search;
+        return _.without(
+            Object.keys(search.model.document_data),
+            search.model.active_search_terms
+        );
+    }
+    // TODO: .matcher() here?
+    window.obp.search.view.matcher = function(item) {
+        return new RegExp("^" + this.query, "i").test(item);
+    }
+    window.obp.search.view.updater = function(selection) {
+        var obp = window.obp;
+        $('.typeahead').val('');
+        obp.search.model.add_term(selection);
+    }
+
+    // model for search terms --------------------------------------------------
+    window.obp.search.model = {};
+    window.obp.search.model.init = function() {
+        window.obp.event["target"].on(obp.event["events"]["obp:filter-change"], function() {
+            window.obp.search.model.search_mode_change();
+        });
+    }
+    window.obp.search.model.search_mode_change = function() {
+        var model = this;
+        model.current_search_mode =
+            $($('.obp-search-panel')[0]).find('.obp-filter-mode:checked').val();
+    }
+    window.obp.search.model.document_data = {};
+    window.obp.search.model.active_search_terms = [];
+    window.obp.search.model.current_search_mode = window.obp.filter.filter_mode_default;
+    window.obp.search.model.to_key = function(item) {
+        return String(item).toUpperCase();
+    }
+    window.obp.search.model.handle_query_data = function(data) {
+        var search = window.obp.search;
         var i, j;
         var termmap = {};
         var len = data["search"].length;
@@ -24,72 +147,35 @@
                 termmap[search_data[i][j]] = search_data[i+1];
             }
         }
-        obp_search.data = termmap;
-        $('.search-input').typeahead({
-            "items":   obp_search.typeahead_list_len,
-            "matcher": obp_search.matcher,
-            "source":  obp_search.source,
-            "updater": obp_search.updater
-        });
+        search.model.document_data = termmap;
     }
-    window.obp.search.source = function() {
-       var obp_search = window.obp.search;
-       var applied = {};
-       $.map($(document.getElementById('search-results-list')).find('a'), function(n,i) {
-           applied[ obp_search.to_key(n.getAttribute('data-selection')) ] = true;
-       });
-       return $.grep(Object.keys(obp_search.data), function(n,i) {
-           return !applied[ obp_search.to_key(n) ];
-       });
-    }
-    window.obp.search.matcher = function(item) {
-        return new RegExp("^" + this.query, "i").test(item);
-    }
-    window.obp.search.updater = function(selection) {
-        var obp = window.obp;
-        if (obp.debug) obp.console.log("Adding filter item: " + selection);
-        // clear input element
-        $('.typeahead').val('');
-        obp.search.add_search_term(selection);
-    }
-    window.obp.search.add_search_term = function(term) {
-       var id = 'obp-filter-li-'
-                + document.getElementById('search-results-list').childNodes.length;
-       // TODO: use external template
-       var $new_li = $('<li class="list-group-item obp-search-item">'
-       + '<a id="'+ id + '" href="#" data-selection="'+ term + '">'
-       + '<span class="glyphicon glyphicon-remove-sign"></span></a> '
-       + term 
-       + '</li>');
-       var $ul = $(document.getElementById('search-results-list'));
-       $ul.append($new_li);
-       // add event handler for removal of search term
-       $('#' + id).click(function(e) {
-            window.obp.search.remove_search_term(
-                e.target.parentElement
-            );
-       });
-       window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
-    }
-    window.obp.search.remove_search_term = function(anchor) {
-        var obp = window.obp;
-        var $li = $(anchor.parentElement);
-        var $ul = $li.parent();
-        var item_key = anchor.getAttribute('data-selection');
-        $li.remove();
+    window.obp.search.model.add_term = function(term) {
+        var current_terms = this.active_search_terms || [];
+        if (_.indexOf(current_terms,term) !== -1) return;
+        current_terms.push(term);
+        this.active_search_terms = current_terms;
+        window.obp.event["target"].trigger(obp.event["events"]["obp:search-term-change"]);
         window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
     }
-    window.obp.search.filter_indices = function() {
-        var search_data     = window.obp.search.data;        
+
+    window.obp.search.model.remove_terms = function(remove_terms) {
+        var current_terms = this.active_search_terms;
+        // TODO: why is toArray() necessary?
+        var new_terms = _.difference(_.toArray(current_terms), _.toArray(remove_terms));
+        if (new_terms.length == current_terms.length) return;
+        this.active_search_terms = new_terms;
+        window.obp.event["target"].trigger(obp.event["events"]["obp:search-term-change"]);
+        window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
+    }
+
+    window.obp.search.model.filter_indices = function() {
         var filter          = window.obp.filter;
-        var $list           = $(document.getElementById('search-results-list'));
-        var result_indices  = filter.all_filter_indices();
-        var mode            = $list.closest('#obp-search-panel').find('.obp-filter-mode:checked').val();
+        var search_data     = this.document_data;
+        var result_indices  = window.obp.filter.all_filter_indices();
+        var mode = this.current_search_mode;
 
         // TODO: make this search case-insensitive
-        var terms = $.map($list.find('a'), function(n,i) {
-            return n.getAttribute('data-selection')
-        });
+        var terms = this.active_search_terms;
         if (terms.length > 0) {
             var list_indices;
             for (var i = 0; i < terms.length; i++) {
@@ -105,11 +191,7 @@
         }
         return result_indices;
     }
-    window.obp.search.highlight_items = function() {
-        var $list = $(document.getElementById('search-results-list'));
-        var terms = $.map($list.find('a'), function(n,i) {
-            return n.getAttribute('data-selection')
-        });
-        return { "term" : terms };
+    window.obp.search.model.highlight_items = function() {
+        return { "term" : this.active_search_terms };
     }
 })();

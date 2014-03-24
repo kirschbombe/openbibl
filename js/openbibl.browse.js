@@ -1,24 +1,39 @@
 (function() {
 "use strict";
     window.obp.browse.browse_data = {};
-    window.obp.browse.handle_query_data = function(data) {
-        window.obp.browse.browse_data = data["browse"];
-    }
+
     window.obp.browse.clear_browse_items = function(target) {
         var list_elt = $(target).closest('.obp-browse-list');
         $(list_elt).find('.obp-browse-checkbox:checked').map(function(i,elt) {
             $(this).click();
-        });        
+        });
     }
+
     window.obp.browse.filter_indices = function() {
+        return this.model.filter_indices();
+    }
+    window.obp.browse.highlight_items = function() {
+        return this.model.highlight_items();
+    }
+    window.obp.browse.handle_query_data = function(data) {
+        this.model.handle_query_data(data);
+    }
+
+    // --------------------------
+
+    window.obp.browse.model = {};
+    window.obp.browse.model.handle_query_data = function(data) {
+        window.obp.browse.browse_data = data["browse"];
+    }
+    window.obp.browse.model.filter_indices = function() {
         var browse          = window.obp.browse;
         var filter          = window.obp.filter;
         var browse_data     = browse.browse_data;
         var result_indices  = filter.all_filter_indices();
         $('.obp-browse-list').each(function(i,elt) {
             var $list = $(this);
-            var list_elt_id = $list.closest('.obp-browse-list')[0].getAttribute('id');
-            
+            var list_elt_type = $list.closest('.obp-browse-list')[0].getAttribute('data-ed-list');
+
             var mode = $list.find('.obp-filter-mode:checked').val();
             var list_indices;
             var checked_items = $list.find('.obp-browse-checkbox:checked');
@@ -26,7 +41,7 @@
                 $(checked_items).each(function(i,elt) {
                     var $item = $(this);
                     var item_id = $item.attr('data-browse-item');
-                    var item_indices = browse_data[list_elt_id][item_id];
+                    var item_indices = browse_data[list_elt_type][item_id];
                     list_indices = list_indices || item_indices;
                     if (mode === filter.filter_mode_union) {
                         list_indices = _.union(list_indices,item_indices);
@@ -49,8 +64,8 @@
         if (checked_items.length > 0) {
             $(checked_items).each(function(i,elt) {
                 items.push(
-                      "[data-ed-ref='" 
-                    + $(this).attr('data-browse-item') 
+                      "[data-ed-ref='"
+                    + $(this).attr('data-browse-item')
                     + "']"
                 );
             });

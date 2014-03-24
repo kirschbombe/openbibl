@@ -62,6 +62,7 @@
         <script type="text/javascript" language="javascript" src="{$typeahead-js}"></script>
         <script type="text/javascript" language="javascript" src="{$cookie-js}"></script>
         <script type="text/javascript" language="javascript" src="{$underscore-js}"></script>
+        <script type="text/javascript" language="javascript" src="{$handlebars-js}"></script>
 
         <!-- TODO: xsl:if on debug state -->
         <script type="text/javascript" language="javascript" src="{$openbibl-js-cls}"></script>
@@ -104,87 +105,71 @@
 
     <!-- /html/body -->
     <xsl:template name="body-content">
-        <xsl:call-template name="make-navigation"/>
-        <xsl:call-template name="bibliographies"/>
+        <nav class="navbar navbar-default navbar-collapse navbar-fixed-top">
+
+            <!-- toggle button for small screen menu -->
+            <button id="navbar-navmenu-toggle" type="button" class="navbar-toggle visible-sm visible-xs" data-toggle="offcanvas" data-target="#obp-navbar-small">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </nav>
+
+        <div class="container">
+            <div class="visible-md visible-lg">
+                <nav class="navmenu navmenu-default navmenu-fixed-left" role="navigation">
+                    <xsl:call-template name="make-navmenu">
+                        <xsl:with-param name="menu" select="'l'"/>
+                    </xsl:call-template>
+                </nav>
+            </div>
+            <div class="visible-sm visible-xs">
+                <nav id="obp-navbar-small" class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
+                    <xsl:call-template name="make-navmenu">
+                        <xsl:with-param name="menu" select="'s'"/>
+                    </xsl:call-template>
+                </nav>
+            </div>
+            <xsl:call-template name="bibliographies"/>
+        </div>
     </xsl:template>
 
     <!-- suppress <back>, which is handled later -->
     <xsl:template match="//tei:back//*"/>
 
-    <!-- wrapper for responsive navigation framework -->
-    <xsl:template name="make-navigation">
-
-        <!-- call template to make large sidebar nav -->
-        <xsl:call-template name="make-large-nav"/>
-
-        <!-- button for sidebar menu -->
-        <nav class="navbar navbar-default navbar-collapse navbar-fixed-top visible-sm visible-xs visible-md visible-lg">
-            <xsl:call-template name="make-menu-button"/>
-            <xsl:call-template name="make-small-nav"/>
-        </nav>
-
-    </xsl:template>
-
-    <!-- toggle button for nav menus -->
-    <xsl:template name="make-menu-button">
-
-        <!-- toggle button for small screen menu -->
-        <button id="navbar-navmenu-toggle" type="button" class="navbar-toggle collapsed visible-sm visible-xs" data-toggle="collapse" data-target="#obp-navbar-small">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-    </xsl:template>
-
-    <!-- make navmenu for large screens -->
-    <xsl:template name="make-large-nav">
-        <div class="visible-md visible-lg">
-            <nav id="sidebar-menu" class="navmenu navmenu-default navmenu-fixed-left" role="navigation">
-                <a class="navmenu-brand" href="#"></a>
-                <ul class="nav navmenu-nav">
-                    <li><a class="brand" href="#">Openbibl</a></li>
-                    <xsl:call-template name="make-theme-menu"/>
-                    <xsl:call-template name="make-sort-menu"/>
-                    <xsl:call-template name="make-search-results"/>
-                    <xsl:call-template name="make-browse-results"/>
-                </ul>
-            </nav>
-        </div>
-    </xsl:template>
-
-    <!-- navbar <nav>igation for small screens -->
-    <xsl:template name="make-small-nav">
-        <div class="visible-sm visible-xs">
-            <nav id="obp-navbar-small" class="navbar-default navbar-collapse collapse" role="navigation">
-                <ul class="nav navbar-nav">
-                    <li><a class="brand" href="#">Openbibl</a></li>
-                    <xsl:call-template name="make-theme-menu"/>
-                    <xsl:call-template name="make-sort-menu"/>
-                </ul>
-            </nav>
-        </div>
+    <!-- make navmenu for all size screens -->
+    <xsl:template name="make-navmenu">
+        <xsl:param name="menu"/>
+        <ul class="nav navmenu-nav">
+            <li><a class="brand" href="#">Openbibl</a></li>
+            <xsl:call-template name="make-theme-menu"/>
+            <xsl:call-template name="make-sort-menu"/>
+            <xsl:call-template name="make-search-results">
+                <xsl:with-param name="menu" select="$menu"/>
+            </xsl:call-template>
+            <xsl:call-template name="make-browse-results">
+                <xsl:with-param name="menu" select="$menu"/>
+            </xsl:call-template>
+        </ul>
     </xsl:template>
 
     <!-- primary content container for bibliography entries -->
     <xsl:template name="bibliographies">
-        <div class="container">
 
-            <!-- target for div[@entry] items-->
-            <div id="bibliographies" class="bibliographies">
-                <h1 class="bibliographies">
-                    <xsl:value-of select="//tei:titleStmt/tei:title"/>
-                </h1>
-                <hr id="asterism-rule" />
-                <div id="asterism"></div>
+        <!-- target for div[@entry] items-->
+        <div id="bibliographies" class="bibliographies">
+            <h1 class="bibliographies">
+                <xsl:value-of select="//tei:titleStmt/tei:title"/>
+            </h1>
+            <hr id="asterism-rule" />
+            <div id="asterism"></div>
 
-                <!-- content placeholder -->
-                <div id="bibliography-placeholder"></div>
-            </div>
-
-           <!-- publication statement -->
-           <xsl:call-template name="make-footer"/>
-
+            <!-- content placeholder -->
+            <div id="bibliography-placeholder"></div>
         </div>
+
+       <!-- publication statement -->
+       <xsl:call-template name="make-footer"/>
 
     </xsl:template>
 
@@ -248,16 +233,19 @@
 
     </xsl:template>
 
+    <!-- collapsable panel containing the search-term input and results -->
     <xsl:template name="make-search-results">
+        <xsl:param name="menu"/>
+        <xsl:variable name="panel-id" select="concat($menu,generate-id())"/>
         <li>
             <!-- search results -->
-            <div id="obp-search-panel" class="panel panel-default">
+            <div class="panel panel-default obp-search-panel">
                 <div class="panel-heading">
-                    <a data-toggle="collapse" href="#search-collapse">
+                    <a data-toggle="collapse" href="#{$panel-id}">
                         Search<b class="caret"></b>
                     </a>
                 </div>
-                <div id="search-collapse" class="panel-collapse collapse obp-search">
+                <div id="{$panel-id}" class="panel-collapse collapse obp-search">
                     <div class="panel-body">
 
                         <!-- filter any/ filter all -->
@@ -266,16 +254,15 @@
                         <div class="nav-form">
                             <form class="obp-search-form">
                                 <input
-                                    id="obp-search-panel-input"
                                     autocomplete="off"
-                                    class="search-input typeahead"
+                                    class="search-input typeahead obp-search-panel-input"
                                     data-provide="typeahead"
                                     placeholder="Search"
                                     spellcheck="false"
                                     type="text"></input>
                             </form>
                         </div>
-                        <ul class="list-group" id="search-results-list"></ul>
+                        <ul class="list-group obp-search-results-list"></ul>
                     </div>
                 </div>
             </div>
@@ -283,12 +270,13 @@
     </xsl:template>
 
     <xsl:template name="make-browse-results">
+        <xsl:param name="menu"/>
         <xsl:for-each select="//tei:back/tei:div[@type='editorial']/*">
 
             <!-- @id to use for toggling the panel retraction -->
-            <xsl:variable name="id" select="generate-id(.)"/>
+            <xsl:variable name="id" select="concat($menu,generate-id(.))"/>
             <li>
-                <div class="panel panel-default obp-browse-list" id="{name(.)}">
+                <div class="panel panel-default obp-browse-list" data-ed-list="{name(.)}">
                     <div class="panel-heading">
                         <a data-toggle="collapse" href="#{$id}">
                             <xsl:value-of select="tei:head"/>
@@ -332,19 +320,25 @@
 
     <xsl:template name="filter-options">
         <form>
-            <input
-                class="obp-filter-mode"
-                type="radio"
-                name="generate-id()"
-                value="obp-filter-intersection"
-                checked="checked"></input>
-            all of
-            <input
-                class="obp-filter-mode"
-                type="radio"
-                name="generate-id()"
-                value="obp-filter-union"></input>
-            any of
+            <label>
+                <input
+                    class="obp-filter-mode"
+                    type="radio"
+                    name="generate-id()"
+                    value="obp-filter-intersection"
+                    checked="checked"></input>
+                all of
+            </label>
+            <xsl:text>&#x00A0;</xsl:text>
+            <label>
+                <input
+                    class="obp-filter-mode"
+                    type="radio"
+                    name="generate-id()"
+                    value="obp-filter-union"></input>
+                any of
+            </label>
+            <xsl:text>&#x00A0;</xsl:text>
             <button class="obp-filter-clear">clear</button>
         </form>
     </xsl:template>
