@@ -13,7 +13,7 @@
         encoding="utf-8"
         indent="yes"/>
     <xsl:preserve-space elements="*"/>
-    
+
     <xsl:include href="openbibl.params.xsl"/>
     <xsl:include href="openbibl.date.xsl"/>
 
@@ -52,7 +52,7 @@
                 <!--[if lt IE 9]>
         ]]></xsl:text>
         <script type="text/javascript" language="javascript" src="{$html5shiv-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$respond-js}"></script>        
+        <script type="text/javascript" language="javascript" src="{$respond-js}"></script>
         <xsl:text disable-output-escaping="yes"><![CDATA[
                 <![endif]-->
         ]]></xsl:text>
@@ -84,7 +84,7 @@
         <script type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
         <script type="text/javascript" language="javascript">
             var onSaxonLoad = function() {
-                window.obp.bibliographies.xml = document.location.href; 
+                window.obp.bibliographies.xml = document.location.href;
                 window.obp.bibliographies.xsl ='<xsl:value-of select="$openbibl-xsl"/>';
                 window.obp.SaxonCE.onSaxonLoad(
                     Saxon,                          // pass reference to Saxon object to avoid scoping issues
@@ -145,9 +145,9 @@
                     <li><a class="brand" href="#">Openbibl</a></li>
                     <xsl:call-template name="make-theme-menu"/>
                     <xsl:call-template name="make-sort-menu"/>
+                    <xsl:call-template name="make-search-results"/>
+                    <xsl:call-template name="make-browse-results"/>
                 </ul>
-                <xsl:call-template name="make-search-results"/>
-                <xsl:call-template name="make-browse-results"/>
             </nav>
         </div>
     </xsl:template>
@@ -215,7 +215,7 @@
 
     <!-- make the dropdown menu containing options for visual styles -->
     <xsl:template name="make-theme-menu">
-        <li class="dropdown">
+        <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Theme <b class="caret"></b></a>
             <ul class="dropdown-menu">
 
@@ -233,7 +233,7 @@
 
     <!-- make sort-by options -->
     <xsl:template name="make-sort-menu">
-        <li class="dropdown">
+        <li>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sort<b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>
@@ -249,22 +249,20 @@
     </xsl:template>
 
     <xsl:template name="make-search-results">
-
-        <div class="visible-md visible-lg">
-            
+        <li>
             <!-- search results -->
             <div id="obp-search-panel" class="panel panel-default">
                 <div class="panel-heading">
                     <a data-toggle="collapse" href="#search-collapse">
-                        Search
+                        Search<b class="caret"></b>
                     </a>
-                </div>   
+                </div>
                 <div id="search-collapse" class="panel-collapse collapse obp-search">
                     <div class="panel-body">
-                        
+
                         <!-- filter any/ filter all -->
                         <xsl:call-template name="filter-options"/>
-                        
+
                         <div class="nav-form">
                             <form class="obp-search-form">
                                 <input
@@ -281,37 +279,38 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </li>
     </xsl:template>
-    
+
     <xsl:template name="make-browse-results">
         <xsl:for-each select="//tei:back/tei:div[@type='editorial']/*">
-            
+
             <!-- @id to use for toggling the panel retraction -->
             <xsl:variable name="id" select="generate-id(.)"/>
-            <div class="visible-md visible-lg">
+            <li>
                 <div class="panel panel-default obp-browse-list" id="{name(.)}">
                     <div class="panel-heading">
                         <a data-toggle="collapse" href="#{$id}">
-                            <xsl:value-of select="tei:head"/>                            
+                            <xsl:value-of select="tei:head"/>
+                            <b class="caret"></b>
                         </a>
                     </div>
-                    
+
                     <div id="{$id}" class="panel-collapse collapse">
                         <div class="panel-body">
-    
+
                             <!-- filter any/ filter all -->
                             <xsl:call-template name="filter-options"/>
-                            
-                            <xsl:for-each select="tei:head/following-sibling::*">                                
-                                
+
+                            <xsl:for-each select="tei:head/following-sibling::*">
+
                                 <!-- NOTE: arbitrary @xml:id depth -->
                                 <xsl:variable name="xml-id" select=".//@xml:id"/>
                                 <xsl:variable name="ref-count" select="count(//@ref[.=concat('#',$xml-id)])"/>
-                                
+
                                 <div class="checkbox">
                                     <label>
-                                        
+
                                         <input type="checkbox" class="obp-browse-checkbox" data-browse-item="{$xml-id}">
                                             <xsl:if test="$ref-count = 0">
                                                 <xsl:attribute name="disabled">disabled</xsl:attribute>
@@ -325,31 +324,31 @@
                                 </div>
                             </xsl:for-each>
                         </div>
-                    </div>     
+                    </div>
                 </div>
-            </div>
+            </li>
         </xsl:for-each>
     </xsl:template>
-    
+
     <xsl:template name="filter-options">
         <form>
-            <input 
-                class="obp-filter-mode" 
-                type="radio" 
+            <input
+                class="obp-filter-mode"
+                type="radio"
                 name="generate-id()"
                 value="obp-filter-intersection"
                 checked="checked"></input>
             all of
-            <input 
-                class="obp-filter-mode" 
-                type="radio" 
+            <input
+                class="obp-filter-mode"
+                type="radio"
                 name="generate-id()"
                 value="obp-filter-union"></input>
             any of
             <button class="obp-filter-clear">clear</button>
         </form>
     </xsl:template>
-    
+
 
     <xsl:template match="tei:person" mode="browse-title">
         <xsl:value-of select="tei:persName"/>
@@ -368,7 +367,7 @@
         </xsl:variable>
         <xsl:value-of select="$date"/>
     </xsl:template>
-    
+
 
     <xsl:template match="tei:place" mode="browse-title">
         <xsl:value-of select="tei:placeName"/>
