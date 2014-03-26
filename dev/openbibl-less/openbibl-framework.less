@@ -1,0 +1,105 @@
+
+// late settings and overrides
+
+/* add space to the top of div.container for the navbar */
+.container {
+    padding-top:        @navbar-height;
+}
+
+/* override "display: inline" */
+.bibliographies > *,
+p, h2
+{
+    display:            block;
+    margin-left:        2em;
+    margin-right:       2em;
+}
+
+/* theme-independent styling for the footer */
+#footer {
+    border-top-style:   solid;
+    border-top-width:   1px;
+    font-size:          11pt;
+    margin-left:        2em;
+    margin-right:       2em;
+    margin-bottom:      @navbar-height;
+    padding-top:        1em;
+    padding-bottom:     0.5 * @navbar-height;
+    text-align:         center;
+}
+
+/* re-set this reset */
+i {
+    font-style: italic;
+}
+
+/* override bootstrap button location */
+.navbar-toggle {
+  float:                left;
+  margin-left:          @navbar-padding-horizontal;
+}
+
+/* no border on the navmenu */
+.navmenu.navmenu-default {
+    border-right-width:   0;
+}
+
+/* space for the collapsing navmenu */
+@media (min-width: @screen-md) {
+  body {
+    padding-left:       @navmenu-width;
+  }
+}
+
+// override Boostrap default width on form borders
+.navbar-form {
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.obp-search-form {
+    position: relative;
+}
+.obp-search-form  span {
+    position: absolute;
+    right: 1em;
+    padding: 4px 3px 0 0;
+    pointer-events: none;
+}
+
+/* enable vertical scrolling for sidebar menu items */
+#sidebar-menu {
+  overflow-y: scroll;
+}
+
+.navmenu {
+    overflow-y: scroll;
+    margin-top:        @navbar-height;
+}
+
+// override of bootstrap panels.less
+.panel {
+    .box-shadow(0 0px 0px rgba(0,0,0,0));
+    margin-bottom: 0;
+}
+.panel-heading {
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
+// sm/xs bottom-of-screen navbar settings
+.navbar-fixed-bottom {
+    max-height: 10em;
+    overflow-y: scroll;
+}
+.navbar-fixed-bottom > ul {
+    margin: 0 auto;
+
+    width: -webkit-fit-content;
+       width: -moz-fit-content;
+            width: fit-content;
+}
+.navbar-fixed-bottom li {
+    float: left;
+}
+

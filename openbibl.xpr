@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="14.1">
+    <meta>
+        <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
+        <options/>
+    </meta>
+    <projectTree name="openbibl.xpr">
+        <folder path="css/"/>
+        <folder path="dev/"/>
+        <folder path="examples/"/>
+        <folder path="js/"/>
+        <folder path="TEI/"/>
+        <folder path="xsl/"/>
+    </projectTree>
+</project>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_ms.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_ms.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-stylesheet type="text/xsl" href="../xsl/openbibl.xsl"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title><!-- Title of the work --></title>
+            <author>
+               <persName><!--Author of work--></persName>
+            </author>
+            <respStmt>
+               <persName></persName>
+               <resp><!--Transcription, translation, editor, etc.--></resp>
+            </respStmt>
+         </titleStmt>
+         <publicationStmt>
+            <authority></authority>
+            <availability>
+               <ab><!-- copyright or copyleft information here --></ab>
+            </availability>
+            <date></date>
+            <idno></idno>
+            <pubPlace></pubPlace>
+            <publisher></publisher>
+         </publicationStmt>
+         <sourceDesc>
+            <bibl>
+               <!-- source information here; better yet, use a <biblStruct> instead -->
+            </bibl>
+         </sourceDesc>
+      </fileDesc>
+  </teiHeader>
+  <text>
+     <front>
+        <!-- front matter, if any, goes in <div>s, here -->
+        <head><!--for example, Introduction or About--></head>
+        <div>
+           <p><!--introductory or About information here--></p>
+        </div>
+     </front>
+     <body>
+        <div type="entry">
+           <head><!--Entry Heading--></head>
+            
+           <!-- Bibliographic info of the work or title transcription. These elements should display together as one paragraph -->
+           <biblStruct>
+              <monogr>
+                 <author><!--LAST, First--></author>
+                 <title><!--Title--></title>
+                 <edition><!--Edition--></edition>
+                 <editor><!--Last, First--></editor>
+                 <respStmt>
+                    <name><!--Last, First--></name>
+                    <resp><!--Translator, printer, editor, etc.--></resp>
+                 </respStmt>
+                 <imprint>
+                    <pubPlace><!--Place of publication--></pubPlace> 
+                    <publisher><!--Publisher name--></publisher> 
+                    <distributor><!--or Distributor name--></distributor>
+                    <date when-iso=""><!--Date--></date>
+                 </imprint>
+              </monogr>
+           </biblStruct>
+           
+           <msDesc>
+              <!--Repository, call number, identifier, location, etc.-->
+              <msIdentifier>
+                 <repository></repository>
+                 <collection></collection>
+                 <idno><!--call number, identifier, etc.--></idno>
+              </msIdentifier>
+              
+              <!-- Contents statement -->
+              <msContents></msContents>
+               
+              <!-- Collation, physical description, provenance. These elements should display together as one paragraph -->
+              <physDesc>
+                 <objectDesc>
+                    <p><!--format, collation, pagination, leaves, plates, illus., inserts, half-titles, etc.--></p>
+                 </objectDesc>
+                 <bindingDesc>
+                    <p><!--binding description--></p>
+                    <condition></condition>
+                    <decoNote></decoNote>
+                 </bindingDesc>
+                 <accMat><!--accompanying material--></accMat>
+              </physDesc>
+              <history>
+                 <provenance><!--bookplates, other notes / evidence of history--></provenance>
+                 <acquisition></acquisition>
+              </history>
+           </msDesc>
+            
+           <!-- Notes and annotations -->
+           <note>
+              <p><!--notes, commentary, and annotations here--></p>
+           </note>
+            
+           <!-- References -->
+           <listBibl type="refs">
+              <bibl><!--Reference abbr, such as "NUC pre-1956, 244:266"--></bibl>
+           </listBibl>
+        </div>
+     </body>
+     <back>
+        <!-- contextual information: -->
+        <div type="editorial">
+           <listPerson>
+              <person>
+                 <persName><!-- canonical name --></persName>
+                 <birth>
+                    <placeName><!-- where born; date on when= of <birth> --></placeName>
+                 </birth>
+                 <death>
+                    <placeName><!-- where died; date on when= of <death> --></placeName>
+                 </death>
+              </person>
+           </listPerson>
+        </div>
+     </back>
+  </text>
+</TEI>
