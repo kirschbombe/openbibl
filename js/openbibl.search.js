@@ -3,14 +3,22 @@
     // TODO: parameterize
     window.obp.search.typeahead_list_len = 20;
     window.obp.search.init = function() {
-        this.model.init();
         this.view.init();
-        $('.obp-filter-mode').on('change', function() {
-            window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
+        // set focus for search <input> when made visible
+        $('.obp-search-panel').bind('shown.bs.collapse', function() {
+            $(this).find('.obp-search-panel-input').focus();
         });
         $('.obp-search-form').on('submit', function(event) {
             // prevent the search field from causing a page
             // reload when a typeahead suggestion is unavailable
+            event.preventDefault();
+        });
+        $('.obp-search-clear').click(function(event){
+            // TODO: handle this better
+            var search_terms = $(event.target.parentElement.parentElement).find('a.obp-search-item').map(function(elt){
+                return this.getAttribute('data-selection');
+            });
+            window.obp.search.model.remove_terms(search_terms);
             event.preventDefault();
         });
     }
@@ -26,6 +34,9 @@
     }
     window.obp.search.remove_terms = function(terms) {
         window.obp.search.model.remove_terms(terms);
+    }
+    window.obp.search.filter_mode_change = function(event) {
+        window.obp.search.model.filter_mode_change(event);
     }
 
     // view for search terms -------------------------------------------------------
@@ -94,8 +105,8 @@
                 $ul.append(li);
             });
             $('.' + search.term_list_item_class).click(function(e) {
-                var term = e.target.getAttribute('data-selection');
-                if (term) search.model.remove_term(term);
+                var term = e.target.parentElement.getAttribute('data-selection');
+                if (term) search.model.remove_terms([term]);
             });
         }
     }
@@ -120,12 +131,7 @@
 
     // model for search terms --------------------------------------------------
     window.obp.search.model = {};
-    window.obp.search.model.init = function() {
-        window.obp.event["target"].on(obp.event["events"]["obp:filter-change"], function() {
-            window.obp.search.model.search_mode_change();
-        });
-    }
-    window.obp.search.model.search_mode_change = function() {
+    window.obp.search.model.filter_mode_change = function(event) {
         var model = this;
         model.current_search_mode =
             $($('.obp-search-panel')[0]).find('.obp-filter-mode:checked').val();
@@ -159,10 +165,10 @@
     }
 
     window.obp.search.model.remove_terms = function(remove_terms) {
-        var current_terms = this.active_search_terms;
+        var current_terms = this.active_search_terms || [];
         // TODO: why is toArray() necessary?
         var new_terms = _.difference(_.toArray(current_terms), _.toArray(remove_terms));
-        if (new_terms.length == current_terms.length) return;
+        if (new_terms.length === current_terms.length) return;
         this.active_search_terms = new_terms;
         window.obp.event["target"].trigger(obp.event["events"]["obp:search-term-change"]);
         window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);

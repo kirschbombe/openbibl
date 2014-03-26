@@ -22,8 +22,9 @@ p, h2
     font-size:          11pt;
     margin-left:        2em;
     margin-right:       2em;
+    margin-bottom:      @navbar-height;
     padding-top:        1em;
-    padding-bottom:     0.5em;
+    padding-bottom:     0.5 * @navbar-height;
     text-align:         center;
 }
 
@@ -75,3 +76,30 @@ i {
     overflow-y: scroll;
     margin-top:        @navbar-height;
 }
+
+// override of bootstrap panels.less
+.panel {
+    .box-shadow(0 0px 0px rgba(0,0,0,0));
+    margin-bottom: 0;
+}
+.panel-heading {
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
+// sm/xs bottom-of-screen navbar settings
+.navbar-fixed-bottom {
+    max-height: 10em;
+    overflow-y: scroll;
+}
+.navbar-fixed-bottom > ul {
+    margin: 0 auto;
+
+    width: -webkit-fit-content;
+       width: -moz-fit-content;
+            width: fit-content;
+}
+.navbar-fixed-bottom li {
+    float: left;
+}
+

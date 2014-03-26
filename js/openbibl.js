@@ -15,9 +15,11 @@
         events: {
             "obp:filter-start"          : "obp:filter-start",
             "obp:filter-change"         : "obp:filter-change",
+            "obp:filter-mode-change"    : "obp:filter-mode-change",
             "obp:filter-complete"       : "obp:filter-complete",
             "obp:bibliography-added"    : "obp:bibliography-added",
-            "obp:search-term-change"    : "obp:search-term-change"
+            "obp:search-term-change"    : "obp:search-term-change",
+            "obp:browse-term-change"    : "obp:browse-term-change"
         }
     }
     // initial document-ready event
@@ -29,6 +31,7 @@
         this.filter.init([this.search, this.browse]);
         this.highlight.init([this.search, this.browse]);
         this.search.init();
+        this.browse.init();
         this.sort.init();
         // check for a last-used theme in the cookies and load it if found
         this.change_theme(this.retrieve_cookie('theme-stylesheet'));
@@ -40,24 +43,10 @@
         $('.obp-sort-anchor').on('click', function(e) {
             window.obp.sort.sort_entries(e.target.getAttribute('data-sort-key'));
         });
-        // set focus for search <input> when made visible 
-        $('.obp-search-panel').bind('shown.bs.collapse', function() {
-            $(this).find('.obp-search-panel-input').focus();
-        });
-        $('.obp-browse-checkbox').click(function(){
+        $('.obp-filter-mode').change(function(event){
+            window.obp.search.filter_mode_change(event);
+            window.obp.browse.filter_mode_change(event);
             window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
-        });
-        $('.obp-filter-mode').change(function(){
-            window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
-        });
-        $('.obp-filter-clear').click(function(event){
-            window.obp.browse.clear_browse_items($(event.target));
-            // TODO: handle this better
-            var search_terms = $(event.target.parentElement.parentElement).find('a.obp-search-item').map(function(elt){
-                return this.getAttribute('data-selection');
-            });
-            window.obp.search.remove_terms(search_terms);
-            event.preventDefault();
         });
         window.obp.event["target"].on(obp.event["events"]["obp:bibliography-added"], function() {
             $('[data-toggle="tooltip"]').tooltip({
@@ -70,6 +59,12 @@
                 placement : "top",
                 trigger   : "hover"
             });
+        });
+        $(window).resize(function () {
+            window.obp.event["target"].trigger(obp.event["events"]["obp:filter-mode-change"]);
+            window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
+            window.obp.event["target"].trigger(obp.event["events"]["obp:search-term-change"]);
+            window.obp.event["target"].trigger(obp.event["events"]["obp:browse-term-change"]);
         });
     }
     Openbibl.prototype.browse    = {};
