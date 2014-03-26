@@ -23,6 +23,7 @@
     <xsl:param name="html5shiv-js"      select="concat($obp-root, 'js/lib/html5shiv-3.7.0.min.js')"/>
     <xsl:param name="respond-js"        select="concat($obp-root, 'js/lib/respond-1.4.2.min.js')"/>
     <xsl:param name="handlebars-js"     select="concat($obp-root, 'js/lib/handlebars-1.3.0.min.js')"/>
+    <xsl:param name="filesaver-js"     select="concat($obp-root, 'js/lib/FileSaver.js')"/>
 
     <xsl:param name="bootstrap-css"     select="concat($obp-root, 'css/lib/bootstrap.css')"/>
     <xsl:param name="navmenu-css"       select="concat($obp-root, 'css/lib/navmenu.css')"/>
@@ -39,6 +40,7 @@
     <xsl:param name="openbibl-js-search"    select="concat($obp-root, 'js/openbibl.search.js')"/>
     <xsl:param name="openbibl-js-browse"    select="concat($obp-root, 'js/openbibl.browse.js')"/>
     <xsl:param name="openbibl-js-query"     select="concat($obp-root, 'js/openbibl.query.js')"/>
+    <xsl:param name="openbibl-js-download"  select="concat($obp-root, 'js/openbibl.download.js')"/>
 
     <xsl:param name="openbibl-xsl"                 select="concat($obp-root, 'xsl/openbibl.xsl')"/>
     <xsl:param name="openbibl-css"                 select="concat($obp-root, 'css/openbibl.css')"/>

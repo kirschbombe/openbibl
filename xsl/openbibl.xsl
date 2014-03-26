@@ -26,7 +26,7 @@
 
     <xsl:template match="/">
         <div id="result">
-            <xsl:apply-templates/>            
+            <xsl:apply-templates/>
         </div>
     </xsl:template>
     

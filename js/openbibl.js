@@ -33,6 +33,7 @@
         this.search.init();
         this.browse.init();
         this.sort.init();
+        this.download.init();
         // check for a last-used theme in the cookies and load it if found
         this.change_theme(this.retrieve_cookie('theme-stylesheet'));
         // fill data for "Search" input
@@ -66,8 +67,12 @@
             window.obp.event["target"].trigger(obp.event["events"]["obp:search-term-change"]);
             window.obp.event["target"].trigger(obp.event["events"]["obp:browse-term-change"]);
         });
+        // initialize UI items; NOTE: added for serialize-to-HTML feature; probably can 
+        // be handled more effectively otherwise
+        window.obp.event["target"].trigger(obp.event["events"]["obp:bibliography-added"]);
     }
     Openbibl.prototype.browse    = {};
+    Openbibl.prototype.download  = {};
     Openbibl.prototype.filter    = {};
     Openbibl.prototype.highlight = {};
     Openbibl.prototype.query     = {};

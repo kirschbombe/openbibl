@@ -84,14 +84,15 @@
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-search}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-browse}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-query}"></script>
+                <script type="text/javascript" language="javascript" src="{$openbibl-js-download}"></script>
             </xsl:otherwise>
         </xsl:choose>
 
-        <script type="text/javascript" language="javascript" src="{$openbibl-js-saxon}"></script>
+        <script id="obp-saxonce-lib" type="text/javascript" language="javascript" src="{$openbibl-js-saxon}"></script>
         <!-- load Saxon; declare onload callback for Saxon-CE,
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
-        <script type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
-        <script type="text/javascript" language="javascript">
+        <script id="obp-saxonce-nocache" type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
+        <script id="obp-saxonce-onload" type="text/javascript" language="javascript">
             var onSaxonLoad = function() {
             window.obp.bibliographies.xml = document.location.href;
             window.obp.bibliographies.xsl ='<xsl:value-of select="$openbibl-xsl"/>';
@@ -108,6 +109,8 @@
         <script type="text/javascript" language="javascript" src="{$typeahead-js}"></script>
         <script type="text/javascript" language="javascript" src="{$underscore-js}"></script>
         <script type="text/javascript" language="javascript" src="{$handlebars-js}"></script>
+        <script type="text/javascript" language="javascript" src="{$filesaver-js}"></script>
+
     </xsl:template>
 
     <!-- /html/body -->
@@ -119,6 +122,10 @@
                 <nav class="navmenu navmenu-default navmenu-fixed-left" role="navigation">
                     <ul class="nav navmenu-nav">
                         <li><a class="brand" href="#">Openbibl</a></li>
+                        <!-- save button -->
+                        <li>
+                            <a href="#" class="obp-download-page">Download</a>
+                        </li>
                         <!-- theme menu -->
                         <li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Theme <b class="caret"></b></a>
