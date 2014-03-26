@@ -175,7 +175,9 @@
                 </nav>
             </div>
 
-            <xsl:call-template name="bibliographies"/>
+            <div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+                <xsl:call-template name="bibliographies"/>
+            </div>
 
             <!-- navbar at bottom always present, only has ui items for sm/xs -->
             <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
