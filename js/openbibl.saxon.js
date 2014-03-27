@@ -6,7 +6,7 @@
     // callback fired once SaxonCE library has loaded
     window.obp.SaxonCE.onSaxonLoad = function(Saxon, xsl_url, xml_url, parameters) {
         this.Saxon = Saxon;
-        if (this.debug) this.Saxon.setLogLevel("FINE");
+        if (window.obp.debug) this.Saxon.setLogLevel("FINE");
         this.requestTransform(xsl_url, xml_url, parameters, this.SaxonSuccessHandler);
     }
     window.obp.SaxonCE.requestTransform = function(xsl_url, xml_url, parameters, handler) { 
