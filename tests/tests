@@ -1,0 +1,7 @@
+
+1) otherEurope
+    in:      ./otherEurope.xml
+    with:    ../xsl/openbibl.xsl, using Saxon-EE 9.4.0.4
+    out:     ./otherEurope.html
+    purpose: regression testing openbibl.xsl
+
