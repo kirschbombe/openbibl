@@ -132,9 +132,7 @@
     // model for search terms --------------------------------------------------
     window.obp.search.model = {};
     window.obp.search.model.filter_mode_change = function(event) {
-        var model = this;
-        model.current_search_mode =
-            $($('.obp-search-panel')[0]).find('.obp-filter-mode:checked').val();
+        this.current_search_mode = $(event.target).val();
     }
     window.obp.search.model.document_data = {};
     window.obp.search.model.active_search_terms = [];
