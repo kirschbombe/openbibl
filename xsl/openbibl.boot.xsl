@@ -94,149 +94,191 @@
         <script id="obp-saxonce-nocache" type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
         <script id="obp-saxonce-onload" type="text/javascript" language="javascript">
             var onSaxonLoad = function() {
-            window.obp.bibliographies.xml = document.location.href;
-            window.obp.bibliographies.xsl ='<xsl:value-of select="$openbibl-xsl"/>';
-            window.obp.SaxonCE.onSaxonLoad(
-                Saxon,                          // pass reference to Saxon object to avoid scoping issues
-                window.obp.bibliographies.xsl,  // openbibl.xsl stylesheet path
-                window.obp.bibliographies.xml,  // TEI XML document path
-                {}                              // openbibl.xsl stylesheet parameters
+                window.obp.bibliographies.xml = document.location.href;
+                window.obp.bibliographies.xsl ='<xsl:value-of select="$openbibl-xsl"/>';
+                window.obp.SaxonCE.onSaxonLoad(
+                    Saxon,                          // pass reference to Saxon object to avoid scoping issues
+                    window.obp.bibliographies.xsl,  // openbibl.xsl stylesheet path
+                    window.obp.bibliographies.xml,  // TEI XML document path
+                    {}                              // openbibl.xsl stylesheet parameters
                 );
             }
         </script>
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
+        <script type="text/javascript" language="javascript" src="{$offcanvas-js}"></script>
         <script type="text/javascript" language="javascript" src="{$cookie-js}"></script>
         <script type="text/javascript" language="javascript" src="{$typeahead-js}"></script>
         <script type="text/javascript" language="javascript" src="{$underscore-js}"></script>
         <script type="text/javascript" language="javascript" src="{$handlebars-js}"></script>
         <script type="text/javascript" language="javascript" src="{$filesaver-js}"></script>
-
     </xsl:template>
 
     <!-- /html/body -->
     <xsl:template name="body-content">
-        <nav class="navbar navbar-default navbar-collapse navbar-fixed-top"></nav>
+
+        <xsl:call-template name="small-nav"/>
 
         <div class="container">
-            <div class="visible-md visible-lg">
-                <nav class="navmenu navmenu-default navmenu-fixed-left" role="navigation">
-                    <ul class="nav navmenu-nav">
-                        <li><a class="brand" href="#">Openbibl</a></li>
-                        <!-- save button -->
-                        <li>
-                            <a href="#" class="obp-download-page">Download</a>
-                        </li>
-                        <!-- theme menu -->
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Theme <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                            <xsl:call-template name="make-theme-menu"/>
-                            </ul>
-                        </li>
-                        <!-- sort manu -->
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sort<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <xsl:call-template name="make-sort-menu"/>
-                            </ul>
-                        </li>
-                        <!-- search menu -->
-                        <li>
-                            <div class="panel panel-default obp-search-panel">
-                                <div class="panel-heading">
-                                    <a data-toggle="collapse" href="{concat('.',generate-id())}">
-                                        Search<b class="caret"></b>
-                                    </a>
-                                </div>
-                                <xsl:call-template name="make-search-results">
-                                    <xsl:with-param name="toggle-class" select="generate-id()"/>
-                                </xsl:call-template>
-                            </div>
-                        </li>
-                        <!-- browse menus -->
-                        <xsl:for-each select="//tei:back/tei:div[@type='editorial']/*">
-                            <!-- @id to use for toggling the panel retraction -->
-                            <xsl:variable name="toggle-class" select="generate-id(.)"/>
-                            <li>
-                                <div class="panel panel-default obp-browse-list" data-ed-list="{name(.)}">
-                                    <div class="panel-heading">
-                                        <a data-toggle="collapse" href=".{$toggle-class}">
-                                            <xsl:value-of select="tei:head"/>
-                                            <b class="caret"></b>
-                                        </a>
-                                    </div>
-                                    <xsl:call-template name="make-browse-results">
-                                        <xsl:with-param name="toggle-class" select="$toggle-class"/>
-                                    </xsl:call-template>
-                                </div>
-                            </li>
-                        </xsl:for-each>
-                    </ul>
-                </nav>
-            </div>
+            <nav class="navbar navbar-default navbar-collapse navbar-fixed-top"></nav>
+
+            <xsl:call-template name="large-nav"/>
 
             <div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
                 <xsl:call-template name="bibliographies"/>
             </div>
 
-            <!-- navbar at bottom always present, only has ui items for sm/xs -->
-            <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-                <ul class="nav navbar-nav visible-sm visible-xs dropup">
+            <xsl:call-template name="small-navbar"/>
+        </div>
+
+    </xsl:template>
+
+    <xsl:template name="small-nav">
+
+        <div id="obp-sidebar-offcanvas-sm"
+            class="navmenu navmenu-default navmenu-fixed-left-offcanvas">
+            <ul class="nav navmenu-nav">
+                <li>
+                    <div class="panel panel-default obp-search-panel">
+                        <div class="panel-heading">
+                            <a data-toggle="collapse" data-target=".obp-search-toggle">
+                                Search<b class="caret"></b>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse obp-search-toggle">
+                            <div class="panel-body">
+                                <xsl:call-template name="make-search-results"/>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <xsl:for-each select="//tei:back/tei:div[@type='editorial']/*">
+                    <!-- @id to use for toggling the panel retraction -->
+                    <xsl:variable name="toggle-class" select="generate-id(.)"/>
+                    <li>
+                        <div class="panel panel-default obp-browse-list" data-ed-list="{name(.)}">
+                            <div class="panel-heading">
+                                <a data-toggle="collapse" data-target=".{$toggle-class}">
+                                    <xsl:value-of select="tei:head"/>
+                                    <b class="caret"></b>
+                                </a>
+                            </div>
+                            <div class="panel-collapse collapse {$toggle-class}">
+                                <div class="panel-body">
+                                    <xsl:call-template name="make-browse-results"/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </xsl:for-each>
+            </ul>
+        </div>
+
+    </xsl:template>
+
+    <xsl:template name="small-navbar">
+        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+            <ul class="nav navbar-nav visible-sm visible-xs dropup">
+                <li><a class="brand" href="#">Openbibl</a></li>
+                <!-- theme menu -->
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Theme <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <xsl:call-template name="make-theme-menu"/>
+                    </ul>
+                </li>
+                <!-- sort menu -->
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target=".obp-sort">
+                        Sort<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <xsl:call-template name="make-sort-menu"/>
+                    </ul>
+                </li>
+                <!-- search menu -->
+                <li>
+                    <div class="panel panel-default obp-search-panel">
+                        <div class="panel-heading">
+                            <a data-toggle="offcanvas"
+                               data-recalc="true"
+                               data-canvas="body"
+                               data-target="#obp-sidebar-offcanvas-sm"
+                               data-autohide="true">Search/Browse</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </xsl:template>
+
+    <xsl:template name="large-nav">
+        <div class="visible-md visible-lg">
+            <nav class="navmenu navmenu-default navmenu-fixed-left" role="navigation">
+                <ul class="nav navmenu-nav">
                     <li><a class="brand" href="#">Openbibl</a></li>
+                    <!-- save button -->
+                    <li>
+                        <a href="#" class="obp-download-page">Download</a>
+                    </li>
                     <!-- theme menu -->
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Theme <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Theme <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <xsl:call-template name="make-theme-menu"/>
+                        </ul>
                     </li>
-                    <!-- sort menu -->
+                    <!-- sort manu -->
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sort<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Sort<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <xsl:call-template name="make-sort-menu"/>
+                        </ul>
                     </li>
                     <!-- search menu -->
                     <li>
                         <div class="panel panel-default obp-search-panel">
                             <div class="panel-heading">
-                                <a data-toggle="collapse" href="{concat('.',generate-id())}">
+                                <a data-toggle="collapse" data-target=".obp-search-toggle">
                                     Search<b class="caret"></b>
                                 </a>
+                            </div>
+                            <div class="panel-collapse collapse obp-search-toggle">
+                                <div class="panel-body">
+                                    <xsl:call-template name="make-search-results"/>
+                                </div>
                             </div>
                         </div>
                     </li>
                     <!-- browse menus -->
-                    <xsl:apply-templates select="//tei:back/tei:div[@type='editorial']/*" mode="small-menu-label"/>
+                    <xsl:for-each select="//tei:back/tei:div[@type='editorial']/*">
+                        <!-- @id to use for toggling the panel retraction -->
+                        <xsl:variable name="toggle-class" select="generate-id(.)"/>
+                        <li>
+                            <div class="panel panel-default obp-browse-list" data-ed-list="{name(.)}">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse" data-target=".{$toggle-class}">
+                                        <xsl:value-of select="tei:head"/>
+                                        <b class="caret"></b>
+                                    </a>
+                                </div>
+                                <div class="panel-collapse collapse {$toggle-class}">
+                                    <div class="panel-body">
+                                        <xsl:call-template name="make-browse-results"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </xsl:for-each>
                 </ul>
             </nav>
-            <xsl:apply-templates select="//tei:back/tei:div[@type='editorial']/*" mode="small-menu-items"/>
         </div>
-
-    </xsl:template>
-
-    <xsl:template match="//tei:back/tei:div[@type='editorial']/*" mode="small-menu-label">
-        <xsl:variable name="toggle-class" select="generate-id(.)"/>
-        <li>
-            <div class="panel panel-default obp-browse-list" data-ed-list="{name(.)}">
-                <div class="panel-heading">
-                    <a data-toggle="collapse" href=".{$toggle-class}">
-                        <xsl:value-of select="tei:head"/>
-                        <b class="caret"></b>
-                    </a>
-                </div>
-            </div>
-        </li>
-    </xsl:template>
-
-    <xsl:template match="//tei:back/tei:div[@type='editorial']/*" mode="small-menu-items">
-        <xsl:variable name="toggle-class" select="generate-id(.)"/>
-        <footer class="navbar navbar-fixed-bottom navbar-collapse visible-sm visible-xs">
-            <div class="container">
-                <div class="navbar-collapse collapse {$toggle-class}">
-                    <div class="obp-browse-list" data-ed-list="{name(.)}">
-                        <xsl:call-template name="make-browse-results">
-                            <xsl:with-param name="toggle-class" select="$toggle-class"/>
-                        </xsl:call-template>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </xsl:template>
 
     <!-- suppress <back>, which is handled later -->
@@ -311,62 +353,54 @@
 
     <!-- collapsable panel containing the search-term input and results -->
     <xsl:template name="make-search-results">
-        <xsl:param name="toggle-class"/>
-        <div class="panel-collapse collapse obp-search {$toggle-class}">
-            <div class="panel-body">
 
-                <!-- filter any/ filter all -->
-                <xsl:call-template name="filter-options">
-                    <xsl:with-param name="button-class" select="'obp-search-clear'"/>
-                </xsl:call-template>
+        <!-- filter any/ filter all -->
+        <xsl:call-template name="filter-options">
+            <xsl:with-param name="button-class" select="'obp-search-clear'"/>
+        </xsl:call-template>
 
-                <div class="nav-form">
-                    <form class="obp-search-form">
-                        <input
-                            autocomplete="off"
-                            class="search-input typeahead obp-search-panel-input"
-                            data-provide="typeahead"
-                            placeholder="Search"
-                            spellcheck="false"
-                            type="text"></input>
-                    </form>
-                </div>
-                <ul class="list-group obp-search-results-list"></ul>
-            </div>
+        <div class="nav-form">
+            <form class="obp-search-form">
+                <input
+                    autocomplete="off"
+                    class="search-input typeahead obp-search-panel-input"
+                    data-provide="typeahead"
+                    placeholder="Search"
+                    spellcheck="false"
+                    type="text"></input>
+            </form>
         </div>
+        <ul class="list-group obp-search-results-list"></ul>
     </xsl:template>
 
     <xsl:template name="make-browse-results">
-        <xsl:param name="toggle-class"/>
-        <div class="panel-collapse collapse {$toggle-class}">
-            <div class="panel-body">
+        <!-- filter any/ filter all -->
+        <xsl:call-template name="filter-options">
+            <xsl:with-param name="button-class" select="'obp-browse-clear'"/>
+        </xsl:call-template>
 
-                <!-- filter any/ filter all -->
-                <xsl:call-template name="filter-options">
-                    <xsl:with-param name="button-class" select="'obp-browse-clear'"/>
-                </xsl:call-template>
+        <div class="obp-browse-panel-body">
 
-                <xsl:for-each select="tei:head/following-sibling::*">
+        <xsl:for-each select="tei:head/following-sibling::*">
 
-                    <!-- NOTE: arbitrary @xml:id depth -->
-                    <xsl:variable name="xml-id" select=".//@xml:id"/>
-                    <xsl:variable name="ref-count" select="count(//@ref[.=concat('#',$xml-id)])"/>
+            <!-- NOTE: arbitrary @xml:id depth -->
+            <xsl:variable name="xml-id" select=".//@xml:id"/>
+            <xsl:variable name="ref-count" select="count(//@ref[.=concat('#',$xml-id)])"/>
 
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" class="obp-browse-checkbox" data-browse-item="{$xml-id}">
-                                <xsl:if test="$ref-count = 0">
-                                    <xsl:attribute name="disabled">disabled</xsl:attribute>
-                                </xsl:if>
-                            </input>
-                            <xsl:text>&#x00A0;</xsl:text>
-                            <span class="obp-browse-item">
-                                <xsl:apply-templates select="." mode="browse-title"/>
-                            </span>
-                        </label>
-                    </div>
-                </xsl:for-each>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="obp-browse-checkbox" data-browse-item="{$xml-id}">
+                        <xsl:if test="$ref-count = 0">
+                            <xsl:attribute name="disabled">disabled</xsl:attribute>
+                        </xsl:if>
+                    </input>
+                    <xsl:text>&#x00A0;</xsl:text>
+                    <span class="obp-browse-item">
+                        <xsl:apply-templates select="." mode="browse-title"/>
+                    </span>
+                </label>
             </div>
+        </xsl:for-each>
         </div>
     </xsl:template>
 
