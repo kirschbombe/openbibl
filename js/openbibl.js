@@ -70,6 +70,20 @@
         // initialize UI items; NOTE: added for serialize-to-HTML feature; probably can 
         // be handled more effectively otherwise
         window.obp.event["target"].trigger(obp.event["events"]["obp:bibliography-added"]);
+        // prevent scroll event from bubbling up to ancestors
+        $('.obp-browse-panel-body').bind('mousewheel DOMMouseScroll', function(e) {
+            var $this = $(this);
+            var scrollto_position = null;
+            if (e.type === 'mousewheel') {
+                scrollto_position = e.originalEvent.wheelDelta * -1;
+            } else if (e.type === 'DOMMouseScroll') {
+                scrollto_position = 40 * e.originalEvent.detail;
+            }
+            if (scrollto_position != null) {
+                e.preventDefault();
+                $this.scrollTop(scrollto_position + $this.scrollTop());
+            }
+        });
     }
     Openbibl.prototype.browse    = {};
     Openbibl.prototype.download  = {};
