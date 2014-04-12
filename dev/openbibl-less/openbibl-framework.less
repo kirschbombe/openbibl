@@ -74,7 +74,8 @@ i {
 
 .navmenu {
     overflow-y: scroll;
-    margin-top:        @navbar-height;
+    margin-top: @navbar-height;
+    height:     100% !important;
 }
 
 // override of bootstrap panels.less
@@ -91,15 +92,26 @@ i {
 .navbar-fixed-bottom {
     max-height: 10em;
     overflow-y: scroll;
+    margin-left: 0;
+    margin-right: 0;
 }
 .navbar-fixed-bottom > ul {
     margin: 0 auto;
-
     width: -webkit-fit-content;
-       width: -moz-fit-content;
-            width: fit-content;
+    width:    -moz-fit-content;
+    width:         fit-content;
 }
 .navbar-fixed-bottom li {
     float: left;
 }
 
+.obp-browse-panel-body {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.navmenu-fixed-left-offcanvas {
+  position: fixed;
+  z-index: 1;
+  left: -1 * @navmenu-width;
+}

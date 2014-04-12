@@ -48,9 +48,11 @@
     window.obp.browse.view = {};
     window.obp.browse.view.browse_term_change = function() {
         var browse = window.obp.browse;
+        // clear UI checkboxes
         $('.obp-browse-checkbox').map(function(i,elt) {
             elt.checked = false
         });
+        // re-sync UI checkboxes with this datamodel
         for ( var i = 0; i < browse.model.browse_lists.length; i++) {
             var list = browse.model.browse_lists[i]["list"];
             var terms = browse.model.browse_lists[i]["terms"] || [];
@@ -86,6 +88,7 @@
     window.obp.browse.model.add_term = function(item) {
         var list = item["list"];
         var term = item["term"];
+        var mode = item["mode"];
         var browse_obj;
         for (var i = 0; i < this.browse_lists.length; i++) {
             if (this.browse_lists[i]["list"] === list) {
@@ -103,8 +106,7 @@
         if (_.indexOf(current_terms,term) !== -1) return;
         current_terms.push(term);
         browse_obj["terms"] = current_terms;
-        browse_obj["mode"] = $('.obp-browse-list[data-ed-list="' + list + '"]')
-            .find('.obp-filter-mode:checked').val()
+        browse_obj["mode"] = mode;
         this.browse_lists.push(browse_obj);
         window.obp.event["target"].trigger(obp.event["events"]["obp:browse-term-change"]);
         window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
