@@ -68,7 +68,6 @@
         as well as adding the schema.org attributes.  
     -->
     <xsl:template match="*">
-        <xsl:param name="mapping-matches" as="element()*" tunnel="yes"/>
         <xsl:copy>
             <xsl:call-template name="apply-schmea-mappings">
                 <xsl:with-param name="current-id" select="generate-id(.)" as="xs:string"/>
