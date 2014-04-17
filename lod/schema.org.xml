@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema-mappings xmlns:schema="http://schema.org">
+    
+    <schema-mapping>
+        <xpath>//tei:teiHeader</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/CreativeWork</schema:itemtype>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:Header/tei:fileDesc/tei:titleStmt/tei:title</xpath>
+        <itemdata>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:Header/tei:fileDesc/tei:titleStmt/tei:author/tei:persName</xpath>
+        <itemdata>
+            <schema:itemprop>author</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:Header/tei:fileDesc/tei:titleStmt/tei:respStmt/tei:persName</xpath>
+        <itemdata>
+            <schema:itemprop>contributor</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date</xpath>
+        <itemdata>
+            <schema:itemprop>datePublished</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:pubPlace</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/Place</schema:itemtype>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:publisher</xpath>
+        <itemdata>
+            <schema:itemprop>publisher</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/CreativeWork</schema:itemtype>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:author</xpath>
+        <itemdata>
+            <schema:itemprop>author</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:title</xpath>
+        <itemdata>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>    
+    
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:editor</xpath>
+        <itemdata>
+            <schema:itemprop>editor</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:respStmt</xpath>
+        <itemdata>
+            <schema:itemprop>contributor</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:imprint</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/Place</schema:itemtype>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:imprint/tei:publisher</xpath>
+        <itemdata>
+            <schema:itemprop>publisher</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:imprint/tei:date</xpath>
+        <itemdata>
+            <schema:itemprop>datePublished</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+    
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:msDesc/tei:msIdentifier/tei:repository</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/Place</schema:itemtype>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>    
+
+</schema-mappings>
+
