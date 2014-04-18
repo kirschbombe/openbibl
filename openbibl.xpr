@@ -9,6 +9,7 @@
         <folder path="dev/"/>
         <folder path="examples/"/>
         <folder path="js/"/>
+        <folder path="lod/"/>
         <folder path="TEI/"/>
         <folder path="xsl/"/>
     </projectTree>
