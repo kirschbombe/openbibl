@@ -3,6 +3,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:obp="http://openbibl.github.io"
+    xmlns:schema="http://schema.org"
     exclude-result-prefixes="tei obp"
     version="1.0">
 
@@ -50,9 +51,7 @@
         <link rel="stylesheet" type="text/css" id="theme-css" href="{$openbibl-default-theme-css}" />
 
         <!-- page title, from TEI document -->
-        <title>
-            <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
-        </title>
+        <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
     </xsl:template>
 
     <xsl:template name="script-content">
@@ -212,7 +211,28 @@
                 </li>
             </xsl:for-each>
         </ul>
+    </xsl:template>
 
+    <!-- pass schema.org attributes through -->
+    <xsl:template match="@*[namespace-uri() = 'http://schema.org']">
+        <xsl:attribute name="{local-name(.)}">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
+
+    <!-- default handler for element nodes, which enables @schema:* atts
+         to be processed
+    -->
+    <xsl:template match="*">
+        <span>
+            <xsl:apply-templates select="@*|node()"/>
+        </span>
+    </xsl:template>
+
+    <xsl:template match="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title">
+        <title>
+            <xsl:apply-templates select="@*|node()"/>
+        </title>
     </xsl:template>
 
     <!-- suppress <back>, which is handled later -->
