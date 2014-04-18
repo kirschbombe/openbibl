@@ -87,7 +87,7 @@
     </schema-mapping>
     
     <schema-mapping>
-        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:imprint</xpath>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:imprint/tei:pubPlace</xpath>
         <itemdata>
             <schema:itemtype>http://schema.org/Place</schema:itemtype>
             <schema:itemprop>name</schema:itemprop>
@@ -117,4 +117,3 @@
     </schema-mapping>    
 
 </schema-mappings>
-
