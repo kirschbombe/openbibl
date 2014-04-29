@@ -250,7 +250,7 @@
             <div id="asterism"></div>
 
             <!-- TOC -->
-            <ul class="toc">
+            <ul id="toc" class="toc">
                 <xsl:apply-templates select="//*" mode="toc"/>
             </ul>
 
@@ -265,9 +265,12 @@
 
     <!-- handle a tei:div[@type='entry']/tei:head element for the TOC -->
     <xsl:template match="tei:head[parent::tei:div[@type='entry']]" mode="toc" priority="1">
-        <li>
+
+        <xsl:variable name="div-index" select="count(preceding::tei:div[@type='entry'])"/>
+
+        <li class="toc" data-src-index="{$div-index}">
             <span class="leader">
-                <a class="toc-click" data-scroll-target="scroll_entry_{count(preceding::tei:head)}">
+                <a class="toc-click" data-src-index="{$div-index}">
                     <xsl:value-of select="."/>
                 </a>
             </span>

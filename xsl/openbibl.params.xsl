@@ -14,8 +14,6 @@
 
     <xsl:param name="jquery-js"         select="concat($obp-root, 'js/lib/jquery-2.1.0.min.js')"/>
     <xsl:param name="bootstrap-js"      select="concat($obp-root, 'js/lib/bootstrap-3.1.1.min.js')"/>
-
-    <!-- <xsl:param name="bootstrap-js"      select="concat($obp-root, 'js/lib/bootstrap-3.1.1.js')"/> -->
     <xsl:param name="offcanvas-js"      select="concat($obp-root, 'js/lib/bootstrap-offcanvas-3.1.0.js')"/>
     <xsl:param name="typeahead-js"      select="concat($obp-root, 'js/lib/bootstrap-typeahead-2.3.2.js')"/>
     <xsl:param name="cookie-js"         select="concat($obp-root, 'js/lib/jquery.cookie.js')"/>

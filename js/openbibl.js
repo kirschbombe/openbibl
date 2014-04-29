@@ -54,6 +54,12 @@
                 placement : "top",
                 trigger   : "hover"
             });
+            $('.toc-click').click(function(e) {
+                var $elt = $('div.entry[data-src-index="' + $(e.target).attr('data-src-index') + '"]');
+                if ($elt.length == 0) return;
+                $(window).scrollTop($elt.offset().top -
+                    $('#bibliographies').offset().top);
+            });
         });
         window.obp.event["target"].on(obp.event["events"]["obp:filter-complete"], function() {
             $('[data-toggle="tooltip"]').tooltip({
@@ -83,12 +89,6 @@
                 e.preventDefault();
                 $this.scrollTop(scrollto_position + $this.scrollTop());
             }
-        });
-        $('.toc-click').click(function(e) {
-            var $elt = $('*[id="' + $(e.target).attr('data-scroll-target') + '"]');
-            if ($elt.length == 0) return;
-            $(window).scrollTop($elt.offset().top -
-                $('#bibliographies').offset().top);
         });
     }
     Openbibl.prototype.browse    = {};
