@@ -55,7 +55,7 @@
                 trigger   : "hover"
             });
             $('.toc-click').click(function(e) {
-                var $elt = $('div.entry[data-src-index="' + $(e.target).attr('data-src-index') + '"]');
+                var $elt = $('div[class="entry"][data-src-index="' + $(e.target).attr('data-src-index') + '"]');
                 if ($elt.length == 0) return;
                 $(window).scrollTop($elt.offset().top -
                     $('#bibliographies').offset().top);
