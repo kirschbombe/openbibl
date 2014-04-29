@@ -41,9 +41,13 @@
         </xsl:variable>
         <xsl:variable name="sort-author" select="normalize-space(tei:biblStruct/tei:monogr/tei:author/tei:persName)"/>
 
-        <div class="entry" data-date="{$sort-date}" data-author="{$sort-author}" data-src-index="{$div-index}">
+        <div class="entry"
+             data-date="{$sort-date}"
+             data-author="{$sort-author}"
+             data-src-index="{$div-index}">
             <xsl:apply-templates select="@*[namespace-uri() = 'http://schema.org']" mode="web"/>
-            <h2 class="bibliography">
+
+            <h2 class="bibliography" id="{concat('scroll_entry_',count(preceding::tei:head))}">
                 <xsl:apply-templates select="tei:head" mode="web"/>
             </h2>
             <p class="bibliography">

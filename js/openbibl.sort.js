@@ -15,7 +15,9 @@
         var $wrapper = $('#bibliographies');
         var $entries = $wrapper.children('div.entry').remove();
         $entries.sort(function(a,b) {
-            return a.getAttribute(key).localeCompare(b.getAttribute(key));
+            return (a.getAttribute(key)||"").localeCompare(
+                    (b.getAttribute(key)||"")
+                );
         });
         $wrapper.append($entries);
         window.obp.event["target"].trigger(obp.event["events"]["obp:bibliography-added"]);

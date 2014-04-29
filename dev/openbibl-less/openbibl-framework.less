@@ -115,3 +115,30 @@ i {
   z-index: 1;
   left: -1 * @navmenu-width;
 }
+
+ul.toc {
+    padding: 0;
+    overflow-x: hidden;
+    list-style: none;
+    margin-left: 4em;
+    margin-right: 4em;
+    margin-top: 2em;
+}
+ul.toc li:before {
+    float: left;
+    width: 0;
+    white-space: nowrap;
+    content: ". . . . . . . . . . . . . . . . . . . . "
+             ". . . . . . . . . . . . . . . . . . . . "
+             ". . . . . . . . . . . . . . . . . . . . "
+             ". . . . . . . . . . . . . . . . . . . . ";
+}
+ul.toc span:first-child {
+    padding-right: 0.33em;
+    background: @obp-body-bg;
+}
+ul.toc span + span {
+    float: right;
+    padding-left: 0.33em;
+    background: @obp-body-bg;
+}

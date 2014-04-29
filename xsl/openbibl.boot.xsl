@@ -249,6 +249,11 @@
             <hr id="asterism-rule" />
             <div id="asterism"></div>
 
+            <!-- TOC -->
+            <ul class="toc">
+                <xsl:apply-templates select="//*" mode="toc"/>
+            </ul>
+
             <!-- content placeholder -->
             <div id="bibliography-placeholder"></div>
         </div>
@@ -257,6 +262,28 @@
        <xsl:call-template name="make-footer"/>
 
     </xsl:template>
+
+    <!-- handle a tei:div[@type='entry']/tei:head element for the TOC -->
+    <xsl:template match="tei:head[parent::tei:div[@type='entry']]" mode="toc" priority="1">
+        <li>
+            <span class="leader">
+                <a class="toc-click" data-scroll-target="scroll_entry_{count(preceding::tei:head)}">
+                    <xsl:value-of select="."/>
+                </a>
+            </span>
+            <span>
+                <xsl:choose>
+                    <xsl:when test="string-length(parent::tei:div/tei:biblStruct/tei:monogr/tei:author) != 0">
+                        <xsl:value-of select="parent::tei:div/tei:biblStruct/tei:monogr/tei:author"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="'[UNKNOWN]'"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </span>
+        </li>
+    </xsl:template>
+    <xsl:template match="node()" mode="toc" priority="0"/>
 
     <!-- publication statement following bibliographies -->
     <xsl:template name="make-footer">
@@ -280,7 +307,6 @@
             <xsl:text> | </xsl:text>
             <span>Published using the Open &lt;bibl&gt; Project</span>
         </div>
-
     </xsl:template>
 
     <!-- make the dropdown menu containing options for visual styles -->

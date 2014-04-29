@@ -68,7 +68,7 @@
             return;
         }
         // TODO: handle this incrementally?
-        var children = result_wrapper.getElementsByTagName('div');
+        var children = $(result_wrapper).find('.entry');
         var bibliographies_wrapper = document.getElementById("bibliographies");
         for (var i = 0; i < children.length; i++) {
             bibliographies_wrapper.appendChild(children[i].cloneNode(true));
