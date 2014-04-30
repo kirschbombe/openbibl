@@ -3,6 +3,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:obp="http://openbibl.github.io"
+    xmlns:schema="http://schema.org"
     exclude-result-prefixes="tei obp"
     version="1.0">
 
@@ -50,9 +51,7 @@
         <link rel="stylesheet" type="text/css" id="theme-css" href="{$openbibl-default-theme-css}" />
 
         <!-- page title, from TEI document -->
-        <title>
-            <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
-        </title>
+        <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
     </xsl:template>
 
     <xsl:template name="script-content">
@@ -85,6 +84,7 @@
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-browse}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-query}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-download}"></script>
+                <script type="text/javascript" language="javascript" src="{$openbibl-js-toc}"></script>
             </xsl:otherwise>
         </xsl:choose>
 
@@ -212,7 +212,28 @@
                 </li>
             </xsl:for-each>
         </ul>
+    </xsl:template>
 
+    <!-- pass schema.org attributes through -->
+    <xsl:template match="@*[namespace-uri() = 'http://schema.org']">
+        <xsl:attribute name="{local-name(.)}">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:template>
+
+    <!-- default handler for element nodes, which enables @schema:* atts
+         to be processed
+    -->
+    <xsl:template match="*">
+        <span>
+            <xsl:apply-templates select="@*|node()"/>
+        </span>
+    </xsl:template>
+
+    <xsl:template match="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title">
+        <title>
+            <xsl:apply-templates select="@*|node()"/>
+        </title>
     </xsl:template>
 
     <!-- suppress <back>, which is handled later -->
@@ -229,14 +250,42 @@
             <hr id="asterism-rule" />
             <div id="asterism"></div>
 
-            <!-- content placeholder -->
-            <div id="bibliography-placeholder"></div>
+            <!-- TOC -->
+            <ul id="toc" class="toc">
+                <xsl:apply-templates select="//*" mode="toc"/>
+            </ul>
         </div>
 
        <!-- publication statement -->
        <xsl:call-template name="make-footer"/>
 
     </xsl:template>
+
+    <!-- handle a tei:div[@type='entry']/tei:head element for the TOC -->
+    <xsl:template match="tei:head[parent::tei:div[@type='entry']]" mode="toc" priority="1">
+
+        <xsl:variable name="div-index" select="count(preceding::tei:div[@type='entry'])"/>
+
+        <li class="toc" data-src-index="{$div-index}">
+            <span class="leader">
+                <a class="toc-click" data-src-index="{$div-index}">
+                    <xsl:value-of select="."/>
+                </a>
+            </span>
+            <span>
+                <xsl:choose>
+                    <xsl:when test="string-length(parent::tei:div/tei:biblStruct/tei:monogr/tei:author) != 0">
+                        <xsl:value-of select="parent::tei:div/tei:biblStruct/tei:monogr/tei:author"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <!-- TODO: externalize/localize string -->
+                        <xsl:value-of select="'[UNKNOWN]'"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </span>
+        </li>
+    </xsl:template>
+    <xsl:template match="node()" mode="toc" priority="0"/>
 
     <!-- publication statement following bibliographies -->
     <xsl:template name="make-footer">
@@ -260,7 +309,6 @@
             <xsl:text> | </xsl:text>
             <span>Published using the Open &lt;bibl&gt; Project</span>
         </div>
-
     </xsl:template>
 
     <!-- make the dropdown menu containing options for visual styles -->

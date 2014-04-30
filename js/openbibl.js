@@ -33,6 +33,7 @@
         this.search.init();
         this.browse.init();
         this.sort.init();
+        this.toc.init();
         this.download.init();
         // check for a last-used theme in the cookies and load it if found
         this.change_theme(this.retrieve_cookie('theme-stylesheet'));
@@ -94,6 +95,7 @@
     Openbibl.prototype.search    = {};
     Openbibl.prototype.sort      = {};
     Openbibl.prototype.storage   = {};
+    Openbibl.prototype.toc       = {};
     Openbibl.prototype.typeahead = {};
     window.obp = new Openbibl();
     $(document).ready(function() { window.obp.onDocumentReady(); });
