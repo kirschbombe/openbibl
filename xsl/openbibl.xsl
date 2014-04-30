@@ -5,7 +5,8 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:schema="http://schema.org"
-    exclude-result-prefixes="xs obp tei schema"
+    xmlns:ixsl="http://saxonica.com/ns/interactiveXSLT"
+    exclude-result-prefixes="xs obp tei schema ixsl"
     version="2.0">
 
     <xsl:import href="openbibl.shared.xsl"/>
@@ -16,14 +17,9 @@
 
     <!-- #result is the wrapper element used in the JS -->
     <xsl:template match="/">
-        <html>
-            <head/>
-            <body>
-                <div id="result">
-                    <xsl:apply-templates select="//tei:div"/>
-                </div>
-            </body>
-        </html>
+        <xsl:result-document href="#bibliographies" method="ixsl:append-content">
+            <xsl:apply-templates select="//tei:div"/>
+        </xsl:result-document>
     </xsl:template>
 
     <!-- header info used in the booting XSLT 1.0 stylesheet -->
@@ -41,30 +37,47 @@
         </xsl:variable>
         <xsl:variable name="sort-author" select="normalize-space(tei:biblStruct/tei:monogr/tei:author/tei:persName)"/>
 
+        <!-- id for collapsed notes/refs panels -->
+        <xsl:variable name="collapse-id" select="generate-id(.)"/>
+
         <div class="entry"
              data-date="{$sort-date}"
              data-author="{$sort-author}"
              data-src-index="{$div-index}">
             <xsl:apply-templates select="@*[namespace-uri() = 'http://schema.org']" mode="web"/>
 
-            <h2 class="bibliography" id="{concat('scroll_entry_',count(preceding::tei:head))}">
-                <xsl:apply-templates select="tei:head" mode="web"/>
-            </h2>
-            <p class="bibliography">
-                <xsl:apply-templates select="tei:biblStruct" mode="web"/>
-            </p>
-            <p class="bibliography">
-                <xsl:apply-templates select="tei:msDesc" mode="web"/>
-            </p>
-            <p class="bibliography">
-                <xsl:apply-templates select="tei:note" mode="web"/>
-            </p>
-            <p class="bibliography">
-                <xsl:apply-templates select="tei:listBibl" mode="web"/>
-            </p>
-            <p class="bibliography">
-                <xsl:apply-templates select="tei:msDesc/tei:msIdentifier" mode="web"/>
-            </p>
+            <div class="panel-group" id="{$collapse-id}-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="bibliography panel-title accordion-toggle collapsed"
+                        data-toggle="collapse" 
+                        data-target="#{$collapse-id}"
+                        data-parent="#{$collapse-id}-group"
+                        >
+                        <xsl:apply-templates select="tei:head" mode="web"/>
+                    </h2>
+                </div>
+                <p class="bibliography">
+                    <xsl:apply-templates select="tei:biblStruct" mode="web"/>
+                </p>
+                <p class="bibliography">
+                    <xsl:apply-templates select="tei:msDesc" mode="web"/>
+                </p>
+                <div id="{$collapse-id}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p class="bibliography">
+                            <xsl:apply-templates select="tei:note" mode="web"/>
+                        </p>
+                        <p class="bibliography">
+                            <xsl:apply-templates select="tei:listBibl" mode="web"/>
+                        </p>
+                        <p class="bibliography">
+                            <xsl:apply-templates select="tei:msDesc/tei:msIdentifier" mode="web"/>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
         </div>
     </xsl:template>
 
@@ -105,6 +118,7 @@
             <span>
                 <xsl:apply-templates select="@*|node()" mode="web"/>
             </span>
+            <!-- TODO: externalize punctuation -->
             <xsl:if test="not(matches(normalize-space(string(.)), '\.$'))">
                 <span>.&#x0020;</span>
             </xsl:if>
@@ -123,6 +137,7 @@
         <span>
             <xsl:apply-templates select="@*|node()" mode="web"/>
         </span>
+        <!-- TODO: externalize punctuation -->
         <xsl:if test="following-sibling::tei:bibl">
             <span>;&#x0020;</span>
         </xsl:if>
@@ -133,6 +148,7 @@
             <xsl:apply-templates select="tei:idno" mode="web"/>
         </span>
         <xsl:if test="tei:collection != ''">
+            <!-- TODO: externalize punctuation -->
             <span>&#x2003;&#x2003;&#x2003;</span>
             <span>
                 <xsl:value-of select="concat(
@@ -171,14 +187,12 @@
         <xsl:apply-templates select="@*|node()" mode="web"/>
     </xsl:template>
 
-    <xsl:template match="tei:biblStruct/tei:monogr/tei:author" mode="web">
-        <xsl:if test=". != ''">
-            <span>
-                <xsl:apply-templates select="@*|node()" mode="web"/>
-            </span>
-            <!-- config: author-following punct -->
-            <span>.&#x0020;</span>
-        </xsl:if>
+    <xsl:template match="tei:biblStruct/tei:monogr/tei:author[. != '']" mode="web">
+        <span>
+            <xsl:apply-templates select="@*|node()" mode="web"/>
+        </span>
+        <!-- TODO: external configuration for punctuation -->
+        <span>.&#x0020;</span>
     </xsl:template>
 
     <!-- make tooltip text -->

@@ -69,7 +69,7 @@
 
         <!-- TODO: xsl:if on debug state to use minified or maxified -->
         <xsl:choose>
-            <xsl:when test="false()">
+            <xsl:when test="true()">
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-min}"></script>
             </xsl:when>
             <xsl:otherwise>
@@ -84,6 +84,7 @@
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-browse}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-query}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-download}"></script>
+                <script type="text/javascript" language="javascript" src="{$openbibl-js-toc}"></script>
             </xsl:otherwise>
         </xsl:choose>
 
@@ -92,6 +93,7 @@
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
         <script id="obp-saxonce-nocache" type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
         <script id="obp-saxonce-onload" type="text/javascript" language="javascript">
+        <![CDATA[
             var onSaxonLoad = function() {
                 window.obp.bibliographies.xml = document.location.href;
                 window.obp.bibliographies.xsl ='<xsl:value-of select="$openbibl-xsl"/>';
@@ -102,6 +104,7 @@
                     {}                              // openbibl.xsl stylesheet parameters
                 );
             }
+        ]]>
         </script>
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
         <script type="text/javascript" language="javascript" src="{$offcanvas-js}"></script>
@@ -253,9 +256,6 @@
             <ul id="toc" class="toc">
                 <xsl:apply-templates select="//*" mode="toc"/>
             </ul>
-
-            <!-- content placeholder -->
-            <div id="bibliography-placeholder"></div>
         </div>
 
        <!-- publication statement -->
@@ -280,6 +280,7 @@
                         <xsl:value-of select="parent::tei:div/tei:biblStruct/tei:monogr/tei:author"/>
                     </xsl:when>
                     <xsl:otherwise>
+                        <!-- TODO: externalize/localize string -->
                         <xsl:value-of select="'[UNKNOWN]'"/>
                     </xsl:otherwise>
                 </xsl:choose>

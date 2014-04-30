@@ -23,7 +23,7 @@
             proc.setParameter(key, parameters[key]);
         proc.setSuccess(handler);
         this.Saxon.setErrorHandler(this.SaxonErrorHandler);
-        proc.transformToDocument(xml);
+        proc.updateHTMLDocument(xml);        
     };
     window.obp.SaxonCE.SaxonRequestXMLHandler = function(url,errors) {
         var xml;
@@ -40,41 +40,10 @@
             // TODO: display error message to user
         }
     };
-    // isolate target wrapper element for Saxon output, which is browser dependent 
-    window.obp.SaxonCE.SaxonGetResultWrapper = function(data) {
-        var result_wrapper = null;
-        // for Chrome and Safari
-        try {
-            result_wrapper = data.getResultDocument().querySelector("#result");
-        } catch (e) {
-            if (this.debug) this.console.log("Failed to called querySelector() in Saxon on-success callback: " + e.toString());
-        }
-        if (result_wrapper === null) {
-            // for Firefox
-            try {
-                result_wrapper = data.getResultDocument().documentElement;
-            } catch (e) {
-                if (this.debug) this.console.log("Failed to get document element in Saxon on-success callback");
-            }
-        }
-        return result_wrapper;        
-    }
     // handle a successful XSLT 2.0 transformation
     window.obp.SaxonCE.SaxonSuccessHandler = function(data) {
         var obp = window.obp;
-        var result_wrapper = obp.SaxonCE.SaxonGetResultWrapper(data);
-        if (result_wrapper === null) {
-            // TODO: display error message to user
-            return;
-        }
-        // TODO: handle this incrementally?
-        var children = $(result_wrapper).find('.entry');
-        var bibliographies_wrapper = document.getElementById("bibliographies");
-        for (var i = 0; i < children.length; i++) {
-            bibliographies_wrapper.appendChild(children[i].cloneNode(true));
-        }
-        obp.bibliographies.count = children.length;
-        // obp callback for events to occur after saxon running
-        window.obp.event["target"].trigger(window.obp.event["events"]["obp:bibliography-added"]);
+        obp.bibliographies.count = $('div.entry').length;
+        obp.event["target"].trigger(window.obp.event["events"]["obp:bibliography-added"]);
     };
 })();

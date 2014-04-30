@@ -20,21 +20,6 @@
                 );
         });
         $wrapper.append($entries);
-        var src_sequence = $.map($wrapper.children('div.entry'), function(elt) {
-            return $(elt).attr('data-src-index');
-        });
-        var $toc = $('#toc');
-        var $toc_entries = $toc.children('li.toc').remove();
-        $toc_entries.sort(function(a,b){
-            var aInd = src_sequence.indexOf(a.getAttribute('data-src-index'))
-            var bInd = src_sequence.indexOf(b.getAttribute('data-src-index'));
-            return aInd < bInd
-                ? -1
-                : aInd === bInd
-                    ? 0
-                    : 1;
-        });
-        $toc.append($toc_entries);
         window.obp.event["target"].trigger(obp.event["events"]["obp:bibliography-added"]);
     }
 })();

@@ -33,6 +33,7 @@
         this.search.init();
         this.browse.init();
         this.sort.init();
+        this.toc.init();
         this.download.init();
         // check for a last-used theme in the cookies and load it if found
         this.change_theme(this.retrieve_cookie('theme-stylesheet'));
@@ -53,12 +54,6 @@
             $('[data-toggle="tooltip"]').tooltip({
                 placement : "top",
                 trigger   : "hover"
-            });
-            $('.toc-click').click(function(e) {
-                var $elt = $('div[class="entry"][data-src-index="' + $(e.target).attr('data-src-index') + '"]');
-                if ($elt.length == 0) return;
-                $(window).scrollTop($elt.offset().top -
-                    $('#bibliographies').offset().top);
             });
         });
         window.obp.event["target"].on(obp.event["events"]["obp:filter-complete"], function() {
@@ -100,6 +95,7 @@
     Openbibl.prototype.search    = {};
     Openbibl.prototype.sort      = {};
     Openbibl.prototype.storage   = {};
+    Openbibl.prototype.toc       = {};
     Openbibl.prototype.typeahead = {};
     window.obp = new Openbibl();
     $(document).ready(function() { window.obp.onDocumentReady(); });
