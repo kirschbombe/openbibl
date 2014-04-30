@@ -69,7 +69,7 @@
 
         <!-- TODO: xsl:if on debug state to use minified or maxified -->
         <xsl:choose>
-            <xsl:when test="true()">
+            <xsl:when test="false()">
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-min}"></script>
             </xsl:when>
             <xsl:otherwise>
@@ -93,7 +93,6 @@
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
         <script id="obp-saxonce-nocache" type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
         <script id="obp-saxonce-onload" type="text/javascript" language="javascript">
-        <![CDATA[
             var onSaxonLoad = function() {
                 window.obp.bibliographies.xml = document.location.href;
                 window.obp.bibliographies.xsl ='<xsl:value-of select="$openbibl-xsl"/>';
@@ -104,7 +103,6 @@
                     {}                              // openbibl.xsl stylesheet parameters
                 );
             }
-        ]]>
         </script>
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
         <script type="text/javascript" language="javascript" src="{$offcanvas-js}"></script>
