@@ -41,6 +41,7 @@
     <xsl:param name="openbibl-js-query"     select="concat($obp-root, 'js/openbibl.query.js')"/>
     <xsl:param name="openbibl-js-download"  select="concat($obp-root, 'js/openbibl.download.js')"/>
     <xsl:param name="openbibl-js-toc"       select="concat($obp-root, 'js/openbibl.toc.js')"/>
+    <xsl:param name="openbibl-js-tooltip"   select="concat($obp-root, 'js/openbibl.tooltip.js')"/>
 
     <xsl:param name="openbibl-xsl"                 select="concat($obp-root, 'xsl/openbibl.xsl')"/>
     <xsl:param name="openbibl-css"                 select="concat($obp-root, 'css/openbibl.css')"/>

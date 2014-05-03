@@ -33,6 +33,7 @@
         this.search.init();
         this.browse.init();
         this.sort.init();
+        this.tooltip.init();
         this.toc.init();
         this.download.init();
         // check for a last-used theme in the cookies and load it if found
@@ -49,18 +50,6 @@
             window.obp.search.filter_mode_change(event);
             window.obp.browse.filter_mode_change(event);
             window.obp.event["target"].trigger(obp.event["events"]["obp:filter-change"]);
-        });
-        window.obp.event["target"].on(obp.event["events"]["obp:bibliography-added"], function() {
-            $('[data-toggle="tooltip"]').tooltip({
-                placement : "top",
-                trigger   : "hover"
-            });
-        });
-        window.obp.event["target"].on(obp.event["events"]["obp:filter-complete"], function() {
-            $('[data-toggle="tooltip"]').tooltip({
-                placement : "top",
-                trigger   : "hover"
-            });
         });
         $(window).resize(function () {
             window.obp.event["target"].trigger(obp.event["events"]["obp:filter-mode-change"]);
@@ -95,6 +84,7 @@
     Openbibl.prototype.search    = {};
     Openbibl.prototype.sort      = {};
     Openbibl.prototype.storage   = {};
+    Openbibl.prototype.tooltip   = {};
     Openbibl.prototype.toc       = {};
     Openbibl.prototype.typeahead = {};
     window.obp = new Openbibl();

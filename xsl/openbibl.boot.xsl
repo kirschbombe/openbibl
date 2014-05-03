@@ -85,6 +85,7 @@
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-query}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-download}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-toc}"></script>
+                <script type="text/javascript" language="javascript" src="{$openbibl-js-tooltip}"></script>
             </xsl:otherwise>
         </xsl:choose>
 
