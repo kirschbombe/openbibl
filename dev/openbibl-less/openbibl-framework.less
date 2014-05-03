@@ -67,13 +67,8 @@ i {
     pointer-events: none;
 }
 
-/* enable vertical scrolling for sidebar menu items */
-#sidebar-menu {
-  overflow-y: scroll;
-}
-
 .navmenu {
-    overflow-y: scroll;
+    overflow-y: hidden;
     margin-top: @navbar-height;
     height:     100% !important;
 }
@@ -88,26 +83,9 @@ i {
     padding-left: 15px;
 }
 
-// sm/xs bottom-of-screen navbar settings
-.navbar-fixed-bottom {
-    max-height: 10em;
-    overflow-y: scroll;
-    margin-left: 0;
-    margin-right: 0;
-}
-.navbar-fixed-bottom > ul {
-    margin: 0 auto;
-    width: -webkit-fit-content;
-    width:    -moz-fit-content;
-    width:         fit-content;
-}
-.navbar-fixed-bottom li {
-    float: left;
-}
-
 .obp-browse-panel-body {
     max-height: 500px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .navmenu-fixed-left-offcanvas {
