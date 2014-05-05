@@ -15,7 +15,10 @@
         });
         $('.obp-search-clear').click(function(event){
             // TODO: handle this better
-            var search_terms = $(event.target.parentElement.parentElement).find('a.obp-search-item').map(function(elt){
+            var search_terms = $(event.target)
+            .closest('.obp-search-panel')
+            .find('a.obp-search-item')
+            .map(function(elt){
                 return this.getAttribute('data-selection');
             });
             window.obp.search.model.remove_terms(search_terms);
@@ -91,18 +94,18 @@
         var search = window.obp.search;
         var active_search_terms = search.model.active_search_terms;
         $('.' + search.term_list_item_class ).parent().remove();
-        var li = [];
+        var search_rows = [];
         for (var i = 0; i < search.model.active_search_terms.length; i++) {
-            var new_li = search.view.compiled_templates['search.term-li.handlebars']({
+            var new_row = search.view.compiled_templates['search.term-li.handlebars']({
                 "cls"   : search.term_list_item_class,
                 "term"  : active_search_terms[i]
             });
-            li.push(new_li);
+            search_rows.push(new_row);
         }
-        if (li.length > 0) {
+        if (search_rows.length > 0) {
             $('.obp-search-results-list').each(function(i,elt){
-                var $ul = $(elt);
-                $ul.append(li);
+                var $tbody = $(elt);
+                $tbody.append(search_rows);
             });
             $('.' + search.term_list_item_class).click(function(e) {
                 var term = e.target.parentElement.getAttribute('data-selection');

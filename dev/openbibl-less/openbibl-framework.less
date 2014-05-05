@@ -59,6 +59,7 @@ i {
 
 .obp-search-form {
     position: relative;
+    overflow: visible;
 }
 .obp-search-form  span {
     position: absolute;
@@ -81,11 +82,6 @@ i {
 .panel-heading {
     padding-top: 10px;
     padding-left: 15px;
-}
-
-.obp-browse-panel-body {
-    max-height: 500px;
-    overflow-y: auto;
 }
 
 .navmenu-fixed-left-offcanvas {
@@ -138,4 +134,55 @@ ul.toc span + span {
 
 .obp-search-results-list {
     list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@obp-menu-item-height: 500px;
+@obp-menu-control-height: 75px;
+
+.obp-menu-li {
+    width: 100%;
+    max-height: @obp-menu-item-height;
+}
+
+.obp-menu-panel-checkboxes {
+    overflow-y: scroll;
+    width: 100%;
+    max-height: (@obp-menu-item-height - @obp-menu-control-height);
+}
+
+.obp-search-panel {
+    overflow: visible;
+}
+
+.obp-search-panel-body {
+    margin-left: 20px;
+}
+
+.obp-menu-panel-body {
+    max-height: @obp-menu-item-height;
+    width: 100%;
+    overflow-y: scroll;
+    margin-left: 20px;
+}
+
+.checkbox {
+    padding: 0;
+}
+
+  input[type="checkbox"]
+, input[type="radio"] {
+    display: none;
+}
+  input[type="radio"].obp-sort-input + span
+, input[type="radio"].obp-theme-input + span
+{
+    color: @obp-link-color;
+    font-size: @obp-font-size-base;
+}
+  input[type="checkbox"]:checked + span 
+, input[type="radio"]:checked + span
+{
+    text-decoration: underline;    
 }

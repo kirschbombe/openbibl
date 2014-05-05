@@ -21,7 +21,7 @@
     };
     window.obp.toc.update_toc = function () {
         var $wrapper = $('#bibliographies');
-        var src_sequence = $.map($wrapper.children('div.entry'), function(elt) {
+        var src_sequence = $.map($wrapper.children('div.entry:visible'), function(elt) {
             return $(elt).attr('data-src-index');
         });
         var $toc = $('#toc');

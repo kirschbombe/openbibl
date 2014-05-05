@@ -2,16 +2,19 @@
 "use strict";
     window.obp.browse.init = function() {
         $('.obp-browse-checkbox').click(function(event){
-            var $list = $(event.target).closest('.obp-browse-list')
+            var $target = $(event.target);
+            var $list = $target.closest('.obp-browse-list')
             var item = {
                 term : event.target.getAttribute('data-browse-item'),
                 list : $list.attr('data-ed-list'),
                 mode : $list.find('.obp-filter-mode:checked').val()
             };
-            if (event.target.checked === true) {
-                window.obp.browse.model.add_term(item)
-            } else {
+            if ($target.hasClass('success')) {
+                $target.removeClass('success');
                 window.obp.browse.model.remove_term(item)
+            } else {
+                $target.addClass('success');
+                window.obp.browse.model.add_term(item)
             }
         });
         $('.obp-browse-clear').click(function(event){
@@ -23,7 +26,7 @@
                 mode: list_mode
             });
             $list.find('.obp-browse-checkbox:checked').each(function(i,elt){
-                elt.checked = false;
+                $(elt).click();
             });
             event.preventDefault();
         });
@@ -49,7 +52,7 @@
     window.obp.browse.view.browse_term_change = function() {
         var browse = window.obp.browse;
         // clear UI checkboxes
-        $('.obp-browse-checkbox').map(function(i,elt) {
+        $('.obp-browse-item').map(function(i,elt) {
             elt.checked = false
         });
         // re-sync UI checkboxes with this datamodel
@@ -57,7 +60,7 @@
             var list = browse.model.browse_lists[i]["list"];
             var terms = browse.model.browse_lists[i]["terms"] || [];
             for (var j = 0; j < terms.length; j++) {
-                $('.obp-browse-checkbox[data-browse-item="' + terms[j] + '"]').each(function(i,elt){
+                $('.obp-browse-item[data-browse-item="' + terms[j] + '"]').each(function(i,elt){
                     elt.checked = true;
                 });
             }
