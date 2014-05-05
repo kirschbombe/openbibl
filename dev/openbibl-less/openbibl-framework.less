@@ -181,8 +181,65 @@ ul.toc span + span {
     color: @obp-link-color;
     font-size: @obp-font-size-base;
 }
-  input[type="checkbox"]:checked + span 
-, input[type="radio"]:checked + span
+
+  input[type="checkbox"]:checked + span:before
+, input[type="radio"]:checked + span:before
 {
-    text-decoration: underline;    
+    font-family: 'Glyphicons Halflings';
+    font-size: 50%;
+    content: "\e013\00A0"; // icon: OK
 }
+
+  input[type="checkbox"] + span:before
+, input[type="radio"] + span:before
+{
+  font-family: 'Glyphicons Halflings';
+  font-size: 50%;
+  content: "\00A0\00A0"; // nbsp's
+}
+
+  input + span
+, a:hover
+{
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    color: @obp-link-color;
+}
+
+input[type="checkbox"]:checked + span.obp-browse-item:before
+{
+    font-family: 'Glyphicons Halflings';
+    font-size: 50%;
+    content: "\002B\00A0"; // icon: plus
+}
+input[type="checkbox"] + span.obp-browse-item:before
+{
+  font-family: 'Glyphicons Halflings';
+  font-size: 50%;
+  content: "\00A0\00A0"; // nbsp's
+}
+span.obp-browse-item {
+  display: inline-block;
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+table.obp-control-tbl {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+  .radio input[type="radio"]
+, .checkbox input[type="checkbox"]
+{
+  margin-left: 0; // override; TODO: find where -22px is coming from
+}
+
+  .radio input[type="radio"] + span
+, .checkbox input[type="checkbox"] + span
+{
+  margin-left: 0;
+}
+

@@ -324,11 +324,11 @@
     <!-- make the dropdown menu containing options for visual styles -->
     <xsl:template name="make-theme-menu">
         <div class="obp-menu-panel-body">
-            <table class="table-condensed">
+            <table class="obp-control-tbl">
                 <form>
                     <!-- TODO: make into external parameters -->
                     <xsl:for-each select="document('')/*/obp:css-themes/option">
-                        <tr>
+                        <tr class="obp-control-tbl">
                             <td><label>
                                 <input type="radio" 
                                     name="theme-form" 
@@ -351,9 +351,9 @@
     <xsl:template name="make-sort-menu">
         <div class="obp-menu-panel-body">
 
-            <table class="table-condensed">
+            <table class="obp-control-tbl">
                 <form>
-                    <tr>
+                    <tr class="obp-control-tbl">
                         <td><label>
                             <input type="radio" 
                                    name="sort-form" 
@@ -441,8 +441,8 @@
     <xsl:template name="filter-options">
         <xsl:param name="button-class"/>
 
-        <table class="table-condensed">
-            <tr>
+        <table class="obp-control-tbl">
+            <tr class="obp-control-tbl">
                 <form>
                     <td><label><input
                             class="obp-filter-mode"
