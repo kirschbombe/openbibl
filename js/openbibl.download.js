@@ -23,7 +23,7 @@
         state.appendChild(document.createTextNode(text));
         $('body').append(state);
         // have browser download/save to file
-        var blob = new Blob([document.documentElement.innerHTML], {type: "text/html;charset=utf-8"});
+        var blob = new Blob([document.documentElement.outerHTML], {type: "text/html;charset=utf-8"});
         var filename = document.title + '.html';
         saveAs(blob, filename);
     }

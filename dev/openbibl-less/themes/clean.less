@@ -97,6 +97,11 @@
 @obp-tooltip-arrow-width:         5px;
 @obp-tooltip-arrow-color:         @obp-tooltip-bg;
 
+// success color for active browse items
+@obp-match-color:                 rgba(255,255,204,1) !important;
+@obp-state-success-text:          @obp-text-color;
+@obp-state-success-bg:            lighten(@obp-match-color, 5%);
+
 // --------------------------------------------------
 // non-bootstrap settings
 // --------------------------------------------------
@@ -161,6 +166,6 @@ ul {
 }
 
 .obp-match {
-    background-color: rgba(255,255,204,1) !important;
+    background-color: @obp-match-color !important;
 }
 

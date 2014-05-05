@@ -13,15 +13,17 @@
     }
     window.obp.toc.enable_click = function() {
         $('a.toc-click').click(function(e) {
-            var $elt = $('div[data-src-index="' + $(e.target).attr('data-src-index') + '"]');
-            if ($elt.length == 0) return;
-            $(window).scrollTop($elt.offset().top -
-                $('#bibliographies').offset().top);
-        });        
+            var offset = $('div[data-src-index="' + $(e.target).attr('data-src-index') + '"]').offset().top
+                       - $('#bibliographies').offset().top
+            $('html body').animate({
+                scrollTop: offset
+                }, window.obp.config['scroll_speed']
+            );
+        });
     };
     window.obp.toc.update_toc = function () {
         var $wrapper = $('#bibliographies');
-        var src_sequence = $.map($wrapper.children('div.entry'), function(elt) {
+        var src_sequence = $.map($wrapper.children('div.entry:visible'), function(elt) {
             return $(elt).attr('data-src-index');
         });
         var $toc = $('#toc');

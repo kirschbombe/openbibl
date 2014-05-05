@@ -9,7 +9,6 @@
     exclude-result-prefixes="xs obp tei schema ixsl"
     version="2.0">
 
-    <xsl:import href="openbibl.shared.xsl"/>
     <xsl:import href="openbibl.date.xsl"/>
 
     <xsl:strip-space elements="*"/>

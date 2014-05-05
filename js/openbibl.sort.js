@@ -6,6 +6,11 @@
             // current sort key
             window.obp.sort.sort_entries(window.obp.sort.current_sort_key);
         });
+        // enable sorting
+        $('.obp-sort-input').on('click', function(e) {
+            window.obp.sort.sort_entries(e.target.getAttribute('data-sort-key'));
+            $(this).closest('.obp-menu-li').find('a[data-toggle]').click();
+        });
     }
     window.obp.sort.sort_key_default = 'data-src-index';
     window.obp.sort.current_sort_key = null;

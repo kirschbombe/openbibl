@@ -20,8 +20,10 @@
             i = 0, j = 0,
             result_indices = [],    // indices that should be displayed
             all_indices = [];       // just a list of all bibl entries
-        // restore all saved-off entries 
-        $('#bibliographies').append(obp.storage.retrieve_all());
+        // restore all hidden entries 
+        $('#bibliographies').find('div.entry').each(function(i,elt) {
+            $(elt).show();
+        });
         window.obp.event["target"].trigger(obp.event["events"]["obp:filter-start"]);
         all_indices = this.all_filter_indices();
         result_indices = all_indices; 
@@ -30,16 +32,13 @@
             // if (current_indices.length === 0) continue;
             result_indices = _.intersection(result_indices, current_indices); 
         }
-        var storage_prefix = window.obp.storage.key_div;
         var store_indices = _.difference(all_indices,result_indices);
         // entries to be moved from the #bibliographies to storage
-        var store = {};
         for (i = 0; i < store_indices.length; i++) {
             var $div = $('div[data-src-index="' + store_indices[i] + '"]');
             if ($div.length > 0)
-                store[storage_prefix + i] = $div.remove()[0];
+                $div.hide();
         }
-        window.obp.storage.store(store);
         window.obp.event["target"].trigger(obp.event["events"]["obp:filter-complete"]);
     }
 })();

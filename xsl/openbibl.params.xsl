@@ -12,7 +12,8 @@
     <xsl:param name="saxon-nocache-debug" select="'js/lib/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
     <xsl:param name="saxon-nocache"       select="concat($obp-root, $saxon-nocache-prod)"/>
 
-    <xsl:param name="jquery-js"         select="concat($obp-root, 'js/lib/jquery-2.1.0.min.js')"/>
+    <xsl:param name="jquery-js"         select="concat($obp-root, 'js/lib/jquery-2.1.0.js')"/>
+    
     <xsl:param name="bootstrap-js"      select="concat($obp-root, 'js/lib/bootstrap-3.1.1.min.js')"/>
         
     <xsl:param name="offcanvas-js"      select="concat($obp-root, 'js/lib/bootstrap-offcanvas-3.1.0.js')"/>
@@ -34,13 +35,13 @@
     <xsl:param name="openbibl-js-theme"     select="concat($obp-root, 'js/openbibl.theme.js')"/>
     <xsl:param name="openbibl-js-util"      select="concat($obp-root, 'js/openbibl.util.js')"/>
     <xsl:param name="openbibl-js-filter"    select="concat($obp-root, 'js/openbibl.filter.js')"/>
-    <xsl:param name="openbibl-js-storage"   select="concat($obp-root, 'js/openbibl.storage.js')"/>
     <xsl:param name="openbibl-js-highlight" select="concat($obp-root, 'js/openbibl.highlight.js')"/>
     <xsl:param name="openbibl-js-search"    select="concat($obp-root, 'js/openbibl.search.js')"/>
     <xsl:param name="openbibl-js-browse"    select="concat($obp-root, 'js/openbibl.browse.js')"/>
     <xsl:param name="openbibl-js-query"     select="concat($obp-root, 'js/openbibl.query.js')"/>
     <xsl:param name="openbibl-js-download"  select="concat($obp-root, 'js/openbibl.download.js')"/>
     <xsl:param name="openbibl-js-toc"       select="concat($obp-root, 'js/openbibl.toc.js')"/>
+    <xsl:param name="openbibl-js-tooltip"   select="concat($obp-root, 'js/openbibl.tooltip.js')"/>
 
     <xsl:param name="openbibl-xsl"                 select="concat($obp-root, 'xsl/openbibl.xsl')"/>
     <xsl:param name="openbibl-css"                 select="concat($obp-root, 'css/openbibl.css')"/>

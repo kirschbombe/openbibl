@@ -4,8 +4,11 @@
         this.sources = sources;
         window.obp.event["target"].on(obp.event["events"]["obp:filter-complete"], function() {
             window.obp.highlight.highlight_filter_items();
+            // TODO: work out the uncollapse/recollapse logic 
+            window.obp.highlight.unhide_filter_items();
         });
         window.obp.event["target"].on(obp.event["events"]["obp:filter-start"], function() {
+            window.obp.highlight.hide_filter_items();
             window.obp.highlight.unhighlight_filter_items();
         });
     }
@@ -13,6 +16,16 @@
     window.obp.highlight.match_class = 'obp-match';
     window.obp.highlight.match_attr_preproc = function(str) {
         return str.toUpperCase().trim()
+    }
+    window.obp.highlight.hide_filter_items = function() {
+        $('.obp-match').each(function(i,elt){
+            $(elt).closest('.panel-collapse:not(.collapse)').addClass('collapse')
+        });
+    }
+    window.obp.highlight.unhide_filter_items = function() {
+        $('.obp-match:hidden').each(function(i,elt){
+            $(elt).closest('.panel-collapse.collapse').removeClass('collapse')
+        });
     }
     window.obp.highlight.highlight_filter_items = function() {
         var i;

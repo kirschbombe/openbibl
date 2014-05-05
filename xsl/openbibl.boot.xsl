@@ -23,9 +23,9 @@
                not due to node-set portability issues in XSLT 1.0)
     -->
     <obp:css-themes>
-        <option value="clean.css"   label="Clean">Clean</option>
-        <option value="bookish.css" label="Bookish">Bookish</option>
-        <option value="fiche.css"   label="Fiche">Fiche</option>
+        <option value="clean.css"   label="Clean"    checked="checked">Clean</option>
+        <option value="bookish.css" label="Bookish"  checked="">Bookish</option>
+        <option value="fiche.css"   label="Fiche"    checked="">Fiche</option>
     </obp:css-themes>
 
     <xsl:template match="/">
@@ -78,13 +78,13 @@
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-theme}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-util}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-filter}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-storage}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-highlight}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-search}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-browse}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-query}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-download}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-toc}"></script>
+                <script type="text/javascript" language="javascript" src="{$openbibl-js-tooltip}"></script>
             </xsl:otherwise>
         </xsl:choose>
 
@@ -152,37 +152,47 @@
     </xsl:template>
 
     <xsl:template name="make-navmenu">
-        <ul class="nav navmenu-nav">
-            <li><a class="brand" href="#">Openbibl</a></li>
+        <ul class="nav navmenu-nav obp-navmenu">
+            <li class="obp-menu-li"><a class="brand" href="#">Openbibl</a></li>
+            
             <!-- save button -->
-            <li>
+            <li class="obp-menu-li">
                 <a href="#" class="obp-download-page">Download</a>
             </li>
+
             <!-- theme menu -->
-            <li>
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    Theme <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <xsl:call-template name="make-theme-menu"/>
-                </ul>
+            <li class="obp-menu-li">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" data-target=".obp-theme-toggle">Theme</a>
+                    </div>
+                    <div class="panel-collapse collapse obp-theme-toggle">
+                        <div class="panel-body">
+                            <xsl:call-template name="make-theme-menu"/>
+                        </div>
+                    </div>
+                </div>
             </li>
+
             <!-- sort manu -->
-            <li>
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    Sort<b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <xsl:call-template name="make-sort-menu"/>
-                </ul>
+            <li class="obp-menu-li">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" data-target=".obp-sort-toggle">Sort</a>
+                    </div>
+                    <div class="panel-collapse collapse obp-sort-toggle">
+                        <div class="panel-body">
+                            <xsl:call-template name="make-sort-menu"/>
+                        </div>
+                    </div>
+                </div>
             </li>
+
             <!-- search menu -->
-            <li>
+            <li class="obp-menu-li">
                 <div class="panel panel-default obp-search-panel">
                     <div class="panel-heading">
-                        <a data-toggle="collapse" data-target=".obp-search-toggle">
-                            Search<b class="caret"></b>
-                        </a>
+                        <a data-toggle="collapse" data-target=".obp-search-toggle">Search</a>
                     </div>
                     <div class="panel-collapse collapse obp-search-toggle">
                         <div class="panel-body">
@@ -195,12 +205,11 @@
             <xsl:for-each select="//tei:back/tei:div[@type='editorial']/*">
                 <!-- @id to use for toggling the panel retraction -->
                 <xsl:variable name="toggle-class" select="generate-id(.)"/>
-                <li>
+                <li class="obp-menu-li">
                     <div class="panel panel-default obp-browse-list" data-ed-list="{name(.)}">
                         <div class="panel-heading">
                             <a data-toggle="collapse" data-target=".{$toggle-class}">
                                 <xsl:value-of select="tei:head"/>
-                                <b class="caret"></b>
                             </a>
                         </div>
                         <div class="panel-collapse collapse {$toggle-class}">
@@ -313,103 +322,148 @@
 
     <!-- make the dropdown menu containing options for visual styles -->
     <xsl:template name="make-theme-menu">
-        <!-- TODO: make into external parameters -->
-        <xsl:for-each select="document('')/*/obp:css-themes/option">
-            <li>
-                <a href="#" onclick="javascript:window.obp.change_theme('{@value}')">
-                    <xsl:value-of select="@label"/>
-                </a>
-            </li>
-        </xsl:for-each>
+        <div class="obp-menu-panel-body">
+            <table class="obp-control-tbl">
+                <form>
+                    <!-- TODO: make into external parameters -->
+                    <xsl:for-each select="document('')/*/obp:css-themes/option">
+                        <tr class="obp-control-tbl">
+                            <td><label>
+                                <input type="radio" 
+                                    name="theme-form" 
+                                    class="obp-theme-input" 
+                                    data-stylesheet-file="{@value}">
+                                    <xsl:if test="@checked='checked'">
+                                        <xsl:attribute name="checked">checked</xsl:attribute>
+                                    </xsl:if>
+                                </input>
+                                <span><xsl:value-of select="@label"/></span>
+                            </label></td>
+                        </tr>
+                    </xsl:for-each>
+                </form>
+            </table>
+        </div>
     </xsl:template>
 
     <!-- make sort-by options -->
     <xsl:template name="make-sort-menu">
-        <li>
-            <a href="#" class="obp-sort-anchor" data-sort-key="data-author">Author</a>
-        </li>
-        <li>
-            <a href="#" class="obp-sort-anchor" data-sort-key="data-date">Date</a>
-        </li>
+        <div class="obp-menu-panel-body">
+
+            <table class="obp-control-tbl">
+                <form>
+                    <tr class="obp-control-tbl">
+                        <td><label>
+                            <input type="radio" 
+                                   name="sort-form" 
+                                   class="obp-sort-input" 
+                                   data-sort-key="data-author"
+                                   checked="checked"></input>
+                            <span>Author</span>
+                        </label></td>
+                    </tr>
+                    <tr>
+                        <td><label>
+                            <input type="radio" 
+                                   name="sort-form" 
+                                   class="obp-sort-input" 
+                                   data-sort-key="data-date"></input>
+                            <span>Date</span>
+                        </label></td>
+                    </tr>
+                </form>
+            </table>
+        </div>
     </xsl:template>
 
     <!-- collapsable panel containing the search-term input and results -->
     <xsl:template name="make-search-results">
 
-        <!-- filter any/ filter all -->
-        <xsl:call-template name="filter-options">
-            <xsl:with-param name="button-class" select="'obp-search-clear'"/>
-        </xsl:call-template>
+        <div class="obp-search-panel-body">
+            <!-- filter any/ filter all -->
+            <xsl:call-template name="filter-options">
+                <xsl:with-param name="button-class" select="'obp-search-clear'"/>
+            </xsl:call-template>
 
-        <div class="nav-form">
-            <form class="obp-search-form">
-                <input
-                    autocomplete="off"
-                    class="search-input typeahead obp-search-panel-input"
-                    data-provide="typeahead"
-                    placeholder="Search"
-                    spellcheck="false"
-                    type="text"></input>
-            </form>
+            <div class="nav-form">
+                <form class="obp-search-form">
+                    <input
+                        autocomplete="off"
+                        class="search-input typeahead obp-search-panel-input"
+                        data-provide="typeahead"
+                        placeholder="Search"
+                        spellcheck="false"
+                        type="text"></input>
+                </form>
+            </div>
+            <ul class="list-group obp-search-results-list"></ul>
+
         </div>
-        <ul class="list-group obp-search-results-list"></ul>
     </xsl:template>
 
     <xsl:template name="make-browse-results">
+
+        <div class="obp-menu-panel-body">
+
         <!-- filter any/ filter all -->
         <xsl:call-template name="filter-options">
             <xsl:with-param name="button-class" select="'obp-browse-clear'"/>
         </xsl:call-template>
+        
+        <div class="obp-menu-panel-checkboxes">
 
-        <div class="obp-browse-panel-body">
-
-        <xsl:for-each select="tei:head/following-sibling::*">
-
-            <!-- NOTE: arbitrary @xml:id depth -->
-            <xsl:variable name="xml-id" select=".//@xml:id"/>
-            <xsl:variable name="ref-count" select="count(//@ref[.=concat('#',$xml-id)])"/>
-
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" class="obp-browse-checkbox" data-browse-item="{$xml-id}">
-                        <xsl:if test="$ref-count = 0">
-                            <xsl:attribute name="disabled">disabled</xsl:attribute>
-                        </xsl:if>
-                    </input>
-                    <xsl:text>&#x00A0;</xsl:text>
-                    <span class="obp-browse-item">
-                        <xsl:apply-templates select="." mode="browse-title"/>
-                    </span>
-                </label>
-            </div>
-        </xsl:for-each>
+            <xsl:for-each select="tei:head/following-sibling::*">
+                
+                <!-- NOTE: arbitrary @xml:id depth -->
+                <xsl:variable name="xml-id" select=".//@xml:id"/>
+                <xsl:variable name="ref-count" select="count(//@ref[.=concat('#',$xml-id)])"/>
+                
+                <div class="checkbox">
+                    <label class="browse-label">
+                        <input type="checkbox" class="obp-browse-checkbox" data-browse-item="{$xml-id}">
+                            <!-- TODO: determine if this is more intuitive
+                            <xsl:if test="$ref-count = 0">
+                                <xsl:attribute name="disabled">disabled</xsl:attribute>
+                            </xsl:if>
+                            -->
+                        </input>
+                        <span class="obp-browse-item">
+                            <xsl:apply-templates select="." mode="browse-title"/>
+                        </span>
+                    </label>
+                </div>
+            </xsl:for-each>
+        </div>
         </div>
     </xsl:template>
 
     <xsl:template name="filter-options">
         <xsl:param name="button-class"/>
-        <form>
-            <label>
-                <input
-                    class="obp-filter-mode"
-                    type="radio"
-                    name="{generate-id()}"
-                    value="obp-filter-intersection"
-                    checked="checked"></input>
-                all of
-            </label>
-            <xsl:text>&#x00A0;</xsl:text>
-            <label>
-                <input
-                    class="obp-filter-mode"
-                    type="radio"
-                    name="{generate-id()}"
-                    value="obp-filter-union"></input>
-                any of
-            </label>
-            <xsl:text>&#x00A0;</xsl:text>
-            <button class="{$button-class}">clear</button>
-        </form>
+
+        <table class="obp-control-tbl">
+            <tr class="obp-control-tbl">
+                <form>
+                    <td><label><input
+                            class="obp-filter-mode"
+                            type="radio"
+                            name="{generate-id()}"
+                            value="obp-filter-intersection"
+                            checked="checked"></input>
+                        <span>all</span>
+                    </label></td>
+                    <td><label><input
+                            class="obp-filter-mode"
+                            type="radio"
+                            name="{generate-id()}"
+                            value="obp-filter-union"></input>
+                        <span>any</span>
+                    </label></td>    
+                    <td>
+                        <button class="{$button-class} btn btn-xs" type="submit">clear</button>
+                    </td>
+                </form>
+            </tr>
+        </table>
     </xsl:template>
 
     <xsl:template match="tei:person" mode="browse-title">
