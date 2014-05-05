@@ -78,7 +78,6 @@
     Openbibl.prototype.SaxonCE   = {};
     Openbibl.prototype.search    = {};
     Openbibl.prototype.sort      = {};
-    Openbibl.prototype.storage   = {};
     Openbibl.prototype.theme     = {};
     Openbibl.prototype.tooltip   = {};
     Openbibl.prototype.toc       = {};

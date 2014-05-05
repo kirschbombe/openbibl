@@ -35,7 +35,6 @@
     <xsl:param name="openbibl-js-theme"     select="concat($obp-root, 'js/openbibl.theme.js')"/>
     <xsl:param name="openbibl-js-util"      select="concat($obp-root, 'js/openbibl.util.js')"/>
     <xsl:param name="openbibl-js-filter"    select="concat($obp-root, 'js/openbibl.filter.js')"/>
-    <xsl:param name="openbibl-js-storage"   select="concat($obp-root, 'js/openbibl.storage.js')"/>
     <xsl:param name="openbibl-js-highlight" select="concat($obp-root, 'js/openbibl.highlight.js')"/>
     <xsl:param name="openbibl-js-search"    select="concat($obp-root, 'js/openbibl.search.js')"/>
     <xsl:param name="openbibl-js-browse"    select="concat($obp-root, 'js/openbibl.browse.js')"/>

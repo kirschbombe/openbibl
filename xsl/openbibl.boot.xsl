@@ -78,7 +78,6 @@
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-theme}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-util}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-filter}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-storage}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-highlight}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-search}"></script>
                 <script type="text/javascript" language="javascript" src="{$openbibl-js-browse}"></script>
