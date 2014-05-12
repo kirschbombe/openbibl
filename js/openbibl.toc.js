@@ -15,7 +15,7 @@
         $('a.toc-click').click(function(e) {
             var offset = $('div[data-src-index="' + $(e.target).attr('data-src-index') + '"]').offset().top
                        - $('#bibliographies').offset().top
-            $('html body').animate({
+            $('html,body').animate({
                 scrollTop: offset
                 }, window.obp.config['scroll_speed']
             );
