@@ -19,12 +19,19 @@
         })
         // serialize application state, for search/browse
         var state = document.createElement('script');
-        var text = 'window.obp.bibliographies=' + JSON.stringify(window.obp.bibliographies);
+
+        // save off window.obp.bibliographies data
+        var text = 'window.obp.bibliographies=' + JSON.stringify(window.obp.bibliographies) + ';';
         state.appendChild(document.createTextNode(text));
+
+        // save off window.obp.config data
+        text = 'window.obp.config=' + JSON.stringify(window.obp.config) + ';';
+        state.appendChild(document.createTextNode(text));
+
         $('body').append(state);
         // have browser download/save to file
         var blob = new Blob([document.documentElement.outerHTML], {type: "text/html;charset=utf-8"});
-        var filename = document.title + '.html';
+        var filename = window.obp.bibliographies.xml.replace(/#.*$/,'').replace(/.*?([^/\\]+)$/,'$1').replace(/xml$/, 'html');
         saveAs(blob, filename);
     }
 })();

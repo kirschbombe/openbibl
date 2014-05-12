@@ -32,8 +32,8 @@
     window.obp.search.highlight_items = function() {
         return this.model.highlight_items();
     }
-    window.obp.search.handle_query_data = function(data) {
-        this.model.handle_query_data(data);
+    window.obp.search.handle_query_data = function() {
+        this.model.handle_query_data();
     }
     window.obp.search.remove_terms = function(terms) {
         window.obp.search.model.remove_terms(terms);
@@ -70,25 +70,32 @@
     }
     window.obp.search.view.retrieve_template = function(template) {
         var view = this;
-        var path = window.obp.config['template_dir'] + '/' + template;
-        $.ajax({
-            url:        path,
-            cache:      true,
-            success:    function(data) {
-                view.compiled_templates[template] =
-                    Handlebars.compile(data);
-            },
-            error : function(jqXHR, textStatus, errorThrown) {
-                if (window.obp.debug) {
-                    window.obp.console.log(
-                        "Seach-template AJAX error for template '"
-                        + template
-                        +"': "
-                        + textStatus
-                    );
+        if (window.obp.config.templates[template] === undefined) {
+            var path = window.obp.config['paths']['template_dir'] + '/' + template;
+            $.ajax({
+                url:        path,
+                cache:      true,
+                success:    function(data) {
+                    window.obp.config.templates[template] = data;
+                    view.compiled_templates[template] =
+                        Handlebars.compile(data);
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                    if (window.obp.debug) {
+                        window.obp.console.log(
+                            "Seach-template AJAX error for template '"
+                            + template
+                            +"': "
+                            + textStatus
+                        );
+                    }
                 }
-            }
-        });
+            });
+       } else {
+            view.compiled_templates[template] = Handlebars.compile(
+                window.obp.config.templates[template]
+            );
+       }
     }
     window.obp.search.view.search_change = function() {
         var search = window.obp.search;
@@ -143,10 +150,11 @@
     window.obp.search.model.to_key = function(item) {
         return String(item).toUpperCase();
     }
-    window.obp.search.model.handle_query_data = function(data) {
+    window.obp.search.model.handle_query_data = function() {
         var search = window.obp.search;
         var i, j;
         var termmap = {};
+        var data = window.obp.config.query.data;
         var len = data["search"].length;
         var search_data = data["search"];
         for (i = 0; i < len; i+=2) {

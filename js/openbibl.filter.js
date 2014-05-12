@@ -8,7 +8,7 @@
         this.sources = sources;
         window.obp.event["target"].on(obp.event["events"]["obp:filter-change"], function() {
             window.obp.filter.filter_entries();
-        });        
+        });
     }
     window.obp.filter.all_filter_indices = function() {
         var all_indices = []
@@ -20,17 +20,17 @@
             i = 0, j = 0,
             result_indices = [],    // indices that should be displayed
             all_indices = [];       // just a list of all bibl entries
-        // restore all hidden entries 
+        // restore all hidden entries
         $('#bibliographies').find('div.entry').each(function(i,elt) {
             $(elt).show();
         });
         window.obp.event["target"].trigger(obp.event["events"]["obp:filter-start"]);
         all_indices = this.all_filter_indices();
-        result_indices = all_indices; 
+        result_indices = all_indices;
         for (i = 0; i < this.sources.length; i++) {
             var current_indices = this.sources[i].filter_indices();
             // if (current_indices.length === 0) continue;
-            result_indices = _.intersection(result_indices, current_indices); 
+            result_indices = _.intersection(result_indices, current_indices);
         }
         var store_indices = _.difference(all_indices,result_indices);
         // entries to be moved from the #bibliographies to storage

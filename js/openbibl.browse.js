@@ -40,8 +40,8 @@
     window.obp.browse.highlight_items = function() {
         return this.model.highlight_items();
     }
-    window.obp.browse.handle_query_data = function(data) {
-        this.model.handle_query_data(data);
+    window.obp.browse.handle_query_data = function() {
+        this.model.handle_query_data();
     }
     window.obp.browse.filter_mode_change = function(event) {
         window.obp.browse.model.filter_mode_change(event);
@@ -72,8 +72,8 @@
     window.obp.browse.model = {};
     window.obp.browse.model.browse_data = null;
     window.obp.browse.model.browse_lists = [];
-    window.obp.browse.model.handle_query_data = function(data) {
-        window.obp.browse.model.browse_data = data["browse"];
+    window.obp.browse.model.handle_query_data = function() {
+        window.obp.browse.model.browse_data = window.obp.config.query.data.browse;
     }
     window.obp.browse.model.filter_mode_change = function(event) {
         var model = this;

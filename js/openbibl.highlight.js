@@ -4,7 +4,7 @@
         this.sources = sources;
         window.obp.event["target"].on(obp.event["events"]["obp:filter-complete"], function() {
             window.obp.highlight.highlight_filter_items();
-            // TODO: work out the uncollapse/recollapse logic 
+            // TODO: work out the uncollapse/recollapse logic
             window.obp.highlight.unhide_filter_items();
         });
         window.obp.event["target"].on(obp.event["events"]["obp:filter-start"], function() {
@@ -37,7 +37,7 @@
             }
         }
         for (i = 0; i < items["element"].length; i++) {
-            this.highlight_elt(items["element"][i]);   
+            this.highlight_elt(items["element"][i]);
         }
         for (i = 0; i < items["term"].length; i++) {
             this.highlight_term(items["term"][i]);

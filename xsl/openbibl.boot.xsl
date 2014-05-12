@@ -16,7 +16,6 @@
     <xsl:preserve-space elements="*"/>
 
     <xsl:include href="openbibl.params.xsl"/>
-    <xsl:include href="openbibl.date.xsl"/>
 
     <!-- TODO: debug "document('openbibl.params.xsl)/*/obp:css-themes" issue
         unless it is resolved by externalizing params (probably
@@ -93,15 +92,11 @@
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
         <script id="obp-saxonce-nocache" type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
         <script id="obp-saxonce-onload" type="text/javascript" language="javascript">
+            window.obp.config.paths['obp_root'] = '<xsl:value-of select="$obp-root"/>';
             var onSaxonLoad = function() {
                 window.obp.bibliographies.xml = document.location.href;
                 window.obp.bibliographies.xsl ='<xsl:value-of select="$openbibl-xsl"/>';
-                window.obp.SaxonCE.onSaxonLoad(
-                    Saxon,                          // pass reference to Saxon object to avoid scoping issues
-                    window.obp.bibliographies.xsl,  // openbibl.xsl stylesheet path
-                    window.obp.bibliographies.xml,  // TEI XML document path
-                    {}                              // openbibl.xsl stylesheet parameters
-                );
+                window.obp.onSaxonLoad(Saxon);
             }
         </script>
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
@@ -153,8 +148,7 @@
 
     <xsl:template name="make-navmenu">
         <ul class="nav navmenu-nav obp-navmenu">
-            <li class="obp-menu-li"><a class="brand" href="#">Openbibl</a></li>
-            
+
             <!-- save button -->
             <li class="obp-menu-li">
                 <a href="#" class="obp-download-page">Download</a>
@@ -316,7 +310,7 @@
                 </xsl:for-each>
             </span>
             <xsl:text> | </xsl:text>
-            <span>Published using the Open &lt;bibl&gt; Project</span>
+            <span>Published using the <a href="https://github.com/kirschbombe/openbibl" target="_blank">Open &lt;bibl&gt;</a> Project</span>
         </div>
     </xsl:template>
 
@@ -329,9 +323,9 @@
                     <xsl:for-each select="document('')/*/obp:css-themes/option">
                         <tr class="obp-control-tbl">
                             <td><label>
-                                <input type="radio" 
-                                    name="theme-form" 
-                                    class="obp-theme-input" 
+                                <input type="radio"
+                                    name="theme-form"
+                                    class="obp-theme-input"
                                     data-stylesheet-file="{@value}">
                                     <xsl:if test="@checked='checked'">
                                         <xsl:attribute name="checked">checked</xsl:attribute>
@@ -354,9 +348,9 @@
                 <form>
                     <tr class="obp-control-tbl">
                         <td><label>
-                            <input type="radio" 
-                                   name="sort-form" 
-                                   class="obp-sort-input" 
+                            <input type="radio"
+                                   name="sort-form"
+                                   class="obp-sort-input"
                                    data-sort-key="data-author"
                                    checked="checked"></input>
                             <span>Author</span>
@@ -364,9 +358,9 @@
                     </tr>
                     <tr>
                         <td><label>
-                            <input type="radio" 
-                                   name="sort-form" 
-                                   class="obp-sort-input" 
+                            <input type="radio"
+                                   name="sort-form"
+                                   class="obp-sort-input"
                                    data-sort-key="data-date"></input>
                             <span>Date</span>
                         </label></td>
@@ -409,15 +403,15 @@
         <xsl:call-template name="filter-options">
             <xsl:with-param name="button-class" select="'obp-browse-clear'"/>
         </xsl:call-template>
-        
+
         <div class="obp-menu-panel-checkboxes">
 
             <xsl:for-each select="tei:head/following-sibling::*">
-                
+
                 <!-- NOTE: arbitrary @xml:id depth -->
-                <xsl:variable name="xml-id" select=".//@xml:id"/>
+                <xsl:variable name="xml-id" select="string(.//@xml:id)"/>
                 <xsl:variable name="ref-count" select="count(//@ref[.=concat('#',$xml-id)])"/>
-                
+
                 <div class="checkbox">
                     <label class="browse-label">
                         <input type="checkbox" class="obp-browse-checkbox" data-browse-item="{$xml-id}">
@@ -457,7 +451,7 @@
                             name="{generate-id()}"
                             value="obp-filter-union"></input>
                         <span>any</span>
-                    </label></td>    
+                    </label></td>
                     <td>
                         <button class="{$button-class} btn btn-xs" type="submit">clear</button>
                     </td>
