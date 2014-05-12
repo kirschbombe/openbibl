@@ -18,8 +18,8 @@
             "dataType": "json",
             "success":  window.obp.query.handle_query_success,
             "error" : function(jqXHR, textStatus, errorThrown) {
-                console.log('File "' +   + '" not available. Requesting index data be generated.');
-                window.obp.query.request_saxon_query
+                console.log('File "' + file  + '" not available. Requesting index data be generated.');
+                window.obp.query.request_saxon_query();
             }
         });
     };
@@ -33,19 +33,20 @@
             subscribers[i].handle_query_data();
     };
     window.obp.query.request_saxon_query = function() {
+        var callback = function(data) {
+            var json;
+            try {
+                json = JSON.parse(data.getResultDocument().textContent);
+            } catch (e) {
+                console.log('Failure to generate query data: ' + e.toString());
+            }
+            window.obp.query.handle_query_success(json);
+        };
         window.obp.SaxonCE.requestQueryTransform(
             window.obp.config.paths['query_xsl'],
             window.obp.bibliographies.xml,
             [],
-            function(data) {
-                var json;
-                try {
-                    json = JSON.parse(data.getResultDocument().textContent);
-                } catch (e) {
-                    console.log('Failure to generate query data: ' + e.toString());
-                }
-                this.handle_query_success(json);
-            }
+            callback
         );
     };
 })();
