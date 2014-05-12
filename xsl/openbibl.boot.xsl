@@ -317,8 +317,8 @@
     <!-- make the dropdown menu containing options for visual styles -->
     <xsl:template name="make-theme-menu">
         <div class="obp-menu-panel-body">
-            <table class="obp-control-tbl">
-                <form>
+            <form>
+                <table class="obp-control-tbl">
                     <!-- TODO: make into external parameters -->
                     <xsl:for-each select="document('')/*/obp:css-themes/option">
                         <tr class="obp-control-tbl">
@@ -335,17 +335,16 @@
                             </label></td>
                         </tr>
                     </xsl:for-each>
-                </form>
-            </table>
+                </table>
+            </form>
         </div>
     </xsl:template>
 
     <!-- make sort-by options -->
     <xsl:template name="make-sort-menu">
         <div class="obp-menu-panel-body">
-
-            <table class="obp-control-tbl">
-                <form>
+            <form>
+                <table class="obp-control-tbl">
                     <tr class="obp-control-tbl">
                         <td><label>
                             <input type="radio"
@@ -365,8 +364,8 @@
                             <span>Date</span>
                         </label></td>
                     </tr>
-                </form>
-            </table>
+                </table>
+            </form>
         </div>
     </xsl:template>
 
@@ -433,10 +432,9 @@
 
     <xsl:template name="filter-options">
         <xsl:param name="button-class"/>
-
-        <table class="obp-control-tbl">
-            <tr class="obp-control-tbl">
-                <form>
+        <form>
+            <table class="obp-control-tbl">
+                <tr class="obp-control-tbl">
                     <td><label><input
                             class="obp-filter-mode"
                             type="radio"
@@ -455,9 +453,9 @@
                     <td>
                         <button class="{$button-class} btn btn-xs" type="submit">clear</button>
                     </td>
-                </form>
-            </tr>
-        </table>
+                </tr>
+            </table>
+        </form>
     </xsl:template>
 
     <xsl:template match="tei:person" mode="browse-title">
