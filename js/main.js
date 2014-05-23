@@ -61,6 +61,7 @@ define(
     }
     filter.init([browse,search]);
     highlight.init([browse,search]);
+    browse.init();
     search.init();
     _.templateSettings = { 
         interpolate: (new RegExp(obpconfig.template_pattern)) 

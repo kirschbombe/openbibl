@@ -2,22 +2,11 @@ define(
   [ 'module', 'obpconfig', 'obpstate', 'jquery', 'obpev', 'underscore', '../filter' ]
 , function(module,obpconfig,obpstate,$,obpev,_,filter) {
     return {
-          browse_data       : null
+          init : function() {}
+        , browse_data       : null
         , browse_lists      : []
         , handle_query_data : function() {
             this.browse_data = obpstate.query.data.browse;
-        }
-        , filter_mode_change : function(event) {
-            var $this = $(event.target);
-            var list_type = $this.closest('.obp-browse-list').attr('data-ed-list');
-            if (list_type !== undefined) {
-                var browse_mode = $this.val();
-                for (var i = 0; i < this.browse_lists.length; i++) {
-                    if (this.browse_lists[i]["list"] === list_type) {
-                        this.browse_lists[i]["mode"] = browse_mode;
-                    }
-                }
-            }
         }
         , toggle_term : function(item) {
             var list = item.list;
@@ -42,7 +31,7 @@ define(
                 this.add_term(browse_obj,term,mode,current_terms)
             } else {
                 this.remove_term(browse_obj,term,mode,current_terms);
-            }            
+            }
         }
         , add_term : function(browse_obj,term,mode,current_terms) {
             current_terms.push(term);
@@ -71,7 +60,7 @@ define(
                     , list  : list
                     , mode  : mode
                 };
-            }      
+            }
             browse_obj.terms = [];
             browse_obj.mode = mode;
             this.browse_lists.push(browse_obj);
@@ -103,6 +92,14 @@ define(
                 }
             }
             return result_indices;
+        }
+        , filter_mode_change : function(list_type,new_mode) {
+            for (var i = 0; i < this.browse_lists.length; i++) {
+                if( this.browse_lists[i]["list"] === list_type) {
+                    this.browse_lists[i]["mode"] = new_mode;
+                    break;
+                }
+            }
         }
     }
 });
