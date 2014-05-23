@@ -96,10 +96,13 @@ define(
                 }
                 module.exports.onSaxonLoad();
             } else {
-                window.setInterval(function() {
-                    module.exports.saxonLoadedCB();
+                if (obpstate.saxonInterval === null) {
+                    obpstate.saxonInterval = window.setInterval(
+                        function() {
+                            module.exports.saxonLoadedCB();
+                        }, obpconfig.saxonPollInterval
+                    );
                 }
-                , obpconfig.saxonPollInterval);
             }
         };
         module.exports.saxonLoadedCB();
