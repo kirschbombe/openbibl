@@ -28,9 +28,6 @@ define(
     obpev.subscribe("obp:browse-term-change", module.id, function() {
         view.browse_term_change();
     });
-    obpev.subscribe("obp:filter-mode-change", module.id, function() {
-        model.filter_mode_change(event);
-    });    
     return {
         filter_indices : function() {
             return model.filter_indices();
