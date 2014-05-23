@@ -63,49 +63,30 @@
             <xsl:text>&gt;![endif]</xsl:text>
         </xsl:comment>
 
-        <!-- load jQuery before OBP javascript, all other after -->
-        <script type="text/javascript" language="javascript" src="{$jquery-js}"></script>
+        <!-- load openbibl and dependencies-->
+        <script data-main="{$obp-js-main}" src="{$require-js}"></script>
+        <script type="text/javascript" language="javascript">
+            require.config({
+              baseUrl : '<xsl:value-of select="$obp-root-js"/>'
+            });
+            window.obp = {
+                  appdir : '<xsl:value-of select="$obp-root"/>'
+                , bibliographies : {
+                      xml : document.location.href
+                    , xsl : '<xsl:value-of select="$openbibl-xsl"/>'
+                }
+                , saxonLoaded : false
+            };
+        </script>
 
-        <!-- TODO: xsl:if on debug state to use minified or maxified -->
-        <xsl:choose>
-            <xsl:when test="false()">
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-min}"></script>
-            </xsl:when>
-            <xsl:otherwise>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-cls}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-sort}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-theme}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-util}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-filter}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-highlight}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-search}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-browse}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-query}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-download}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-toc}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-tooltip}"></script>
-            </xsl:otherwise>
-        </xsl:choose>
-
-        <script id="obp-saxonce-lib" type="text/javascript" language="javascript" src="{$openbibl-js-saxon}"></script>
         <!-- load Saxon; declare onload callback for Saxon-CE,
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
         <script id="obp-saxonce-nocache" type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
         <script id="obp-saxonce-onload" type="text/javascript" language="javascript">
-            window.obp.config.paths['obp_root'] = '<xsl:value-of select="$obp-root"/>';
             var onSaxonLoad = function() {
-                window.obp.bibliographies.xml = document.location.href;
-                window.obp.bibliographies.xsl ='<xsl:value-of select="$openbibl-xsl"/>';
-                window.obp.onSaxonLoad(Saxon);
-            }
+                window.obp.saxonLoaded = true;
+            };
         </script>
-        <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$offcanvas-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$cookie-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$typeahead-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$underscore-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$handlebars-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$filesaver-js}"></script>
     </xsl:template>
 
     <!-- /html/body -->
