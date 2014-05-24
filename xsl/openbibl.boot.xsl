@@ -91,10 +91,6 @@
         <script type="text/javascript" language="javascript" src="{$jquery-js}"></script>
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
         <script type="text/javascript" language="javascript" src="{$offcanvas-js}"></script>
-        <!-- TODO: determine why this panel is expanding -->
-        <script type="text/javascript">
-            $('.obp-theme-toggle').collapse();
-        </script>
     </xsl:template>
 
     <!-- /html/body -->

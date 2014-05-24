@@ -7,11 +7,11 @@ define(
             module.exports.change_theme($(this).attr('data-stylesheet-file'));
             $(this).closest('.obp-menu-li').find('a[data-toggle]').click();
         });
-        var stored = $.cookie('theme-stylesheet');
-        $('.obp-theme-input[data-stylesheet-file="' + stored + '"]').click();
+        module.exports.change_theme($.cookie('theme-stylesheet'));
     });
     module.exports.change_theme = function(stylesheet) {
-        if (stylesheet === undefined) return;
+        if (stylesheet === undefined || stylesheet === '') return;
+        $('.obp-theme-input[data-stylesheet-file="' + stylesheet + '"]').prop('checked', 'checked');
         var $theme_css = $('#theme-css');
         $.cookie('theme-stylesheet',stylesheet);
         var parts = $theme_css.attr('href').split('/');
