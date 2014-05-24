@@ -2,7 +2,7 @@
 require.config({ 
       paths : {
           'domReady'    : 'lib/domReady-2.0.1'
-        , 'jquery'      : 'lib/jquery-2.1.0'
+        , 'jquery'      : 'lib/jquery-2.1.0.min'
         , 'bootstrap'   : 'lib/bootstrap-3.0.1.min'
         , 'offcanvas'   : 'lib/bootstrap-offcanvas-3.1.0'
         , 'typeahead'   : 'lib/bootstrap-typeahead-2.3.2'
@@ -31,15 +31,12 @@ require.config({
     }
 });
 
-// TODO: need obp name?
-// the modules are passed here, although not used, to trigger
-// initialization
 define(
   [  'module', 'require', 'domReady', 'jquery', 'underscore',
      'obpconfig', 'obpev', 'obpstate', 
      'filter', 'browse', 'search', 'query', 'highlight',
      'saxon', 'download', 'sort', 'theme', 'toc', 'tooltip',
-     'bootstrap'
+     'bootstrap', 'offcanvas'
   ]
 , function(module,require,domReady,$,_,obpconfig,obpev,obpstate,
            filter,browse,search,query,highlight, saxon, download
