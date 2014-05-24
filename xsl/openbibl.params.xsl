@@ -29,6 +29,10 @@
     <xsl:variable name="obp-js-main"    select="concat($obp-root-js, 'main.js')"/>
     <xsl:variable name="require-js"     select="concat($obp-root-js, 'lib/require-2.1.11.js')"/>
 
+    <xsl:variable name="jquery-js"      select="concat($obp-root-js, 'lib/jquery-2.1.0.min.js')"/>
+    <xsl:variable name="bootstrap-js"   select="concat($obp-root-js, 'lib/bootstrap-3.1.1.min.js')"/>
+    <xsl:variable name="offcanvas-js"   select="concat($obp-root-js, 'lib/bootstrap-offcanvas-3.1.0.js')"/>
+
     <xsl:variable name="saxon-nocache-prod"  select="'js/lib/saxon-ce/1.1/Saxonce.nocache.js'"/>
     <xsl:variable name="saxon-nocache-debug" select="'js/lib/saxon-ce/1.1/debug/Saxonce.nocache.js'"/>
 
