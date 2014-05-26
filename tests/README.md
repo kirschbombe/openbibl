@@ -29,8 +29,8 @@ Current level of coverage:
         │   │   └── view.js
         │   ├── browse.js
    x    │   ├── config.js
-        │   ├── download.js
-        │   ├── event.js
+   /    │   ├── download.js
+   x    │   ├── event.js
         │   ├── filter.js
         │   ├── highlight.js
         │   ├── query.js

@@ -7,7 +7,7 @@ define(
         describe('load/initialization', function() {
             it('load', function(){
                 expect(browse).toBeDefined();
-            }); // it    
+            }); // it
             it('initialized state', function() {
                 expect(browse.filter_indices()).toEqual([]);
                 expect(browse.highlight_items()).toEqual(
@@ -15,7 +15,7 @@ define(
                 );
             }); // it
         }); // describe
-    
+
         describe('click events', function() {
             beforeEach(function() {
                 loadFixtures('otherEurope.html');
@@ -30,7 +30,7 @@ define(
                  expect(obpev.raise).toHaveBeenCalledWith('obp:browse-term-change', 'browse');
                  expect(obpev.raise).toHaveBeenCalledWith('obp:filter-change', 'browse');
             }); // it
-            it('.obp-browse-checkbox', function() { 
+            it('.obp-browse-checkbox', function() {
                  var spyEvent = spyOnEvent('.obp-browse-checkbox', 'click');
                  $('.obp-browse-checkbox').first().click();
                  expect('click').toHaveBeenTriggeredOn('.obp-browse-checkbox');
@@ -39,7 +39,7 @@ define(
                  expect(obpev.raise).toHaveBeenCalledWith('obp:filter-change', 'browse');
             }); // it
         }); // describe
-        
+
         describe('model messaging', function(){
             it('model called to update query data', function() {
                 browse.init();
@@ -49,6 +49,6 @@ define(
                 expect(model.handle_query_data).toHaveBeenCalled();
             }); // it
         }); // describe
-    
+
     });
 });

@@ -8,7 +8,7 @@
         , 'jasmine-html'   : 'tests/js/lib/jasmine-2.0.0/jasmine-html'
         , 'jasmine-jquery' : 'tests/js/lib/jasmine-jquery-2.1.0'
         , 'boot'           : 'tests/js/lib/jasmine-2.0.0/boot'
-      
+
         , 'domReady'    : 'js/lib/domReady-2.0.1'
         , 'jquery'      : 'js/lib/jquery-2.1.0'
         , 'typeahead'   : 'js/lib/bootstrap-typeahead-2.3.2'
@@ -55,9 +55,9 @@
       , 'tests/js/spec/openbibl/browse/view'
 */
       , 'tests/js/spec/openbibl/config'
-/*      , 'tests/js/spec/openbibl/download'
-        , 'tests/js/spec/openbibl/event
-        , 'tests/js/spec/openbibl/filter
+      , 'tests/js/spec/openbibl/download'
+      , 'tests/js/spec/openbibl/event'
+/*        , 'tests/js/spec/openbibl/filter
         , 'tests/js/spec/openbibl/highlight
         , 'tests/js/spec/openbibl/query
         , 'tests/js/spec/openbibl/saxon
