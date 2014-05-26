@@ -12,6 +12,7 @@
         <folder path="js/"/>
         <folder path="lod/"/>
         <folder path="TEI/"/>
+        <folder path="tests/"/>
         <folder path="xsl/"/>
         <file name="LICENSE"/>
         <file name="README.md"/>

@@ -1,12 +1,12 @@
 define(
-  [ 'module', 'obpconfig', 'obpstate', 'jquery', 'obpev', 'underscore', '../filter' ]
-, function(module,obpconfig,obpstate,$,obpev,_,filter) {
+  [ 'module', 'obpconfig', 'jquery', 'obpev', 'underscore', 'filter' ]
+, function(module,obpconfig,$,obpev,_,filter) {
     return {
           init : function() {}
         , browse_data       : null
         , browse_lists      : []
-        , handle_query_data : function() {
-            this.browse_data = obpstate.query.data.browse;
+        , handle_query_data : function(new_query_data) {
+            this.browse_data = new_query_data;
         }
         , toggle_term : function(item) {
             var list = item.list;
@@ -43,6 +43,21 @@ define(
             browse_obj.terms = _.difference(_.toArray(current_terms),term);
             browse_obj.mode = mode;
             this.browse_lists.push(browse_obj);
+        }
+        , highlight_items : function() {
+            var items = [];
+            var lists = this.browse_lists;
+            for (var i = 0; i < lists.length; i++) {
+                var checked_items = lists[i]["terms"] || [];
+                for (var j = 0; j < checked_items.length; j++) {
+                    items.push(
+                          "[data-ed-ref='"
+                        + checked_items[j]
+                        + "']"
+                    );
+                }
+            }
+            return { "element" : items };
         }
         , remove_terms : function(item) {
             var list = item.list;

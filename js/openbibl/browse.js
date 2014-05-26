@@ -1,6 +1,6 @@
 define(
-[ 'module', 'jquery', 'obpev', './browse/model', './browse/view' ]
-, function(module, $, obpev, model, view) {
+[ 'module', 'jquery', 'obpev', 'obpstate', 'browse/model', 'browse/view' ]
+, function(module, $, obpev, obpstate, model, view) {
     return {
           init : function() {
             model.init();
@@ -37,22 +37,7 @@ define(
             return model.highlight_items();
         }
         , handle_query_data : function() {
-            model.handle_query_data();
-        }
-        , highlight_items : function() {
-            var items = [];
-            var lists = model.browse_lists;
-            for (var i = 0; i < lists.length; i++) {
-                var checked_items = lists[i]["terms"] || [];
-                for (var j = 0; j < checked_items.length; j++) {
-                    items.push(
-                          "[data-ed-ref='"
-                        + checked_items[j]
-                        + "']"
-                    );
-                }
-            }
-            return { "element" : items };
+            model.handle_query_data(obpstate.query.data.browse);
         }
     };
 });

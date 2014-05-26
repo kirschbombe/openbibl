@@ -1,5 +1,5 @@
 define(
-  [ 'module', 'jquery', 'obpev', './search/model', './search/view' ]
+  [ 'module', 'jquery', 'obpev', 'search/model', 'search/view' ]
 , function(module,$,obpev,model,view) {
     // set focus for search <input> when made visible
     $('.obp-search-panel').bind('shown.bs.collapse', function() {

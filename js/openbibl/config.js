@@ -1,12 +1,12 @@
 define( []
 , function() {
-    return {
+    var config = {
           debug : false
-        , console : (typeof console == 'object') 
-                  ? console 
+        , console : (typeof console == 'object')
+                  ? console
                   : { log : function(){} }
         , saxonLogLevel : 'OFF'     // SEVERE, OFF, WARINING, INFO, CONFIG, FINE, FINER, FINEST
-        , saxonPollInterval: 100    // time in ms for polling for Saxon-CE load state 
+        , saxonPollInterval: 100    // time in ms for polling for Saxon-CE load state
 
           // project paths are relative to the obp root directory
         , paths : {
@@ -24,9 +24,16 @@ define( []
         , typeahead : {
             list_len: 20
         }
-        , rebase : function(obj) {
-            for (var key in obj)
-                if (this.hasOwnProperty(key)) this[key] = obj[key];
+    };
+    config.rebase = function(obj) {
+        if (typeof obj !== "object") throw "obp.config.rebase() requires an object";
+        for (var key in obj) {
+            if (this.hasOwnProperty(key)) {
+                this[key] = obj[key];
+            } else {
+                throw "Unsupported config key in obp.config.rebase: " + key;
+            }
         }
     }
+    return config;
 });

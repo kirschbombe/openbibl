@@ -16,9 +16,18 @@
 
     <!-- #result is the wrapper element used in the JS -->
     <xsl:template match="/">
-        <xsl:result-document href="#bibliographies" method="ixsl:append-content">
-            <xsl:apply-templates select="//tei:div"/>
-        </xsl:result-document>
+        <xsl:choose>
+            <!-- for use in browser: have js processor handle result content -->
+            <xsl:when test="system-property('xsl:product-name') = 'Saxon-CE'">
+                <xsl:result-document href="#bibliographies" method="ixsl:append-content">
+                    <xsl:apply-templates select="//tei:div"/>
+                </xsl:result-document>
+            </xsl:when>
+            <!-- for use in testing: serialize to output -->
+            <xsl:otherwise>
+                <xsl:apply-templates select="//tei:div"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- header info used in the booting XSLT 1.0 stylesheet -->

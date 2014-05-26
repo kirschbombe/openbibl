@@ -1,9 +1,6 @@
 define(
   [ 'module', 'jquery', 'domReady', 'obpconfig' ]
 , function(module,$,domReady,obpconfig) {
-    domReady(function() {
-        //module.target = $(document.getElementsByTagName('body')[0]);
-    });
     return {
          name : 'openbibl.event'
        , events: {
