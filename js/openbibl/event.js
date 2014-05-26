@@ -2,8 +2,7 @@ define(
   [ 'module', 'jquery', 'domReady', 'obpconfig' ]
 , function(module,$,domReady,obpconfig) {
     return {
-         name : 'openbibl.event'
-       , events: {
+         events: {
              "obp:filter-start"          : {}
            , "obp:filter-change"         : {}
            , "obp:filter-mode-change"    : {}
@@ -15,14 +14,14 @@ define(
        , subscribe : function(ev,obj,cb) {
             if (obpconfig.debug) obpconfig.console.log(obj + ' subscribed ' + ev);
             if (!(ev in this.events)) {
-               throw "Unsupported event subscription for '" 
+               throw "Unsupported event subscription for '"
                      + ev + "' from object '" + obj + "'";
             }
            this.events[ev][obj] = cb;
        }
        , unsubscribe : function(ev,obj) {
             if (!(ev in this.events)) {
-               throw "Unsupported event subscription for '" 
+               throw "Unsupported event subscription for '"
                      + ev + "' from object '" + obj + "'";
             }
             delete this.events[ev][obj];
@@ -30,13 +29,13 @@ define(
        , raise : function(ev,obj) {
             if (obpconfig.debug) obpconfig.console.log(obj + ' raised ' + ev);
             if (!(ev in this.events)) {
-               throw "Unsupported event subscription for '" 
+               throw "Unsupported event subscription for '"
                      + ev + "' from object '" + obj + "'";
             }
             var subscribers = this.events[ev] || {};
             for (var obj in subscribers) {
                 subscribers[obj]();
-            } 
+            }
        }
     }
 });
