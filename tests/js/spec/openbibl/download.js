@@ -1,6 +1,6 @@
 define(
   ['module', 'jquery', 'jasmine-jquery', 'obpstate']
-, function(module, $, jj, obpev, browse, model, obpstate) {
+, function(module, $, jj, obpev, obpstate) {
 
     describe(module.id, function(){
         describe('click events', function() {
