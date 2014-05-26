@@ -36,7 +36,7 @@ define(
         $('body').append(state_script);
         // have browser download/save to file
         var blob = new Blob([document.documentElement.outerHTML], {type: "text/html;charset=utf-8"});
-        var filename = window.obp.bibliographies.xml.replace(/#.*$/,'').replace(/.*?([^/\\]+)$/,'$1').replace(/xml$/, 'html');
+        var filename = obpstate.bibliographies.xml.replace(/#.*$/,'').replace(/.*?([^/\\]+)$/,'$1').replace(/xml$/, 'html');
         filesaver(blob, filename);
     });
 });
