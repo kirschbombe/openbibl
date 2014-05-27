@@ -6,7 +6,7 @@ define(
 
         describe('click events', function() {
             beforeEach(function() {
-                loadFixtures('otherEurope.html');
+                loadFixtures('otherEurope.boot.html');
             });
 
             it('.obp-download-page click', function() {

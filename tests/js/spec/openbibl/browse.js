@@ -18,7 +18,7 @@ define(
 
         describe('click events', function() {
             beforeEach(function() {
-                loadFixtures('otherEurope.html');
+                loadFixtures('otherEurope.boot.html');
                 browse.init();
                 spyOn(obpev, 'raise');
             });

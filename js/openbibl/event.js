@@ -1,16 +1,23 @@
 define(
   [ 'module', 'jquery', 'domReady', 'obpconfig' ]
 , function(module,$,domReady,obpconfig) {
+    var supported_events = [  
+        "obp:filter-start",      "obp:filter-change",      "obp:filter-mode-change", 
+        "obp:filter-complete",   "obp:bibliography-added", "obp:search-term-change",
+        "obp:browse-term-change"
+    ];
+    var event_map = {};
+    var init_events = function() {
+        for (var i = 0; i < supported_events.length; i++)
+            event_map[supported_events[i]] = {};
+    };
+    init_events();
     return {
-         events: {
-             "obp:filter-start"          : {}
-           , "obp:filter-change"         : {}
-           , "obp:filter-mode-change"    : {}
-           , "obp:filter-complete"       : {}
-           , "obp:bibliography-added"    : {}
-           , "obp:search-term-change"    : {}
-           , "obp:browse-term-change"    : {}
-       }
+         init : function() {
+             init_events();
+             this.events = event_map;
+         }
+       , events: event_map
        , subscribe : function(ev,obj,cb) {
             if (obpconfig.debug) obpconfig.console.log(obj + ' subscribed ' + ev);
             if (!(ev in this.events)) {

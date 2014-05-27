@@ -2,18 +2,17 @@ define(
   [ 'module', 'obpconfig', 'obpstate', 'jquery', 'obpev' ]
 , function(module,obpconfig,obpstate,$,obpev) {
     return {
-          id : module.id
-        , init : function(sources) {
+          init : function(sources) {
                 var filter = this;
                 this.sources = sources;
-                obpev.subscribe("obp:filter-change", this.id, function() {
+                obpev.subscribe("obp:filter-change", module.id, function() {
                     filter.filter_entries();
                 });
         }
         , sources : []
-        , filter_mode_union : 'obp-filter-union'
-        , filter_mode_intersection : 'obp-filter-intersection'
-        , filter_mode_default : 'obp-filter-intersection'
+        , filter_mode_union         : 'obp-filter-union'
+        , filter_mode_intersection  : 'obp-filter-intersection'
+        , filter_mode_default       : 'obp-filter-intersection'
         , all_filter_indices : function() {
             var all_indices = []
             for (var i = 0; i < obpstate.bibliographies.count; i++) { all_indices.push(i) }
@@ -27,7 +26,7 @@ define(
             $('#bibliographies').find('div.entry').each(function(i,elt) {
                 $(elt).show();
             });
-            obpev.raise("obp:filter-start", this.id);
+            obpev.raise("obp:filter-start", module.id);
             all_indices = this.all_filter_indices();
             result_indices = all_indices;
             for (i = 0; i < this.sources.length; i++) {
@@ -42,7 +41,7 @@ define(
                 if ($div.length > 0)
                     $div.hide();
             }
-            obpev.raise("obp:filter-complete",this.id);
+            obpev.raise("obp:filter-complete", module.id);
         }
     }
 });
