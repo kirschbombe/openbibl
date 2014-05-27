@@ -1,11 +1,13 @@
 
-== ./xsl ==
+./xsl
+====
  
 Current testing scheme for the XSLT 1.0 and 2.0 styelsheets is the
 bash script and output located in the ./xsl directory. It requires
 an XSLT 2.0 processor and is currently tested using Saxon-HE 9.5.1.5J.
 
-== ./js ==
+./js
+====
 
 The Jasmine 2.0 behavior-driven testing framework is used for testing
 the Openbibl Javascript code. The test runner is located in the ./js
@@ -16,11 +18,13 @@ below indicates the current level of testing coverage.
 Documentation for the Jasmine framework and for the Jasmine/jQuery
 plug-in used to test browser events may be found at:
 
-    http://jasmine.github.io/2.0/introduction.html
-    https://github.com/velesin/jasmine-jquery
+[Jasmine](http://jasmine.github.io/2.0/introduction.html)
+
+[jasmine-jquery](https://github.com/velesin/jasmine-jquery)
 
 Current level of coverage:
 
+```
         js/ 
         ├── main.js
         ├── openbibl
@@ -44,4 +48,5 @@ Current level of coverage:
         │   ├── theme.js
         │   ├── toc.js
         │   └── tooltip.js
+```
 
