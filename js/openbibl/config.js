@@ -1,5 +1,38 @@
 define( []
 , function() {
+    var serialize = {
+          debug             : true
+        , console           : false
+        , saxonLogLevel     : false
+        , saxonPollInterval : false
+        , paths             : true
+        , scroll_speed      : true
+        , query             : true
+        , templates         : false
+        , template_pattern  : true
+        , typeahead         : true
+        , rebase            : false
+        , stringify         : false
+    };
+    // TODO: factor out rebase and stringify for state.js and config.js
+    var stringify = function() {
+        var ret = {};
+        for (var key in this) {
+            if (serialize[key])
+                ret[key] = this[key];
+        }
+        return JSON.stringify(ret);
+    };
+    var rebase = function(obj) {
+        if (typeof obj !== "object") throw "obp.config.rebase() requires an object";
+        for (var key in obj) {
+            if (this.hasOwnProperty(key)) {
+                this[key] = obj[key];
+            } else {
+                throw "Unsupported config key in obp.config.rebase: " + key;
+            }
+        }
+    }
     var config = {
           debug : false
         , console : (typeof console == 'object')
@@ -24,16 +57,8 @@ define( []
         , typeahead : {
             list_len: 20
         }
+        , rebase    : rebase
+        , stringify : stringify
     };
-    config.rebase = function(obj) {
-        if (typeof obj !== "object") throw "obp.config.rebase() requires an object";
-        for (var key in obj) {
-            if (this.hasOwnProperty(key)) {
-                this[key] = obj[key];
-            } else {
-                throw "Unsupported config key in obp.config.rebase: " + key;
-            }
-        }
-    }
     return config;
 });
