@@ -7,10 +7,14 @@
     <projectTree name="openbibl.xpr">
         <folder path="css/"/>
         <folder path="dev/"/>
+        <folder path="docs/"/>
         <folder path="examples/"/>
         <folder path="js/"/>
         <folder path="lod/"/>
         <folder path="TEI/"/>
+        <folder path="tests/"/>
         <folder path="xsl/"/>
+        <file name="LICENSE"/>
+        <file name="README.md"/>
     </projectTree>
 </project>

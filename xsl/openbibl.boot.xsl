@@ -16,7 +16,6 @@
     <xsl:preserve-space elements="*"/>
 
     <xsl:include href="openbibl.params.xsl"/>
-    <xsl:include href="openbibl.date.xsl"/>
 
     <!-- TODO: debug "document('openbibl.params.xsl)/*/obp:css-themes" issue
         unless it is resolved by externalizing params (probably
@@ -64,53 +63,34 @@
             <xsl:text>&gt;![endif]</xsl:text>
         </xsl:comment>
 
-        <!-- load jQuery before OBP javascript, all other after -->
-        <script type="text/javascript" language="javascript" src="{$jquery-js}"></script>
+        <!-- load openbibl and dependencies-->
+        <script data-main="{$obp-js-main}" src="{$require-js}"></script>
+        <script type="text/javascript" language="javascript">
+            require.config({
+              baseUrl : '<xsl:value-of select="$obp-root-js"/>'
+            });
+            window.obp = {
+                  appdir : '<xsl:value-of select="$obp-root"/>'
+                , bibliographies : {
+                      xml : document.location.href
+                    , xsl : '<xsl:value-of select="$openbibl-xsl"/>'
+                }
+                , saxonLoaded : false
+            };
+        </script>
 
-        <!-- TODO: xsl:if on debug state to use minified or maxified -->
-        <xsl:choose>
-            <xsl:when test="false()">
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-min}"></script>
-            </xsl:when>
-            <xsl:otherwise>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-cls}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-sort}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-theme}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-util}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-filter}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-highlight}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-search}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-browse}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-query}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-download}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-toc}"></script>
-                <script type="text/javascript" language="javascript" src="{$openbibl-js-tooltip}"></script>
-            </xsl:otherwise>
-        </xsl:choose>
-
-        <script id="obp-saxonce-lib" type="text/javascript" language="javascript" src="{$openbibl-js-saxon}"></script>
         <!-- load Saxon; declare onload callback for Saxon-CE,
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
         <script id="obp-saxonce-nocache" type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
         <script id="obp-saxonce-onload" type="text/javascript" language="javascript">
             var onSaxonLoad = function() {
-                window.obp.bibliographies.xml = document.location.href;
-                window.obp.bibliographies.xsl ='<xsl:value-of select="$openbibl-xsl"/>';
-                window.obp.SaxonCE.onSaxonLoad(
-                    Saxon,                          // pass reference to Saxon object to avoid scoping issues
-                    window.obp.bibliographies.xsl,  // openbibl.xsl stylesheet path
-                    window.obp.bibliographies.xml,  // TEI XML document path
-                    {}                              // openbibl.xsl stylesheet parameters
-                );
-            }
+                window.obp.saxonLoaded = true;
+            };
         </script>
+        <!-- TODO: integrate these three js libs with asynch loading -->
+        <script type="text/javascript" language="javascript" src="{$jquery-js}"></script>
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>
         <script type="text/javascript" language="javascript" src="{$offcanvas-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$cookie-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$typeahead-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$underscore-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$handlebars-js}"></script>
-        <script type="text/javascript" language="javascript" src="{$filesaver-js}"></script>
     </xsl:template>
 
     <!-- /html/body -->
@@ -153,8 +133,7 @@
 
     <xsl:template name="make-navmenu">
         <ul class="nav navmenu-nav obp-navmenu">
-            <li class="obp-menu-li"><a class="brand" href="#">Openbibl</a></li>
-            
+
             <!-- save button -->
             <li class="obp-menu-li">
                 <a href="#" class="obp-download-page">Download</a>
@@ -316,22 +295,22 @@
                 </xsl:for-each>
             </span>
             <xsl:text> | </xsl:text>
-            <span>Published using the Open &lt;bibl&gt; Project</span>
+            <span>Published using the <a href="https://github.com/kirschbombe/openbibl" target="_blank">Open &lt;bibl&gt;</a> Project</span>
         </div>
     </xsl:template>
 
     <!-- make the dropdown menu containing options for visual styles -->
     <xsl:template name="make-theme-menu">
         <div class="obp-menu-panel-body">
-            <table class="obp-control-tbl">
-                <form>
+            <form>
+                <table class="obp-control-tbl">
                     <!-- TODO: make into external parameters -->
                     <xsl:for-each select="document('')/*/obp:css-themes/option">
                         <tr class="obp-control-tbl">
                             <td><label>
-                                <input type="radio" 
-                                    name="theme-form" 
-                                    class="obp-theme-input" 
+                                <input type="radio"
+                                    name="theme-form"
+                                    class="obp-theme-input"
                                     data-stylesheet-file="{@value}">
                                     <xsl:if test="@checked='checked'">
                                         <xsl:attribute name="checked">checked</xsl:attribute>
@@ -341,22 +320,21 @@
                             </label></td>
                         </tr>
                     </xsl:for-each>
-                </form>
-            </table>
+                </table>
+            </form>
         </div>
     </xsl:template>
 
     <!-- make sort-by options -->
     <xsl:template name="make-sort-menu">
         <div class="obp-menu-panel-body">
-
-            <table class="obp-control-tbl">
-                <form>
+            <form>
+                <table class="obp-control-tbl">
                     <tr class="obp-control-tbl">
                         <td><label>
-                            <input type="radio" 
-                                   name="sort-form" 
-                                   class="obp-sort-input" 
+                            <input type="radio"
+                                   name="sort-form"
+                                   class="obp-sort-input"
                                    data-sort-key="data-author"
                                    checked="checked"></input>
                             <span>Author</span>
@@ -364,15 +342,15 @@
                     </tr>
                     <tr>
                         <td><label>
-                            <input type="radio" 
-                                   name="sort-form" 
-                                   class="obp-sort-input" 
+                            <input type="radio"
+                                   name="sort-form"
+                                   class="obp-sort-input"
                                    data-sort-key="data-date"></input>
                             <span>Date</span>
                         </label></td>
                     </tr>
-                </form>
-            </table>
+                </table>
+            </form>
         </div>
     </xsl:template>
 
@@ -409,15 +387,15 @@
         <xsl:call-template name="filter-options">
             <xsl:with-param name="button-class" select="'obp-browse-clear'"/>
         </xsl:call-template>
-        
+
         <div class="obp-menu-panel-checkboxes">
 
             <xsl:for-each select="tei:head/following-sibling::*">
-                
+
                 <!-- NOTE: arbitrary @xml:id depth -->
-                <xsl:variable name="xml-id" select=".//@xml:id"/>
+                <xsl:variable name="xml-id" select="string(.//@xml:id)"/>
                 <xsl:variable name="ref-count" select="count(//@ref[.=concat('#',$xml-id)])"/>
-                
+
                 <div class="checkbox">
                     <label class="browse-label">
                         <input type="checkbox" class="obp-browse-checkbox" data-browse-item="{$xml-id}">
@@ -439,10 +417,9 @@
 
     <xsl:template name="filter-options">
         <xsl:param name="button-class"/>
-
-        <table class="obp-control-tbl">
-            <tr class="obp-control-tbl">
-                <form>
+        <form>
+            <table class="obp-control-tbl">
+                <tr class="obp-control-tbl">
                     <td><label><input
                             class="obp-filter-mode"
                             type="radio"
@@ -457,13 +434,13 @@
                             name="{generate-id()}"
                             value="obp-filter-union"></input>
                         <span>any</span>
-                    </label></td>    
+                    </label></td>
                     <td>
                         <button class="{$button-class} btn btn-xs" type="submit">clear</button>
                     </td>
-                </form>
-            </tr>
-        </table>
+                </tr>
+            </table>
+        </form>
     </xsl:template>
 
     <xsl:template match="tei:person" mode="browse-title">

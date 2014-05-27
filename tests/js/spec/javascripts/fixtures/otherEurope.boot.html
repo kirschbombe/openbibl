@@ -1,0 +1,375 @@
+<!DOCTYPE html
+  PUBLIC "html" "about:legacy-compat">
+<html xmlns:schema="http://schema.org" lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+      <meta name="description" content="openbibl bibliography">
+      <meta name="author" content="TEI author">
+      <link rel="shortcut icon" href="assets/ico/favicon.png">
+      <link rel="stylesheet" type="text/css" id="theme-css" href="../../css/theme/clean.css">
+      <title itemprop="name">Printing from the Other Europe: Central and East
+         European Printing from 1484 to 1697 in the Lilly Library
+      </title>
+   </head>
+   <body>
+      <div id="obp-sidebar-offcanvas-sm" class="navmenu navmenu-default navmenu-fixed-left-offcanvas">
+         <ul class="nav navmenu-nav obp-navmenu">
+            <li class="obp-menu-li"><a href="#" class="obp-download-page">Download</a></li>
+            <li class="obp-menu-li">
+               <div class="panel panel-default">
+                  <div class="panel-heading"><a data-toggle="collapse" data-target=".obp-theme-toggle">Theme</a></div>
+                  <div class="panel-collapse collapse obp-theme-toggle">
+                     <div class="panel-body">
+                        <div class="obp-menu-panel-body">
+                           <form>
+                              <table class="obp-control-tbl">
+                                 <tr class="obp-control-tbl">
+                                    <td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="clean.css" checked><span>Clean</span></label></td>
+                                 </tr>
+                                 <tr class="obp-control-tbl">
+                                    <td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="bookish.css"><span>Bookish</span></label></td>
+                                 </tr>
+                                 <tr class="obp-control-tbl">
+                                    <td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="fiche.css"><span>Fiche</span></label></td>
+                                 </tr>
+                              </table>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+            <li class="obp-menu-li">
+               <div class="panel panel-default">
+                  <div class="panel-heading"><a data-toggle="collapse" data-target=".obp-sort-toggle">Sort</a></div>
+                  <div class="panel-collapse collapse obp-sort-toggle">
+                     <div class="panel-body">
+                        <div class="obp-menu-panel-body">
+                           <form>
+                              <table class="obp-control-tbl">
+                                 <tr class="obp-control-tbl">
+                                    <td><label><input type="radio" name="sort-form" class="obp-sort-input" data-sort-key="data-author" checked><span>Author</span></label></td>
+                                 </tr>
+                                 <tr>
+                                    <td><label><input type="radio" name="sort-form" class="obp-sort-input" data-sort-key="data-date"><span>Date</span></label></td>
+                                 </tr>
+                              </table>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+            <li class="obp-menu-li">
+               <div class="panel panel-default obp-search-panel">
+                  <div class="panel-heading"><a data-toggle="collapse" data-target=".obp-search-toggle">Search</a></div>
+                  <div class="panel-collapse collapse obp-search-toggle">
+                     <div class="panel-body">
+                        <div class="obp-search-panel-body">
+                           <form>
+                              <table class="obp-control-tbl">
+                                 <tr class="obp-control-tbl">
+                                    <td><label><input class="obp-filter-mode" type="radio" name="d2" value="obp-filter-intersection" checked><span>all</span></label></td>
+                                    <td><label><input class="obp-filter-mode" type="radio" name="d2" value="obp-filter-union"><span>any</span></label></td>
+                                    <td><button class="obp-search-clear btn btn-xs" type="submit">clear</button></td>
+                                 </tr>
+                              </table>
+                           </form>
+                           <div class="nav-form">
+                              <form class="obp-search-form"><input autocomplete="off" class="search-input typeahead obp-search-panel-input" data-provide="typeahead" placeholder="Search" spellcheck="false" type="text"></form>
+                           </div>
+                           <ul class="list-group obp-search-results-list"></ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+            <li class="obp-menu-li">
+               <div class="panel panel-default obp-browse-list" data-ed-list="listPerson">
+                  <div class="panel-heading"><a data-toggle="collapse" data-target=".d2e1383">People</a></div>
+                  <div class="panel-collapse collapse d2e1383">
+                     <div class="panel-body">
+                        <div class="obp-menu-panel-body">
+                           <form>
+                              <table class="obp-control-tbl">
+                                 <tr class="obp-control-tbl">
+                                    <td><label><input class="obp-filter-mode" type="radio" name="d2e1383" value="obp-filter-intersection" checked><span>all</span></label></td>
+                                    <td><label><input class="obp-filter-mode" type="radio" name="d2e1383" value="obp-filter-union"><span>any</span></label></td>
+                                    <td><button class="obp-browse-clear btn btn-xs" type="submit">clear</button></td>
+                                 </tr>
+                              </table>
+                           </form>
+                           <div class="obp-menu-panel-checkboxes">
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="a_magnus"><span class="obp-browse-item">Albertus, Magnus,
+                                       Saint (–1280)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_alakraw"><span class="obp-browse-item">Alakraw, Johann (1400–1492)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="c_stahel"><span class="obp-browse-item">Stahel, Conrad (1450–1491)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="b_mayr"><span class="obp-browse-item">Mayir, Benedictus (1400–1400)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_severyn"><span class="obp-browse-item">Severyn, Jan (1400–1544)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_hus"><span class="obp-browse-item">Hus, Jan (1372–1415)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="mathias_scharffenberg"><span class="obp-browse-item">Scharffenberg, Mathias (–1547)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_lupac"><span class="obp-browse-item">Lupac, Martin (1400–1468)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_hevelius"><span class="obp-browse-item">Hevelius, Johannes (1611–1687)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="a_hünefeldianis"><span class="obp-browse-item">Hünefeldianis, Andreas (1581–1666)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="f_faber"><span class="obp-browse-item">Faber, Ferdinand (1784–1866)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="sv_hoffmann"><span class="obp-browse-item">Hoffmann, Samuel Verplank (1802–1880)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_tischniowa"><span class="obp-browse-item">Martin of Tischniowa (1400–1400)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="k_wladislaw"><span class="obp-browse-item">King Wladislaw of Bohemia (1456–1516)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="jt_gernon"><span class="obp-browse-item">Gernon, John Talbot (1800–1900)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_miechowa"><span class="obp-browse-item">Maciej Miechowa (1457–1523)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="s_scharffenberg"><span class="obp-browse-item">Scharffenberg, Stanislawa (1500–1584)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="marcus_scharffenberg"><span class="obp-browse-item">Scharffenberg, Marcus (1490–1545)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="f_leonard"><span class="obp-browse-item">Leonard (1500–1500)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="sigismund"><span class="obp-browse-item">Sigismund (Zigmunt) II Augustus I (1520–1572)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_nicz"><span class="obp-browse-item">Jan Nicz (1523–1572)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="z_solin"><span class="obp-browse-item">Solin, Zacharius (1500–1500)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_vzerotin"><span class="obp-browse-item">von Zerotin, John (1500–1587)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="k_ostrozhskii"><span class="obp-browse-item">Ostrozhskii, Konstantine (1460–1530)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="i_federov"><span class="obp-browse-item">Federov, Ivan (1510–1583)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_chrysostom"><span class="obp-browse-item">Chrysostom, John (0347–0407)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="anthimus"><span class="obp-browse-item">Anthimus of Iberia (1650–1716)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="s_grecenu"><span class="obp-browse-item">Grecénu, Serban (1500–1500)</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="r_grecenu"><span class="obp-browse-item">Grecénu, Radul (1500–1500)</span></label></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+            <li class="obp-menu-li">
+               <div class="panel panel-default obp-browse-list" data-ed-list="listPlace">
+                  <div class="panel-heading"><a data-toggle="collapse" data-target=".d2e2012">Places</a></div>
+                  <div class="panel-collapse collapse d2e2012">
+                     <div class="panel-body">
+                        <div class="obp-menu-panel-body">
+                           <form>
+                              <table class="obp-control-tbl">
+                                 <tr class="obp-control-tbl">
+                                    <td><label><input class="obp-filter-mode" type="radio" name="d2e2012" value="obp-filter-intersection" checked><span>all</span></label></td>
+                                    <td><label><input class="obp-filter-mode" type="radio" name="d2e2012" value="obp-filter-union"><span>any</span></label></td>
+                                    <td><button class="obp-browse-clear btn btn-xs" type="submit">clear</button></td>
+                                 </tr>
+                              </table>
+                           </form>
+                           <div class="obp-menu-panel-checkboxes">
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="winterberg"><span class="obp-browse-item">Winterberg, Germany</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="prague"><span class="obp-browse-item">Prague</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="gdansk"><span class="obp-browse-item">Gdansk, Poland</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="kuttenberg"><span class="obp-browse-item">Kuttenberg (Kutná Hora), Bohemia</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="krakow"><span class="obp-browse-item">Krakow, Poland</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="kralice"><span class="obp-browse-item">Kralice, Bohemia</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="ostrog"><span class="obp-browse-item">Ostroh, Ukraine</span></label></div>
+                              <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="bucharest"><span class="obp-browse-item">Bucharest, Romania</span></label></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+         </ul>
+      </div>
+      <div class="container">
+         <nav class="navbar navbar-default navbar-collapse navbar-fixed-top">
+            <div class="visible-sm visible-xs"><button type="button" class="navbar-toggle" data-autohide="true" data-canvas="body" data-recalc="true" data-target="#obp-sidebar-offcanvas-sm" data-toggle="offcanvas"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div>
+         </nav>
+         <div class="visible-md visible-lg">
+            <nav class="navmenu navmenu-default navmenu-fixed-left" role="navigation">
+               <ul class="nav navmenu-nav obp-navmenu">
+                  <li class="obp-menu-li"><a href="#" class="obp-download-page">Download</a></li>
+                  <li class="obp-menu-li">
+                     <div class="panel panel-default">
+                        <div class="panel-heading"><a data-toggle="collapse" data-target=".obp-theme-toggle">Theme</a></div>
+                        <div class="panel-collapse collapse obp-theme-toggle">
+                           <div class="panel-body">
+                              <div class="obp-menu-panel-body">
+                                 <form>
+                                    <table class="obp-control-tbl">
+                                       <tr class="obp-control-tbl">
+                                          <td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="clean.css" checked><span>Clean</span></label></td>
+                                       </tr>
+                                       <tr class="obp-control-tbl">
+                                          <td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="bookish.css"><span>Bookish</span></label></td>
+                                       </tr>
+                                       <tr class="obp-control-tbl">
+                                          <td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="fiche.css"><span>Fiche</span></label></td>
+                                       </tr>
+                                    </table>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="obp-menu-li">
+                     <div class="panel panel-default">
+                        <div class="panel-heading"><a data-toggle="collapse" data-target=".obp-sort-toggle">Sort</a></div>
+                        <div class="panel-collapse collapse obp-sort-toggle">
+                           <div class="panel-body">
+                              <div class="obp-menu-panel-body">
+                                 <form>
+                                    <table class="obp-control-tbl">
+                                       <tr class="obp-control-tbl">
+                                          <td><label><input type="radio" name="sort-form" class="obp-sort-input" data-sort-key="data-author" checked><span>Author</span></label></td>
+                                       </tr>
+                                       <tr>
+                                          <td><label><input type="radio" name="sort-form" class="obp-sort-input" data-sort-key="data-date"><span>Date</span></label></td>
+                                       </tr>
+                                    </table>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="obp-menu-li">
+                     <div class="panel panel-default obp-search-panel">
+                        <div class="panel-heading"><a data-toggle="collapse" data-target=".obp-search-toggle">Search</a></div>
+                        <div class="panel-collapse collapse obp-search-toggle">
+                           <div class="panel-body">
+                              <div class="obp-search-panel-body">
+                                 <form>
+                                    <table class="obp-control-tbl">
+                                       <tr class="obp-control-tbl">
+                                          <td><label><input class="obp-filter-mode" type="radio" name="d2" value="obp-filter-intersection" checked><span>all</span></label></td>
+                                          <td><label><input class="obp-filter-mode" type="radio" name="d2" value="obp-filter-union"><span>any</span></label></td>
+                                          <td><button class="obp-search-clear btn btn-xs" type="submit">clear</button></td>
+                                       </tr>
+                                    </table>
+                                 </form>
+                                 <div class="nav-form">
+                                    <form class="obp-search-form"><input autocomplete="off" class="search-input typeahead obp-search-panel-input" data-provide="typeahead" placeholder="Search" spellcheck="false" type="text"></form>
+                                 </div>
+                                 <ul class="list-group obp-search-results-list"></ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="obp-menu-li">
+                     <div class="panel panel-default obp-browse-list" data-ed-list="listPerson">
+                        <div class="panel-heading"><a data-toggle="collapse" data-target=".d2e1383">People</a></div>
+                        <div class="panel-collapse collapse d2e1383">
+                           <div class="panel-body">
+                              <div class="obp-menu-panel-body">
+                                 <form>
+                                    <table class="obp-control-tbl">
+                                       <tr class="obp-control-tbl">
+                                          <td><label><input class="obp-filter-mode" type="radio" name="d2e1383" value="obp-filter-intersection" checked><span>all</span></label></td>
+                                          <td><label><input class="obp-filter-mode" type="radio" name="d2e1383" value="obp-filter-union"><span>any</span></label></td>
+                                          <td><button class="obp-browse-clear btn btn-xs" type="submit">clear</button></td>
+                                       </tr>
+                                    </table>
+                                 </form>
+                                 <div class="obp-menu-panel-checkboxes">
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="a_magnus"><span class="obp-browse-item">Albertus, Magnus,
+                                             Saint (–1280)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_alakraw"><span class="obp-browse-item">Alakraw, Johann (1400–1492)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="c_stahel"><span class="obp-browse-item">Stahel, Conrad (1450–1491)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="b_mayr"><span class="obp-browse-item">Mayir, Benedictus (1400–1400)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_severyn"><span class="obp-browse-item">Severyn, Jan (1400–1544)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_hus"><span class="obp-browse-item">Hus, Jan (1372–1415)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="mathias_scharffenberg"><span class="obp-browse-item">Scharffenberg, Mathias (–1547)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_lupac"><span class="obp-browse-item">Lupac, Martin (1400–1468)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_hevelius"><span class="obp-browse-item">Hevelius, Johannes (1611–1687)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="a_hünefeldianis"><span class="obp-browse-item">Hünefeldianis, Andreas (1581–1666)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="f_faber"><span class="obp-browse-item">Faber, Ferdinand (1784–1866)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="sv_hoffmann"><span class="obp-browse-item">Hoffmann, Samuel Verplank (1802–1880)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_tischniowa"><span class="obp-browse-item">Martin of Tischniowa (1400–1400)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="k_wladislaw"><span class="obp-browse-item">King Wladislaw of Bohemia (1456–1516)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="jt_gernon"><span class="obp-browse-item">Gernon, John Talbot (1800–1900)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_miechowa"><span class="obp-browse-item">Maciej Miechowa (1457–1523)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="s_scharffenberg"><span class="obp-browse-item">Scharffenberg, Stanislawa (1500–1584)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="marcus_scharffenberg"><span class="obp-browse-item">Scharffenberg, Marcus (1490–1545)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="f_leonard"><span class="obp-browse-item">Leonard (1500–1500)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="sigismund"><span class="obp-browse-item">Sigismund (Zigmunt) II Augustus I (1520–1572)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_nicz"><span class="obp-browse-item">Jan Nicz (1523–1572)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="z_solin"><span class="obp-browse-item">Solin, Zacharius (1500–1500)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_vzerotin"><span class="obp-browse-item">von Zerotin, John (1500–1587)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="k_ostrozhskii"><span class="obp-browse-item">Ostrozhskii, Konstantine (1460–1530)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="i_federov"><span class="obp-browse-item">Federov, Ivan (1510–1583)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_chrysostom"><span class="obp-browse-item">Chrysostom, John (0347–0407)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="anthimus"><span class="obp-browse-item">Anthimus of Iberia (1650–1716)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="s_grecenu"><span class="obp-browse-item">Grecénu, Serban (1500–1500)</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="r_grecenu"><span class="obp-browse-item">Grecénu, Radul (1500–1500)</span></label></div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="obp-menu-li">
+                     <div class="panel panel-default obp-browse-list" data-ed-list="listPlace">
+                        <div class="panel-heading"><a data-toggle="collapse" data-target=".d2e2012">Places</a></div>
+                        <div class="panel-collapse collapse d2e2012">
+                           <div class="panel-body">
+                              <div class="obp-menu-panel-body">
+                                 <form>
+                                    <table class="obp-control-tbl">
+                                       <tr class="obp-control-tbl">
+                                          <td><label><input class="obp-filter-mode" type="radio" name="d2e2012" value="obp-filter-intersection" checked><span>all</span></label></td>
+                                          <td><label><input class="obp-filter-mode" type="radio" name="d2e2012" value="obp-filter-union"><span>any</span></label></td>
+                                          <td><button class="obp-browse-clear btn btn-xs" type="submit">clear</button></td>
+                                       </tr>
+                                    </table>
+                                 </form>
+                                 <div class="obp-menu-panel-checkboxes">
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="winterberg"><span class="obp-browse-item">Winterberg, Germany</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="prague"><span class="obp-browse-item">Prague</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="gdansk"><span class="obp-browse-item">Gdansk, Poland</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="kuttenberg"><span class="obp-browse-item">Kuttenberg (Kutná Hora), Bohemia</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="krakow"><span class="obp-browse-item">Krakow, Poland</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="kralice"><span class="obp-browse-item">Kralice, Bohemia</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="ostrog"><span class="obp-browse-item">Ostroh, Ukraine</span></label></div>
+                                    <div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="bucharest"><span class="obp-browse-item">Bucharest, Romania</span></label></div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+               </ul>
+            </nav>
+         </div>
+         <div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+            <div id="bibliographies" class="bibliographies">
+               <h1 class="bibliographies">Printing from the Other Europe: Central and East
+                  European Printing from 1484 to 1697 in the Lilly Library
+               </h1>
+               <hr id="asterism-rule">
+               <div id="asterism"></div>
+               <ul id="toc" class="toc">
+                  <li class="toc" data-src-index="0"><span class="leader"><a class="toc-click" data-src-index="0">Holy Communion</a></span><span>ALBERTUS, Magnus,
+                        Saint</span></li>
+                  <li class="toc" data-src-index="1"><span class="leader"><a class="toc-click" data-src-index="1">The Prague Bible</a></span><span>[UNKNOWN]</span></li>
+                  <li class="toc" data-src-index="2"><span class="leader"><a class="toc-click" data-src-index="2">Selenographia</a></span><span>HEVELIUS, Johannes</span></li>
+                  <li class="toc" data-src-index="3"><span class="leader"><a class="toc-click" data-src-index="3">Biblia Bohemica</a></span><span>[UNKNOWN]</span></li>
+                  <li class="toc" data-src-index="4"><span class="leader"><a class="toc-click" data-src-index="4">Health and Nutrition</a></span><span>MACIEJ, Z. of Miechowa.</span></li>
+                  <li class="toc" data-src-index="5"><span class="leader"><a class="toc-click" data-src-index="5">Biblia Leopolity</a></span><span>[UNKNOWN]</span></li>
+                  <li class="toc" data-src-index="6"><span class="leader"><a class="toc-click" data-src-index="6">Kralitz Bible</a></span><span>[UNKNOWN]</span></li>
+                  <li class="toc" data-src-index="7"><span class="leader"><a class="toc-click" data-src-index="7">Ostrih Bible</a></span><span>[UNKNOWN]</span></li>
+                  <li class="toc" data-src-index="8"><span class="leader"><a class="toc-click" data-src-index="8">Pearls</a></span><span>CHRYSOTOM, John, Saint.</span></li>
+               </ul>
+            </div>
+            <div id="footer"><span>Dawn Childress, 2014, University Park, PA</span> | <span>Published using the <a href="https://github.com/kirschbombe/openbibl" target="_blank">Open &lt;bibl&gt;</a> Project</span></div>
+         </div>
+      </div>
+      <!--[if lt IE 9]<   >![endif]--><script data-main="../../js/main.js" src="../../js/lib/require-2.1.11.js"></script><script type="text/javascript" language="javascript">
+            require.config({
+              baseUrl : '../../js/'
+            });
+            window.obp = {
+                  appdir : '../../'
+                , bibliographies : {
+                      xml : document.location.href
+                    , xsl : '../../xsl/openbibl.xsl'
+                }
+                , saxonLoaded : false
+            };
+        </script>
+       <script type="text/javascript" language="javascript" src="../../js/lib/jquery-2.1.0.min.js"></script>
+       <script type="text/javascript" language="javascript" src="../../js/lib/bootstrap-3.1.1.min.js"></script>
+       <script type="text/javascript" language="javascript" src="../../js/lib/bootstrap-offcanvas-3.1.0.js"></script>
+   </body>
+</html>
