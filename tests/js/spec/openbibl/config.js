@@ -1,6 +1,6 @@
 define(
-  ['module', 'obpconfig']
-, function(module, config) {
+  ['module', 'jquery', 'jasmine-jquery', 'obpconfig']
+, function(module, $, jj, config) {
     describe(module.id, function() {
 
         describe('load/init', function(){

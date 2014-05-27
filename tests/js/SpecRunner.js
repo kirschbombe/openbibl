@@ -36,15 +36,16 @@
         exports: 'window.jasmineRequire'
       }
       , 'jasmine-html': {
-        deps: ['jasmine'],
-        exports: 'window.jasmineRequire'
+          deps: ['jasmine']
+        , exports: 'window.jasmineRequire'
       }
       , 'jasmine-jquery' : {
-          exports: 'window.spyOnEvent'
+          deps: ['jquery']
+        , exports: 'window.spyOnEvent'
       }
       , 'boot': {
-        deps: ['jasmine', 'jasmine-html'],
-        exports: 'window.jasmineRequire'
+          deps: ['jasmine', 'jasmine-html']
+        , exports: 'window.jasmineRequire'
       }
     }
   });
