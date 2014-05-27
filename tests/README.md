@@ -50,3 +50,9 @@ Current level of coverage:
         │   └── tooltip.js
 ```
 
+Results of the Jasmine test runner against the Openbibl specs are
+viewable by navigating to the ./openbibl/tests/js/SpecRunner.html
+file, e.g.:
+
+[SpecRunner.html](http://rnathanday.github.io/openbibl/tests/js/SpecRunner.html)
+
