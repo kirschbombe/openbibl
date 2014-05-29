@@ -1,3 +1,9 @@
+/*
+* Openbibl Framework v0.1.0
+* Copyright 2014, Dawn Childress
+* Contact: https://github.com/kirschbombe/openbibl
+* License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
+*/
 define(
 [ 'module', 'jquery', 'filesaver' ]
 , function(module, $, filesaver) {
@@ -20,24 +26,21 @@ define(
             if (elt.text.match(/saxon/i))
                 $(elt).remove();
         })
-        // remove scripts loaded by require-js
+
+        // set this global flag for js loading in html
+        window.obp.xsl_load = false;
+
+        // remove script tags injected by require-js
         $clone.find('script[data-requiremodule]').remove();
 
         // serialize application state, for search/browse
         var $state_script = $('<script></script>');
-
-        var text = 'window.obp=' + JSON.stringify(window.obp) + ';';
+        var text = 'window.obp='           + JSON.stringify(window.obp) + ';\n'
+                 + 'window.obp.obpstate='  + obpstate.stringify()       + ';\n'
+                 + 'window.obp.obpconfig=' + obpconfig.stringify()      + ';\n';
         $state_script.append(text);
-
-        // save off window.obp.bibliographies data
-        text = 'window.obp.obpstate=' + obpstate.stringify() + ';';
-        $state_script.append(text);
-
-        // save off window.obp.config data
-        text = 'window.obp.obpconfig=' + obpconfig.stringify() + ';';
-        $state_script.append(text);
-
         $clone.find('body').append($state_script);
+
         // have browser download/save to file
         var blob = new Blob([$clone[0].documentElement.outerHTML], {type: "text/html;charset=utf-8"});
         var filename = obpstate.bibliographies.xml.replace(/#.*$/,'').replace(/.*?([^/\\]+)$/,'$1').replace(/xml$/, 'html');
