@@ -76,6 +76,7 @@
                     , xsl : '<xsl:value-of select="$openbibl-xsl"/>'
                 }
                 , saxonLoaded : false
+                , xsl_load : true
             };
         </script>
 
