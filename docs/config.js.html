@@ -61,42 +61,6 @@ define( []
         , typeahead         : true
         , rebase            : false
         , stringify         : false
-    },
-    /**
-     * Method to stringify Openbibl configuration data as JSON for serialization.
-     * @todo factor this and openbibl/state stringify to single instance 
-     * @method
-     * @public
-     * @instance
-     */
-    stringify = function() {
-        var ret = {};
-        Object.keys(this).map(function(key) {
-            if (serialize[key]) {
-                ret[key] = this[key];
-            }            
-        });
-        return JSON.stringify(ret);
-    },
-    /**
-     * Method to re-base configuration values, used when JSON data is re-hydrated
-     * from window.obp serialization for an HTML-based view of a bibliography
-     * during main.js initialization.
-     * @method
-     * @public
-     * @instance
-     */
-    rebase = function(obj) {
-        if (typeof obj !== "object") {
-            throw "obp.config.rebase() requires an object";
-        }
-        Object.keys(obj).map(function(key){
-            if (this.hasOwnProperty(key)) {
-                this[key] = obj[key];
-            } else {
-                throw "Unsupported config key in obp.config.rebase: " + key;
-            }            
-        });
     };
     return {
         /**
@@ -105,7 +69,7 @@ define( []
          * @property
          * @public
          */
-        debug : false, 
+        debug : false,
         /**
          * Console object for debugging, in case browser doesn't have one.
          * @property
@@ -138,12 +102,12 @@ define( []
          * @property
          * @public
          * @constant
-         */ 
+         */
         paths : {
               obp_root        : ''
             , template_dir    : 'js/templates'
             , query_xsl       : 'xsl/openbibl.query.xsl'
-        }, 
+        },
         /**
          * Milisecond speed of the scrolling done when a TOC entry is clicked.
          * @default 200 ms
@@ -152,7 +116,7 @@ define( []
          */
         scroll_speed : 200,
         /**
-         * Data file containing serialized browse/search data, which is located relative to the 
+         * Data file containing serialized browse/search data, which is located relative to the
          * XML file it is generated from.
          * @todo incorporate with 'paths' above
          * @property
@@ -185,9 +149,45 @@ define( []
          */
         typeahead : {
             list_len: 20
+        },
+        /**
+         * Method to re-base configuration values, used when JSON data is re-hydrated
+         * from window.obp serialization for an HTML-based view of a bibliography
+         * during main.js initialization.
+         * @method
+         * @public
+         * @instance
+         */
+        rebase : function(obj) {
+            var config = this;
+            if (typeof obj !== "object") {
+                throw "obp.config.rebase() requires an object";
+            }
+            Object.keys(obj).map(function(key){
+                if (config.hasOwnProperty(key)) {
+                    config[key] = obj[key];
+                } else {
+                    throw "Unsupported config key in obp.config.rebase: " + key;
+                }
+            });
+        },
+        /**
+         * Method to stringify Openbibl configuration data as JSON for serialization.
+         * @todo factor this and openbibl/state stringify to single instance
+         * @method
+         * @public
+         * @instance
+         */
+        stringify : function() {
+            var config = this
+              , ret = {};
+            Object.keys(this).map(function(key) {
+                if (serialize[key]) {
+                    ret[key] = config[key];
+                }
+            });
+            return JSON.stringify(ret);
         }
-        , rebase    : rebase
-        , stringify : stringify
     };
 });
 </code></pre>
@@ -200,13 +200,13 @@ define( []
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="download.html">openbibl/download</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li><li><a href="sort.html">openbibl/sort</a></li><li><a href="state.html">openbibl/state</a></li><li><a href="theme.html">openbibl/theme</a></li><li><a href="toc.html">openbibl/toc</a></li><li><a href="tooltip.html">openbibl/tooltip</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Fri May 30 2014 14:30:53 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Fri May 30 2014 17:12:11 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

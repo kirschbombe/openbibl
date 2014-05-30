@@ -34,44 +34,6 @@ define( []
         , typeahead         : true
         , rebase            : false
         , stringify         : false
-    },
-    /**
-     * Method to stringify Openbibl configuration data as JSON for serialization.
-     * @todo factor this and openbibl/state stringify to single instance
-     * @method
-     * @public
-     * @instance
-     */
-    stringify = function() {
-        var config = this
-          , ret = {};
-        Object.keys(this).map(function(key) {
-            if (serialize[key]) {
-                ret[key] = config[key];
-            }
-        });
-        return JSON.stringify(ret);
-    },
-    /**
-     * Method to re-base configuration values, used when JSON data is re-hydrated
-     * from window.obp serialization for an HTML-based view of a bibliography
-     * during main.js initialization.
-     * @method
-     * @public
-     * @instance
-     */
-    rebase = function(obj) {
-        var config = this;
-        if (typeof obj !== "object") {
-            throw "obp.config.rebase() requires an object";
-        }
-        Object.keys(obj).map(function(key){
-            if (config.hasOwnProperty(key)) {
-                config[key] = obj[key];
-            } else {
-                throw "Unsupported config key in obp.config.rebase: " + key;
-            }
-        });
     };
     return {
         /**
@@ -160,8 +122,44 @@ define( []
          */
         typeahead : {
             list_len: 20
+        },
+        /**
+         * Method to re-base configuration values, used when JSON data is re-hydrated
+         * from window.obp serialization for an HTML-based view of a bibliography
+         * during main.js initialization.
+         * @method
+         * @public
+         * @instance
+         */
+        rebase : function(obj) {
+            var config = this;
+            if (typeof obj !== "object") {
+                throw "obp.config.rebase() requires an object";
+            }
+            Object.keys(obj).map(function(key){
+                if (config.hasOwnProperty(key)) {
+                    config[key] = obj[key];
+                } else {
+                    throw "Unsupported config key in obp.config.rebase: " + key;
+                }
+            });
+        },
+        /**
+         * Method to stringify Openbibl configuration data as JSON for serialization.
+         * @todo factor this and openbibl/state stringify to single instance
+         * @method
+         * @public
+         * @instance
+         */
+        stringify : function() {
+            var config = this
+              , ret = {};
+            Object.keys(this).map(function(key) {
+                if (serialize[key]) {
+                    ret[key] = config[key];
+                }
+            });
+            return JSON.stringify(ret);
         }
-        , rebase    : rebase
-        , stringify : stringify
     };
 });

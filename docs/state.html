@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: openbibl/search/model</title>
+    <title>JSDoc: Module: openbibl/state</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: openbibl/search/model</h1>
+    <h1 class="page-title">Module: openbibl/state</h1>
 
     
 
@@ -27,7 +27,7 @@
 
 <header>
     <h2>
-    openbibl/search/model
+    openbibl/state
     </h2>
     
 </header>
@@ -38,7 +38,8 @@
 
     
         
-            <div class="description">Data model for search-term functionality.</div>
+            <div class="description">Object representing current application state for Javascript
+code in framework.</div>
         
 
         
@@ -64,7 +65,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="model.js_.html">openbibl/search/model.js</a>, <a href="model.js_.html#line9">line 9</a>
+        <a href="state.js.html">openbibl/state.js</a>, <a href="state.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -91,38 +92,38 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         <dl>
             
 <dt>
-    <h4 class="name" id="add_term"><span class="type-signature"></span>add_term<span class="signature">(value)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="bibliographies"><span class="type-signature">&lt;inner> </span>bibliographies<span class="type-signature"></span></h4>
 
     
 </dt>
 <dd>
-
     
     <div class="description">
-        Method to add a new term to the list of active search terms.
+        Data on the XML and XSL files used to produce displayed bibliography entries.
+"xml" : xml document path
+"xsl" : xslt 2.0 stylesheet path
+"count" : number of bibliography entries displayed
     </div>
     
 
     
 
     
-
+<dl class="details">
     
-        <h5>Parameters:</h5>
-        
 
-<table class="params">
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props">
     <thead>
     <tr>
-        
-        <th>Name</th>
         
 
         <th>Type</th>
@@ -137,31 +138,241 @@
 
     <tbody>
     
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">of term</td>
-        </tr>
+    </tbody>
+</table></dl>
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="state.js.html">openbibl/state.js</a>, <a href="state.js.html#line49">line 49</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="query"><span class="type-signature">&lt;inner> </span>query<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Data queried from the  TEI XML file and used in user interface code to
+drive browse and search functionality.
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
     </tbody>
-</table>
+</table></dl>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="state.js.html">openbibl/state.js</a>, <a href="state.js.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="saxonInterval"><span class="type-signature">&lt;inner> </span>saxonInterval<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Value of active interval ID from window.setInterval() call used in
+polling that determines whether the Saxon-CE xslt processor has been
+loaded and is available.
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+        <h5 class="subsection-title">Properties:</h5>
+
+        <dl>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+    </tbody>
+</table></dl>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="state.js.html">openbibl/state.js</a>, <a href="state.js.html#line61">line 61</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<dt>
+    <h4 class="name" id="rebase"><span class="type-signature"></span>rebase<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Method to re-base configuration values, used when JSON data is re-hydrated
+from window.obp serialization for an HTML-based view of a bibliography
+during main.js initialization.
+    </div>
+    
+
+    
+
+    
+
     
 
     
@@ -187,7 +398,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="model.js_.html">openbibl/search/model.js</a>, <a href="model.js_.html#line65">line 65</a>
+        <a href="state.js.html">openbibl/state.js</a>, <a href="state.js.html#line96">line 96</a>
     </li></ul></dd>
     
 
@@ -217,7 +428,7 @@
         
             
 <dt>
-    <h4 class="name" id="filter_indices"><span class="type-signature"></span>filter_indices<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="stringify"><span class="type-signature"></span>stringify<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 </dt>
@@ -225,8 +436,7 @@
 
     
     <div class="description">
-        Return list of bibliography entry indices (based on @data-src-index value)
-reflecting the current list of active terms, given the search mode.
+        Method to stringify Openbibl application state data as JSON for serialization.
     </div>
     
 
@@ -259,7 +469,7 @@ reflecting the current list of active terms, given the search mode.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="model.js_.html">openbibl/search/model.js</a>, <a href="model.js_.html#line91">line 91</a>
+        <a href="state.js.html">openbibl/state.js</a>, <a href="state.js.html#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -271,199 +481,9 @@ reflecting the current list of active terms, given the search mode.
     <dt class="tag-todo">To Do:</dt>
     <dd class="tag-todo">
         <ul>
-            <li>Make search case-insensitive</li>
+            <li>factor this and openbibl/config stringify to single instance</li>
         </ul>
     </dd>
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="highlight_items"><span class="type-signature"></span>highlight_items<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Return list of terms to be highlighted (active search terms).
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="model.js_.html">openbibl/search/model.js</a>, <a href="model.js_.html#line118">line 118</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="remove_terms"><span class="type-signature"></span>remove_terms<span class="signature">(list)</span><span class="type-signature"></span></h4>
-
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Remove provided search terms from the active term list.
-    </div>
-    
-
-    
-
-    
-
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>list</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">of terms to remove</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="model.js_.html">openbibl/search/model.js</a>, <a href="model.js_.html#line77">line 77</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
     
 </dl>
 
@@ -486,67 +506,6 @@ reflecting the current list of active terms, given the search mode.
         </dl>
     
 
-    
-        <h3 class="subsection-title">Type Definitions</h3>
-
-        <dl>
-                
-<dt>
-    <h4 class="name" id="handle_query_data">handle_query_data</h4>
-
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Callback used to receive and populate the search-term-list and
-occurrence-index data used by the search term filter.
-    </div>
-    
-
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="model.js_.html">openbibl/search/model.js</a>, <a href="model.js_.html#line47">line 47</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-            </dl>
     
 
     

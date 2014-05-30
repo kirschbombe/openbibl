@@ -53,10 +53,12 @@ define(
   [  'module', 'domReady', 'jquery', 'underscore',
      'obpconfig', 'obpev', 'obpstate',
      'filter', 'browse', 'search', 'query', 'highlight',
-     'saxon', 'download', 'sort', 'theme', 'toc', 'tooltip',
+     'saxon', 'sort', 'theme', 'toc', 'tooltip',
+     'download'
   ]
-, function(module,domReady,$,_,obpconfig,obpev,obpstate,
-           filter,browse,search,query,highlight,saxon
+, function(module, domReady, $, _, obpconfig, obpev, obpstate,
+           filter, browse, search, query, highlight, saxon, sort,
+           theme, toc, tooltip
 ) {
     "use strict";
     // determine whether this is an XML or HTML file load based on href
@@ -74,11 +76,6 @@ define(
             }
         });
     }
-    // Openbibl
-    filter.init([browse,search]);
-    highlight.init([browse,search]);
-    browse.init();
-    search.init();
     _.templateSettings = {
         interpolate: (new RegExp(obpconfig.template_pattern))
     };
@@ -125,6 +122,14 @@ define(
         module.exports.saxonLoadedCB();
     }
     domReady(function() {
+        filter.init([browse,search]);
+        highlight.init([browse,search]);
+        browse.init();
+        search.init();
+        sort.init();
+        theme.init();
+        toc.init();
+        tooltip.init();
         $('.obp-filter-mode').change(function(){
             obpev.raise("obp:filter-mode-change",module.id);
             obpev.raise("obp:filter-change",module.id);

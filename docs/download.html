@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: main</title>
+    <title>JSDoc: Module: openbibl/download</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: main</h1>
+    <h1 class="page-title">Module: openbibl/download</h1>
 
     
 
@@ -27,7 +27,7 @@
 
 <header>
     <h2>
-    main
+    openbibl/download
     </h2>
     
 </header>
@@ -38,16 +38,12 @@
 
     
         
-            <div class="description">Main entry point for the Openbibl framework.
+            <div class="description">Downlad-as-HTML functionality.
 
-This module is loaded according to the RequireJS @data-main attribute and performs:
-<ul>
-<li>setting of configuration options for RequireJS and for the Openbibl framework modules</li>
-<li>initialization of Openbibl framework modules requiring initialization (e.g., to bind to DOM events or to Openbibl events)</li>
-<li>binding of global Openbibl events to DOM events</li>
-<li>binding of DOM events that for behavior is not specific to a particular module</li>
-<li>request for bibliography content and index data loading</li>
-</ul></div>
+Document rendered in the browser is serialized as HTML. This allows the XML->HTML
+transformation step to be avoided if the downloaded HTML file is served. Configuration
+and state data are serialized as JSON in the HTML file to keep file
+references accurate and to maintain any generated data.</div>
         
 
         
@@ -73,7 +69,7 @@ This module is loaded according to the RequireJS @data-main attribute and perfor
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="main.js.html">main.js</a>, <a href="main.js.html#line39">line 39</a>
+        <a href="download.js.html">openbibl/download.js</a>, <a href="download.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
