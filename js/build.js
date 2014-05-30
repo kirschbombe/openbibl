@@ -1,5 +1,7 @@
 // r.js optimizer config file
 // CURRENTLY UNUSED
+/*jslint white: true, ass: true */
+/*global define: true */
 ({
       generateSourceMaps : true
     , preserveLicenseComments : false 
@@ -35,4 +37,4 @@
     , shim : {
           'tyepahead' : { deps: ['jquery'] }
     }
-})
+});

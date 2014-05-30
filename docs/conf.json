@@ -1,8 +1,8 @@
 {
     "source" : {
-          "include" : [ 
+          "include" : [
                   "README.md"
-                , "js/" 
+                , "js/"
             ]
         , "exclude" : [ "js/lib" ]
         , "excludePattern" : "min.js$"

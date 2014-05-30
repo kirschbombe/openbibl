@@ -4,7 +4,7 @@
 * Contact: https://github.com/kirschbombe/openbibl
 * License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
 */
-/*jslint white: true, todo: true, nomen: true, plusplus: true */
+/*jslint white: true, nomen: true, plusplus: true */
 /*global define: true */
 /**
  * UI view for index-based browse functionality.
