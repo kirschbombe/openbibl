@@ -43,10 +43,11 @@ define( []
      * @instance
      */
     stringify = function() {
-        var ret = {};
+        var config = this
+          , ret = {};
         Object.keys(this).map(function(key) {
             if (serialize[key]) {
-                ret[key] = this[key];
+                ret[key] = config[key];
             }
         });
         return JSON.stringify(ret);
