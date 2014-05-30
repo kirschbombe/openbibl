@@ -60,12 +60,13 @@ define( []
      * @instance
      */
     rebase = function(obj) {
+        var config = this;
         if (typeof obj !== "object") {
             throw "obp.config.rebase() requires an object";
         }
         Object.keys(obj).map(function(key){
-            if (this.hasOwnProperty(key)) {
-                this[key] = obj[key];
+            if (config.hasOwnProperty(key)) {
+                config[key] = obj[key];
             } else {
                 throw "Unsupported config key in obp.config.rebase: " + key;
             }
