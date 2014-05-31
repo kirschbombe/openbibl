@@ -7,7 +7,21 @@
 /*jslint white: true, todo: true, nomen: true, plusplus: true */
 /*global define: true */
 /**
- * Openbibl application event controller.
+ * Openbibl event controller, a simple application synchronization
+ * mechanism. Application events are raised by controllers or raised
+ * in DOM-event callbacks to signal that some aspect of the application
+ * state has changed which
+ *
+ * For example, the "obp:filter-change" event is raised when a filter
+ * item (search term or browse term) is added/removed, which would
+ * impact the visibility of bibliography entries. Consequently, the table
+ * of contents entries require a recalculation, and this recalculation
+ * is triggered by means of the obp:filter-change event, to which the
+ * TOC controller subscribes.
+ *
+ * These events are called without any assurance of ordering. The callbacks
+ * fired for a given event are done functionally at random (although in practice
+ * according to the alphabetical sort order of the registered object names).
  *
  * @module openbibl/event
  */
@@ -16,13 +30,59 @@ define(
 , function(obpconfig) {
     'use strict';
     var supported_events = [
-        "obp:filter-start",      "obp:filter-change",      "obp:filter-mode-change",
-        "obp:filter-complete",   "obp:bibliography-added", "obp:search-term-change",
+        /**
+         * Event obp:filter-change. Raised by browse and search controllers
+         * when user input there changes members of the active search/browse
+         * items; triggers recalculation of visible bibliography entries.
+         * @constant
+         */
+        "obp:filter-change",
+        /**
+         * Event obp:filter-mode-change. Raised in callback triggered
+         * by DOM onchange event for .obp-filter-mode, and by window resize;
+         * triggers recalculation of visible bibliography entries.
+         * @constant
+         */
+        "obp:filter-mode-change",
+        /**
+         * Event obp:filter-complete. Raised by the openbibl/filter controller
+         * once the visible bibliographies have been filtered; triggers
+         * recalculation in modules controlling sort-order, TOC, and
+         * tooltip visibility.
+         * @constant
+         */
+        "obp:filter-complete",
+        /**
+         * Event obp:bibliography-added. Raised by the openbibl/filter
+         * and openbibl/sort controllers to signal a change in the visibility
+         * or ordering of bibliography entries; triggers recalculation and/or
+         * re-initialization in the highlight, TOC, and tooltip modules.
+         * Re-initialization would be required due to a change in the Document
+         * requiring re-setting DOM event handlers.
+         * @constant
+         */
+        "obp:bibliography-added",
+        /**
+         * Event obp:search-term-change. Raised in the openbibl/search
+         * controller to signal change (addition or removal) of active
+         * search terms; triggers update of the search term view.
+         * @constant
+         */
+        "obp:search-term-change",
+        /**
+         * Event obp:browse-term-change. Raised by the openbibl/browse
+         * controller to signal change (addition or removal) of active
+         * browse items; triggers update of the browse views.
+         * @constant
+         */
         "obp:browse-term-change"
     ];
     return {
         /**
-         *
+         * Initialize the event controller.
+         * @method
+         * @public
+         * @instance
          */
         init : function() {
             var obpev = this;
@@ -31,11 +91,21 @@ define(
             });
         },
         /**
-         *
+         * Event table mapping events to registered callbacks.
+         * @property
+         * @public
+         * @instance
          */
         events: {},
         /**
-         *
+         * Method enabling subscription to an event.
+         * @param {string} event name
+         * @param {string} name of object subscribing to event
+         * @param {function} callback to fire on event
+         * @throws exception when unsupported event is subscribed to
+         * @method
+         * @public
+         * @instance
          */
         subscribe : function(ev,obj,cb) {
             if (obpconfig.debug) { obpconfig.console.log(obj + ' subscribed ' + ev); }
@@ -47,7 +117,13 @@ define(
             }
         },
         /**
-         *
+         * Method enabling unsubscription from an event.
+         * @param {string} event name
+         * @param {string} name of object unsubscribing to event
+         * @throws exception when unsupported event is unsubscribed from
+         * @method
+         * @public
+         * @instance
          */
         unsubscribe : function(ev,obj) {
             if (this.events.hasOwnProperty(ev)) {
@@ -58,7 +134,13 @@ define(
             }
        },
        /**
-        *
+        * Method used to raise an event in the application.
+        * @param {string} event to raise
+        * @param {string} name of object raising event
+        * @throws exception when unsupported event is raised
+        * @method
+        * @public
+        * @instance
         */
        raise : function(ev,obj) {
             var subscribers;
