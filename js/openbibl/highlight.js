@@ -17,14 +17,17 @@ define(
     'use strict';
     return {
         /**
-         *
+         * Register highlight module with Openbibl application events.
+         * @todo work out the uncollapse/recollapse logic (see reported issue)
+         * @method
+         * @public
+         * @instance
          */
         init : function(sources) {
             var highlight = this;
             highlight.sources = sources;
             obpev.subscribe("obp:filter-complete", highlight.id, function() {
                 highlight.highlight_filter_items();
-                // TODO: work out the uncollapse/recollapse logic
                 highlight.unhide_filter_items();
             });
             obpev.subscribe("obp:filter-start", highlight.id, function() {
@@ -33,15 +36,32 @@ define(
             });
         },
         /**
-         *
+         * Attribute name for for a <span> representing a highlighted match.
+         * @property
+         * @constant
          */
         match_attr_name : 'data-match',
+        /**
+         * Class name for a span representing a highlighted match.
+         * @property
+         * @constant
+         */
         match_class : 'obp-match',
+        /**
+         * Preprocessor for the value of a @data-match attribute value.
+         * @method
+         * @private
+         * @instance
+         */
         match_attr_preproc : function(str) {
             return str.toUpperCase().trim();
         },
         /**
-         *
+         * Method to display a highlighted item that is in a collapsed Bootstrap panel.
+         * @todo correct display and uncollapse behavior, which is inconsistent.
+         * @method
+         * @private
+         * @instance
          */
         hide_filter_items : function() {
             /*jslint unparam: true */
@@ -51,7 +71,11 @@ define(
             });
         },
         /**
-         *
+         * Method to hide a highlighted item (collapse an encolsing Bootstrap panel).
+         * @todo correct display and collapse behavior, which is inconsistent
+         * @method
+         * @private
+         * @instance
          */
         unhide_filter_items : function() {
             /*jslint unparam: true */
@@ -61,7 +85,11 @@ define(
             });
         },
         /**
-         *
+         * Method to collect items to be highlighted from subscribed objects (i.e., browse
+         * and search controllers).
+         * @method
+         * @public
+         * @instance
          */
         highlight_filter_items : function() {
             var items = { element: [], term: [] }
@@ -80,7 +108,11 @@ define(
             }
         },
         /**
-         *
+         * Highlight an element (<span>).
+         * @param {string} jQuery selector pattern for matching
+         * @method
+         * @private
+         * @instance
          */
         highlight_elt : function(selector) {
             /*jslint unparam: true */
@@ -99,7 +131,12 @@ define(
             });
         },
         /**
+         * Highlight a term.
+         * @param {string} term to highlight
          * @todo parameterize whole-word, case-insensitive search
+         * @method
+         * @private
+         * @instance
          */
         highlight_term : function(term) {
             var highlighter = this
@@ -131,7 +168,10 @@ define(
             });
         },
         /**
-         *
+         * Remove highlighting from all currently highlighted terms.
+         * @method
+         * @private
+         * @instance
          */
         unhighlight_filter_items : function() {
             var highlight = this
