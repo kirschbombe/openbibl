@@ -17,7 +17,11 @@ define(
     'use strict';
     return {
         /**
-         *
+         * Initialize the filter controller.
+         * @sources {array} sources of bibliography entry index lists, e.g., the openbibl/browse controller
+         * @method
+         * @public
+         * @instance
          */
         init : function(sources) {
             var filter = this;
@@ -27,23 +31,42 @@ define(
             });
         },
         /**
-         *
+         * Array of sources (e.g., openbibl/browse controller object) providing
+         * filter data for a filter operation. A filter source implements a method
+         * 'filter_indices()' that is called whenever a filtering operation occurs,
+         * which provides the indices reflecting the current subset for that provider.
+         * @property
+         * @private
          */
         sources : [],
         /**
-         *
+         * Name of the filtering mode for a set-union operation. Used both in
+         * JS code and in the xsl/openbibl.boot.xsl stylesheet.
+         * @constant
+         * @public
          */
         filter_mode_union         : 'obp-filter-union',
         /**
-         *
+         * Name of the filtering mode for a set-intersection operation. Used both in
+         * JS code and in the xsl/openbibl.boot.xsl stylesheet.
+         * @constant
+         * @public
          */
         filter_mode_intersection  : 'obp-filter-intersection',
         /**
-         *
+         * Name of the default filtering mode.
+         * @constant
+         * @public
          */
         filter_mode_default       : 'obp-filter-intersection',
         /**
-         *
+         * Method to return an array of values of the div[class="entry"]/@data-src-index
+         * attributes for all bibliography entries in the bibliography. Used as a
+         * starting point for set operations in the filter-source providers.
+         * @returns {array} list of integers corresponding to all entries
+         * @method
+         * @public
+         * @instance
          */
         all_filter_indices : function() {
             var max = obpstate.bibliographies.count - 1
@@ -55,7 +78,13 @@ define(
             return ret;
         },
         /**
-         *
+         * Method invoked on the 'obp:filter-change' event. Results in each of the
+         * providers of filtering data being queried for their current bibliography
+         * entries to be considered "active" according to their (browse/search)
+         * functionality. Performs updates to the HTML view.
+         * @method
+         * @public
+         * @instance
          */
         filter_entries : function() {
             var i = 0
@@ -68,11 +97,9 @@ define(
                 $(elt).show();
             });
             obpev.raise("obp:bibliography-added", module.id);
-            all_indices = this.all_filter_indices();
-            result_indices = all_indices;
+            all_indices = result_indices = this.all_filter_indices();
             for (i = 0; i < this.sources.length; i++) {
                 current_indices = this.sources[i].filter_indices();
-                // if (current_indices.length === 0) continue;
                 result_indices = _.intersection(result_indices, current_indices);
             }
             store_indices = _.difference(all_indices,result_indices);
