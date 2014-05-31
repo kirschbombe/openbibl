@@ -1,13 +1,18 @@
+/*
+* Openbibl Framework v0.1.0
+* Copyright 2014, Dawn Childress
+* Contact: https://github.com/kirschbombe/openbibl
+* License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
+*/
 // r.js optimizer config file
 // CURRENTLY UNUSED
 /*jslint white: true, ass: true */
-/*global define: true */
 ({
       generateSourceMaps : true
-    , preserveLicenseComments : false 
+    , preserveLicenseComments : false
     ,  optimize : "uglify2"
-    , 
-    
+    ,
+
       baseUrl: "."
     , name: "main"
     , out: "main.min.js"
@@ -18,7 +23,7 @@
         , 'cookie'      : 'lib/jquery.cookie'
         , 'underscore'  : 'lib/underscore-1.6.0.min'
         , 'filesaver'   : 'lib/FileSaver'
-        
+
         , 'obpconfig'   : 'openbibl/config'
         , 'obpev'       : 'openbibl/event'
         , 'obpstate'    : 'openbibl/state'

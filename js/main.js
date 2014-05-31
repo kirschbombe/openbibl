@@ -76,6 +76,7 @@ define(
             }
         });
     }
+    obpev.init();
     _.templateSettings = {
         interpolate: (new RegExp(obpconfig.template_pattern))
     };
