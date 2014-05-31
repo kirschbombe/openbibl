@@ -19,17 +19,22 @@ define(
         "obp:filter-start",      "obp:filter-change",      "obp:filter-mode-change",
         "obp:filter-complete",   "obp:bibliography-added", "obp:search-term-change",
         "obp:browse-term-change"
-    ];
+    ],
+    event_map = {},
+    init_events = function(obj) {
+        supported_events.forEach(function(event) {
+            obj[event] = {};
+        });
+    };
+    init_events(event_map);
     return {
         /**
          *
          */
         init : function() {
-            var obpev = this;
-            supported_events.forEach(function(event) {
-                obpev.events[event] = {};
-            });
+            init_events(this.events);
         },
+
         /**
          *
          */
