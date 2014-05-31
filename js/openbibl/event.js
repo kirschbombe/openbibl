@@ -12,16 +12,16 @@
  * in DOM-event callbacks to signal that some aspect of the application
  * state has changed which
  *
- * For example, the "obp:filter-change" event is raised when a filter
+ * <p>For example, the "obp:filter-change" event is raised when a filter
  * item (search term or browse term) is added/removed, which would
  * impact the visibility of bibliography entries. Consequently, the table
  * of contents entries require a recalculation, and this recalculation
  * is triggered by means of the obp:filter-change event, to which the
- * TOC controller subscribes.
+ * TOC controller subscribes.</p>
  *
- * These events are called without any assurance of ordering. The callbacks
+ * <p>These events are called without any assurance of ordering. The callbacks
  * fired for a given event are done functionally at random (although in practice
- * according to the alphabetical sort order of the registered object names).
+ * according to the alphabetical sort order of the registered object names).</p>
  *
  * @module openbibl/event
  */
@@ -29,53 +29,56 @@ define(
   [ 'obpconfig' ]
 , function(obpconfig) {
     'use strict';
-    var supported_events = [
-        /**
-         * Event obp:filter-change. Raised by browse and search controllers
-         * when user input there changes members of the active search/browse
-         * items; triggers recalculation of visible bibliography entries.
-         * @constant
-         */
-        "obp:filter-change",
-        /**
-         * Event obp:filter-mode-change. Raised in callback triggered
-         * by DOM onchange event for .obp-filter-mode, and by window resize;
-         * triggers recalculation of visible bibliography entries.
-         * @constant
-         */
-        "obp:filter-mode-change",
-        /**
-         * Event obp:filter-complete. Raised by the openbibl/filter controller
-         * once the visible bibliographies have been filtered; triggers
-         * recalculation in modules controlling sort-order, TOC, and
-         * tooltip visibility.
-         * @constant
-         */
-        "obp:filter-complete",
-        /**
-         * Event obp:bibliography-added. Raised by the openbibl/filter
-         * and openbibl/sort controllers to signal a change in the visibility
-         * or ordering of bibliography entries; triggers recalculation and/or
-         * re-initialization in the highlight, TOC, and tooltip modules.
-         * Re-initialization would be required due to a change in the Document
-         * requiring re-setting DOM event handlers.
-         * @constant
-         */
-        "obp:bibliography-added",
-        /**
-         * Event obp:search-term-change. Raised in the openbibl/search
-         * controller to signal change (addition or removal) of active
-         * search terms; triggers update of the search term view.
-         * @constant
-         */
-        "obp:search-term-change",
-        /**
-         * Event obp:browse-term-change. Raised by the openbibl/browse
-         * controller to signal change (addition or removal) of active
-         * browse items; triggers update of the browse views.
-         * @constant
-         */
-        "obp:browse-term-change"
+    /**
+     * Event obp:filter-change. Raised by browse and search controllers
+     * when user input there changes members of the active search/browse
+     * items; triggers recalculation of visible bibliography entries.
+     * @constant {string} obp:filter-change
+     */
+    var obp_filter_change = "obp:filter-change",
+    /**
+     * Event obp:filter-mode-change. Raised in callback triggered
+     * by DOM onchange event for .obp-filter-mode, and by window resize;
+     * triggers recalculation of visible bibliography entries.
+     * @constant {string} obp:filter-mode-change
+     */
+    obp_filter_mode_change = "obp:filter-mode-change",
+    /**
+     * Event obp:filter-complete. Raised by the openbibl/filter controller
+     * once the visible bibliographies have been filtered; triggers
+     * recalculation in modules controlling sort-order, TOC, and
+     * tooltip visibility.
+     * @constant {string} obp:filter-complete
+     */
+    obp_filter_complete = "obp:filter-complete",
+    /**
+     * Event obp:bibliography-added. Raised by the openbibl/filter
+     * and openbibl/sort controllers to signal a change in the visibility
+     * or ordering of bibliography entries; triggers recalculation and/or
+     * re-initialization in the highlight, TOC, and tooltip modules.
+     * Re-initialization would be required due to a change in the Document
+     * requiring re-setting DOM event handlers.
+     * @constant {string} obp:bibliography-added
+     */
+    obp_bibliography_added = "obp:bibliography-added",
+    /**
+     * Event obp:search-term-change. Raised in the openbibl/search
+     * controller to signal change (addition or removal) of active
+     * search terms; triggers update of the search term view.
+     * @constant {string} obp:search-term-change
+     */
+    obp_search_term_change = "obp:search-term-change",
+    /**
+     * Event obp:browse-term-change. Raised by the openbibl/browse
+     * controller to signal change (addition or removal) of active
+     * browse items; triggers update of the browse views.
+     * @constant {string} obp:browse-term-change
+     */
+    obp_browse_term_change = "obp:browse-term-change",
+
+    supported_events = [
+          obp_bibliography_added, obp_browse_term_change, obp_filter_change
+        , obp_filter_complete,    obp_filter_mode_change, obp_search_term_change
     ];
     return {
         /**
