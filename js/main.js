@@ -62,7 +62,6 @@ define(
 ) {
     "use strict";
     // determine whether this is an XML or HTML file load based on href
-    // TODO: do not use file extension
     var html_load = !window.obp.xsl_load;
     if (html_load) {
         obpconfig.rebase(window.obp.obpconfig);
@@ -87,6 +86,15 @@ define(
         query.subscribers = [search, browse];
         query.request_query_data(query_data_file);
     };
+    // If XML file is requested in browser, have the bibliography entries
+    // transformed to HTML for injection into the page using the Saxon-CE
+    // processor. The processor is loaded asynchronously (as is this module),
+    // so we need a way to poll for it having successfully loaded. This is
+    // done using a window.setInterval() call to check for a true value
+    // assigned to the 'window.obp.saxonLoaded' global, which is set to true
+    // by the onSaxonLoad() callback. See the 'openbibl/xsl/openbibl.boot.xsl'
+    // file for the JS call.
+    // TODO: set timeout for the polling.
     if (!html_load) {
         module.exports.onSaxonLoad = function() {
             saxon.onSaxonLoad(window.Saxon);
