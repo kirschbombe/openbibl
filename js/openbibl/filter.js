@@ -67,7 +67,7 @@ define(
             $('#bibliographies').find('div.entry').each(function(i,elt) {
                 $(elt).show();
             });
-            obpev.raise("obp:filter-start", module.id);
+            obpev.raise("obp:bibliography-added", module.id);
             all_indices = this.all_filter_indices();
             result_indices = all_indices;
             for (i = 0; i < this.sources.length; i++) {

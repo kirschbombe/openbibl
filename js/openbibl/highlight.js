@@ -26,13 +26,10 @@ define(
         init : function(sources) {
             var highlight = this;
             highlight.sources = sources;
-            obpev.subscribe("obp:filter-complete", highlight.id, function() {
+            obpev.subscribe("obp:bibliography-added", highlight.id, function() {
+                highlight.unhighlight_filter_items();
                 highlight.highlight_filter_items();
                 highlight.unhide_filter_items();
-            });
-            obpev.subscribe("obp:filter-start", highlight.id, function() {
-                highlight.hide_filter_items();
-                highlight.unhighlight_filter_items();
             });
         },
         /**
