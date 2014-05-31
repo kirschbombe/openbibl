@@ -1,58 +1,112 @@
+/*
+* Openbibl Framework v0.1.0
+* Copyright 2014, Dawn Childress
+* Contact: https://github.com/kirschbombe/openbibl
+* License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
+*/
+/*jslint white: true, nomen: true*/
+/*global define: true */
+/**
+ * Controller for search term functionality.
+ *
+ * @module openbibl/search
+ */
 define(
-  [ 'module', 'jquery', 'obpev', 'search/model', 'search/view' ]
-, function(module,$,obpev,model,view) {
-    // set focus for search <input> when made visible
-    $('.obp-search-panel').bind('shown.bs.collapse', function() {
-        $(this).find('.obp-search-panel-input').focus();
-    });
-    $('.obp-search-form').on('submit', function(event) {
-        // prevent the search field from causing a page
-        // reload when a typeahead suggestion is unavailable
-        event.preventDefault();
-    });
-    return { 
-          init : function() {
-            var search = this;
+  [ 'module', 'search/model', 'search/view', 'obpstate', 'obpev' ]
+, function(module,model,view,obpstate,obpev) {
+    'use strict';
+    return {
+        /**
+         * Initializer for search term controller. Initializes view.
+         * @method
+         * @public
+         * @instance
+         */
+        init : function() {
             view.init(this);
-            $('.obp-search-clear').click(function(event){
-                // TODO: handle this better
-                var search_terms = $(event.target)
-                    .closest('.obp-search-panel')
-                    .find('a.obp-search-item')
-                    .map(function(elt){
-                        return this.getAttribute('data-selection');
-                    });
-                search.remove_terms(search_terms);
-                event.preventDefault();
-            });
-            $('.obp-filter-mode').change(function(event){
-                search.filter_mode_change(event);
-            });
-          }
-        , term_list_item_class : 'obp-search-item'
-        , filter_indices : function() {
+        },
+        /**
+         * Value to use for @class attribute of a search term item.
+         * @constant {stirng}
+         * @public
+         */
+        term_list_item_class : 'obp-search-item',
+        /**
+         * Returns a list of bibliography entry indices (@data-src-index values)
+         * considered active/visible based on active search terms.
+         * @return {array} possibly empty list of integer indices
+         * @method
+         * @instance
+         * @public
+         */
+        filter_indices : function() {
             return model.filter_indices();
-        }
-        , highlight_items : function() {
+        },
+        /**
+         * Returns a list of search term values to use by the highlighting
+         * module.
+         * @return {object} list of terms to highlight
+         * @method
+         * @instance
+         * @public
+         */
+        highlight_items : function() {
             return model.highlight_items();
-        }
-        , handle_query_data : function() {
-            model.handle_query_data();
-        }
-        , remove_terms : function(terms) {
+        },
+        /**
+         * Method called once search term data has been generated
+         * from the source document.
+         * @method
+         * @public
+         * @instance
+         */
+        handle_query_data : function() {
+            model.handle_query_data(obpstate.query.data);
+        },
+        /**
+         * Method called when one or all search terms have been
+         * removed.
+         * @method
+         * @public
+         * @instance
+         */
+        remove_terms : function(terms) {
             model.remove_terms(terms);
-        }
-        , filter_mode_change : function(event) {
-            model.filter_mode_change(event);
-        }
-        , active_search_terms : function() {
+            obpev.raise("obp:search-term-change",module.id);
+            obpev.raise("obp:filter-change",module.id);
+        },
+        /**
+         * Method called when the a filter mode button has been clicked,
+         * for synchronization.
+         * @param {string} new search filter mode
+         * @method
+         * @public
+         * @instance
+         */
+        filter_mode_change : function(val) {
+            view.filter_mode_change(val);
+            model.current_search_mode = view.current_search_mode;
+        },
+        /**
+         * Returns list of currently active search terms.
+         * @method
+         * @public
+         * @instance
+         */
+        active_search_terms : function() {
             return model.active_search_terms;
-        }
-        , add_term : function(term) {
+        },
+        /**
+         * Add a new search term to the list.
+         * @param {string} value of term to add
+         * @method
+         * @public
+         * @instance
+         */
+        add_term : function(term) {
             model.add_term(term);
-        }
-        , remove_terms : function(terms) {
-            model.remove_terms(terms);
+            obpev.raise("obp:search-term-change",module.id);
+            obpev.raise("obp:filter-change",module.id);
         }
     };
 });

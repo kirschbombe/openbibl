@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    * Openbibl Framework v0.1.0
+    * Copyright 2014, Dawn Childress
+    * Contact: https://github.com/kirschbombe/openbibl
+    * License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
+-->
 <xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"

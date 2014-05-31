@@ -1,58 +1,103 @@
-
+/*
+* Openbibl Framework v0.1.0
+* Copyright 2014, Dawn Childress
+* Contact: https://github.com/kirschbombe/openbibl
+* License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
+*/
+/*jslint white: true, nomen: true, plusplus: true, todo: true */
+/*global define: true */
+/**
+ * Data model for search-term functionality.
+ *
+ * @module openbibl/search/model
+ */
 define(
-  [ 'module', 'obpconfig', 'obpstate', 'jquery', 'obpev', '../filter' ]
-, function(module,obpconfig,obpstate,$,obpev,filter) {
-    return { 
-          filter_mode_change : function(event) {
-            this.current_search_mode = $(event.target).val();
-        }
-        , document_data : {}
-        , active_search_terms : []
-        , current_search_mode : filter.filter_mode_default
-        , to_key : function(item) {
-            return String(item).toUpperCase();
-        }
-        , handle_query_data : function() {
-            var i, j;
-            var termmap = {};
-            var data = obpstate.query.data;
-            var len = data.search.length;
-            var search_data = data.search;
+  [ 'underscore', '../filter' ]
+, function(_,filter) {
+    'use strict';
+    return {
+        /**
+         * Mapping of search terms to the bibliography entry indices (@data-src-index value),
+         * used by filtering.
+         * @property
+         * @private
+         */
+        document_data : {},
+        /**
+         * Terms currently active in the search field.
+         * @property
+         * @private
+         */
+        active_search_terms : [],
+        /**
+         * Current mode for search term filtering.
+         * @property
+         * @private
+         */
+        current_search_mode : filter.filter_mode_default,
+        /**
+         * Callback used to receive and populate the search-term-list and
+         * occurrence-index data used by the search term filter.
+         * @param {object} listing of search term data, in the format:
+         *                 \{ search : [ "foo", [0,3], "bar", [1,3], ... ] \}
+         * @callback
+         * @public
+         * @instance
+         */
+        handle_query_data : function(data) {
+            var i, j,
+                termmap = {},
+                len = data.search.length;
             for (i = 0; i < len; i+=2) {
-                for (j = 0; j < search_data[i].length; j++) {
-                    termmap[search_data[i][j]] = search_data[i+1];
+                for (j = 0; j < data.search[i].length; j++) {
+                    termmap[data.search[i][j]] = data.search[i+1];
                 }
             }
             this.document_data = termmap;
-        }
-        , add_term : function(term) {
-            var current_terms = this.active_search_terms || [];
-            if (_.indexOf(current_terms,term) !== -1) return;
-            current_terms.push(term);
-            this.active_search_terms = current_terms;
-            obpev.raise("obp:search-term-change",module.id);
-            obpev.raise("obp:filter-change",module.id);
-        }
-        , remove_terms : function(remove_terms) {
-            var current_terms = this.active_search_terms || [];
-            // TODO: why is toArray() necessary?
-            var new_terms = _.difference(_.toArray(current_terms), _.toArray(remove_terms));
-            if (new_terms.length === current_terms.length) return;
-            this.active_search_terms = new_terms;
-            obpev.raise("obp:search-term-change",module.id);
-            obpev.raise("obp:filter-change",module.id);
-        }
-        , filter_indices : function() {
-            var search_data     = this.document_data;
-            var result_indices  = filter.all_filter_indices();
-            var mode = this.current_search_mode;
-    
-            // TODO: make this search case-insensitive
-            var terms = this.active_search_terms;
+        },
+        /**
+         * Method to add a new term to the list of active search terms.
+         * @param {string} value of term
+         * @method
+         * @public
+         * @instance
+         */
+        add_term : function(term) {
+            if (_.indexOf(this.active_search_terms,term) === -1) {
+                this.active_search_terms.push(term);
+            }
+        },
+        /**
+         * Remove provided search terms from the active term list.
+         * @param {array} list of terms to remove
+         * @method
+         * @public
+         * @instance
+         */
+        remove_terms : function(terms) {
+            this.active_search_terms = _.difference(
+                  _.toArray(this.active_search_terms)
+                , _.toArray(terms)
+            );
+        },
+        /**
+         * Return list of bibliography entry indices (based on @data-src-index value)
+         * reflecting the current list of active terms, given the search mode.
+         * @todo Make search case-insensitive
+         * @public
+         * @method
+         * @instance
+         */
+        filter_indices : function() {
+            var search_data     = this.document_data
+              , result_indices  = filter.all_filter_indices()
+              , mode            = this.current_search_mode
+              , terms           = this.active_search_terms
+              , list_indices, item_indices, i;
             if (terms.length > 0) {
-                var list_indices;
-                for (var i = 0; i < terms.length; i++) {
-                    var item_indices = search_data[terms[i]];
+                list_indices = null;
+                for (i = 0; i < terms.length; i++) {
+                    item_indices = search_data[terms[i]];
                     list_indices = list_indices || item_indices;
                     if (mode === filter.filter_mode_union) {
                         list_indices = _.union(list_indices,item_indices);
@@ -63,8 +108,14 @@ define(
                 result_indices = _.intersection(result_indices, list_indices);
             }
             return result_indices;
-        }
-        , highlight_items : function() {
+        },
+        /**
+         * Return list of terms to be highlighted (active search terms).
+         * @method
+         * @public
+         * @instance
+         */
+        highlight_items : function() {
             return { "term" : this.active_search_terms };
         }
     };

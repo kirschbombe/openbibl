@@ -1,9 +1,30 @@
+/*
+* Openbibl Framework v0.1.0
+* Copyright 2014, Dawn Childress
+* Contact: https://github.com/kirschbombe/openbibl
+* License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
+*/
+/*jslint white: true, todo: true, nomen: true */
+/*global define: true */
+/**
+ * Openbibl XML file querying object.
+ *
+ * @module openbibl/query
+ */
 define(
-  [ 'module', 'obpconfig', 'obpstate', 'jquery', 'obpev' ]
-, function(module,obpconfig,obpstate,$,obpev) {
+  [ 'obpconfig', 'obpstate', 'jquery', 'saxon' ]
+, function(obpconfig,obpstate,$,saxon) {
+    'use strict';
     return {
-          subscribers : []
-        , request_query_data : function(file) {
+        /**
+         *
+         */
+        subscribers : [],
+        /**
+         *
+         */
+        request_query_data : function(file) {
+            /*jslint unparam: true*/
             var query = this;
             $.ajax({
                 "url":      file
@@ -15,31 +36,38 @@ define(
                     query.notify_subscribers();
                  }
                  , "error" : function(jqXHR, textStatus, errorThrown) {
-                    console.log('File "' + file  + '" not available. Requesting index data be generated.');
                     query.request_saxon_query();
                 }
             });
-        }
-        , notify_subscribers : function() {
+        },
+        /**
+         *
+         */
+        notify_subscribers : function() {
             var subscribers = this.subscribers || [];
-            for (var i = 0; i < subscribers.length; i++)
-                subscribers[i].handle_query_data();
-        }
-        , request_saxon_query : function() {
-            var callback = function(data) {
-                var json;
-                try {
-                    json = JSON.parse(data.getResultDocument().textContent);
-                } catch (e) {
-                    console.log('Failure to generate query data: ' + e.toString());
+            subscribers.map(function(subscriber){
+                subscriber.handle_query_data();
+            });
+        },
+        /**
+         *
+         */
+        request_saxon_query : function() {
+            var query = this
+               , json;
+            saxon.requestQueryTransform(
+                  obpconfig.paths.query_xsl
+                , obpstate.bibliographies.xml
+                , []
+                , function(data) {
+                    try {
+                        json = JSON.parse(data.getResultDocument().textContent);
+                        obpstate.query.data = json;
+                        query.notify_subscribers();
+                    } catch (e) {
+                        console.log('Failure to generate query data: ' + e.toString());
+                    }
                 }
-                window.obp.query.handle_query_success(json);
-            };
-            window.obp.SaxonCE.requestQueryTransform(
-                window.obp.config.paths['query_xsl'],
-                window.obp.bibliographies.xml,
-                [],
-                callback
             );
         }
     };
