@@ -15,8 +15,7 @@ define(
             var events = obpev.events;
             it('initialized state', function() {
                 expect(events).toEqual({
-                     "obp:filter-start"          : {}
-                   , "obp:filter-change"         : {}
+                     "obp:filter-change"         : {}
                    , "obp:filter-mode-change"    : {}
                    , "obp:filter-complete"       : {}
                    , "obp:bibliography-added"    : {}
@@ -34,21 +33,21 @@ define(
             }); // it
             it('supported event does not throw exception', function() {
                 expect(function() {
-                    obpev.subscribe('obp:filter-start', module.id, function(){});
+                    obpev.subscribe('obp:filter-change', module.id, function(){});
                 }).not.toThrow();
             });
         }); // describe
 
         describe('registered callback handling', function() {
             it('subscribed callback fired', function(){
-                var event = 'obp:filter-start';
+                var event = 'obp:filter-change';
                 var callback = jasmine.createSpy('callback');
                 obpev.subscribe(event, module.id, callback);
                 obpev.raise(event, module.id);
                 expect(callback).toHaveBeenCalled();
             });
             it('unsubscribed callback not fired', function(){
-                var event = 'obp:filter-start';
+                var event = 'obp:filter-change';
                 var callback = jasmine.createSpy('callback');
                 obpev.subscribe(event, module.id, callback);
                 obpev.unsubscribe(event, module.id);
