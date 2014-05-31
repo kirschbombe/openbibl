@@ -44,47 +44,42 @@ define(
     'use strict';
     return {
         /**
-         *
+         * Reference to the global Saxon-CE object.
+         * @property
+         * @private
          */
         Saxon : null,
         /**
-         *
+         * Calback to be triggered once the global Saxon object is available
+         * for use.
+         * @param {object} Saxon the global Saxon object
+         * @method
+         * @public
+         * @instance
          */
         onSaxonLoad : function(Saxon) {
             this.Saxon = Saxon;
             this.Saxon.setLogLevel(obpconfig.saxonLogLevel);
         },
         /**
-         * @todo notify user of error
+         * Method to set up a transformation using the Saxon-CE processor.
+         * @todo improve user notification for error handling
+         * @param {string} xsl url for xsl stylesheet 
+         * @param {string} xml url for xml source file
+         * @param {array} parameters array of array of stylesheet parameters of form: [ [ "namespace"/null, "key", "value" ], ... ]
+         * @param {function} success transform success callback   
+         * @param {string} method name of method to call on processor (e.g., "updateHTMLDocument", "transformToFragment")
+         * @method
+         * @private
+         * @instance
          */
-        requestInitialTransform : function(xsl_url, xml_url, parameters, handler) {
+        requestTransform : function(xsl_url, xml_url, parameters, handler, process) {
             var errors = []
               , xsl = this.SaxonRequestXMLHandler(xsl_url,errors)   // asyncURI obj
               , xml = this.SaxonRequestXMLHandler(xml_url,errors)   // asyncURI obj
               , proc;
             if (errors.length > 0) {
                 if (this.debug) { this.console.log("Failed to load XML resource(s): " + errors.toString()); }
-                return;
-            }
-            proc = this.Saxon.newXSLT20Processor(xsl);
-            parameters.forEach(function(plist){
-                proc.setParameter(plist[0], plist[1], plist[2]);
-            });
-            proc.setSuccess(handler);
-            this.Saxon.setErrorHandler(this.SaxonErrorHandler);
-            proc.updateHTMLDocument(xml);
-        },
-        /**
-         *
-         */
-        requestQueryTransform : function(xsl_url, xml_url, parameters, handler) {
-            var errors = []
-              , xsl = this.SaxonRequestXMLHandler(xsl_url,errors)   // asyncURI obj
-              , xml = this.SaxonRequestXMLHandler(xml_url,errors)   // asyncURI obj
-              , proc;
-            if (errors.length > 0) {
-                if (this.debug) { this.console.log("Failed to load XML resource(s): " + errors.toString()); }
-                // TODO: display error message to user
                 return;
             }
             proc = this.Saxon.newXSLT20Processor(xsl);
@@ -94,21 +89,69 @@ define(
             proc.setSuccess(handler);
             this.Saxon.setErrorHandler(this.SaxonErrorHandler);
             /*global document: true */
-            proc.transformToFragment(xml,document);
+            // Document object is passed for the "transformToFragment" call, which
+            // requires a context
+            proc[process](xml, document);
         },
         /**
-         *
+         * Have the XSLT 2.0 processor perform an "updateHTMLDocument" transformation with
+         * the provided parameters. Currently used to initiate the transform used to supply 
+         * HTML for the TEI bibliography entries. Transform success handler is provided. Errors 
+         * are handled by an Openbibl global error handler.
+         * @param {string} xsl url for xsl stylesheet 
+         * @param {string} xml url for xml source file
+         * @param {array} parameters array of array of stylesheet parameters of form: [ [ "namespace"/null, "key", "value" ], ... ]
+         * @param {function} success transform success callback   
+         * @method
+         * @public
+         * @instance
+         */
+        requestInitialTransform : function(xsl_url, xml_url, parameters, handler) {
+            this.requestTransform(xsl_url, xml_url, parameters, handler, 'updateHTMLDocument');
+        },
+        /**
+         * Have the XSLT 2.0 processor perform a "transformToFragment" transformation with
+         * the provided parameters. Currently used to transform TEI XML bibliography to JSON for use
+         * in the browse/search functionality. Transform success handler is provided. Errors 
+         * are handled by an Openbibl global error handler.
+         * @param {string} xsl url for xsl stylesheet 
+         * @param {string} xml url for xml source file
+         * @param {array} parameters array of array of stylesheet parameters of form: [ [ "namespace"/null, "key", "value" ], ... ]
+         * @param {function} success transform success callback   
+         * @method
+         * @public
+         * @instance
+         */
+        requestQueryTransform : function(xsl_url, xml_url, parameters, handler) {
+            this.requestTransform(xsl_url, xml_url, parameters, handler, 'transformToFragment');
+        },
+        /**
+         * Have the Saxon-CE processor create an Async XML object for the provided
+         * URL to be used in a transform.
+         * @param {string} url for resource (e.g., xml or xsl file)
+         * @param {array} array to populate with any caught errors
+         * @method
+         * @private
+         * @instance 
          */
         SaxonRequestXMLHandler : function(url,errors) {
             var xml;
-            try { xml = this.Saxon.requestXML(url); } catch (e) {
+            try { 
+                xml = this.Saxon.requestXML(url); 
+            } catch (e) {
                 if (this.debug) { this.console.log("Error requesting XML resource: " + e.toString()); }
                 errors.push("Failed to load resource '" + url + "'");
             }
             return xml;
         },
         /**
+         * Openbibl global and generic error handler to be passed to the XSLT processor
+         * for a transformation.
          * @todo notify user of transformation error
+         * @param {object} Saxon error object
+         * @method
+         * @private
+         * @instance
          */
         SaxonErrorHandler : function(saxonError) {
             if (obpconfig.debug) {
@@ -133,7 +176,7 @@ define(
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Sat May 31 2014 11:49:57 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Sat May 31 2014 12:37:46 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -91,62 +91,6 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
-
-        <dl>
-            
-<dt>
-    <h4 class="name" id="Saxon"><span class="type-signature">&lt;inner> </span>Saxon<span class="type-signature"></span></h4>
-
-    
-</dt>
-<dd>
-    
-
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="saxon.js.html">openbibl/saxon.js</a>, <a href="saxon.js.html#line22">line 22</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        </dl>
-    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -154,14 +98,17 @@
         <dl>
             
 <dt>
-    <h4 class="name" id="onSaxonLoad"><span class="type-signature">&lt;inner> </span>onSaxonLoad<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="onSaxonLoad"><span class="type-signature"></span>onSaxonLoad<span class="signature">(Saxon)</span><span class="type-signature"></span></h4>
 
     
 </dt>
 <dd>
 
     
-
+    <div class="description">
+        Calback to be triggered once the global Saxon object is available
+for use.
+    </div>
     
 
     
@@ -169,70 +116,53 @@
     
 
     
-<dl class="details">
-    
+        <h5>Parameters:</h5>
+        
 
-    
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="saxon.js.html">openbibl/saxon.js</a>, <a href="saxon.js.html#line26">line 26</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
-<dt>
-    <h4 class="name" id="requestInitialTransform"><span class="type-signature">&lt;inner> </span>requestInitialTransform<span class="signature">()</span><span class="type-signature"></span></h4>
+                <td class="name"><code>Saxon</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the global Saxon object</td>
+        </tr>
 
     
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
+    </tbody>
+</table>
     
 
     
@@ -267,13 +197,6 @@
     
 
     
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>notify user of error</li>
-        </ul>
-    </dd>
-    
 </dl>
 
 
@@ -295,18 +218,142 @@
         
             
 <dt>
-    <h4 class="name" id="requestQueryTransform"><span class="type-signature">&lt;inner> </span>requestQueryTransform<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="requestInitialTransform"><span class="type-signature"></span>requestInitialTransform<span class="signature">(xsl, xml, parameters, success)</span><span class="type-signature"></span></h4>
 
     
 </dt>
 <dd>
 
     
-
+    <div class="description">
+        Have the XSLT 2.0 processor perform an "updateHTMLDocument" transformation with
+the provided parameters. Currently used to initiate the transform used to supply 
+HTML for the TEI bibliography entries. Transform success handler is provided. Errors 
+are handled by an Openbibl global error handler.
+    </div>
     
 
     
 
+    
+
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>xsl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">url for xsl stylesheet</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xml</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">url for xml source file</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>parameters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">array of array of stylesheet parameters of form: [ [ "namespace"/null, "key", "value" ], ... ]</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>success</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">transform success callback</td>
+        </tr>
+
+    
+    </tbody>
+</table>
     
 
     
@@ -332,7 +379,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="saxon.js.html">openbibl/saxon.js</a>, <a href="saxon.js.html#line53">line 53</a>
+        <a href="saxon.js.html">openbibl/saxon.js</a>, <a href="saxon.js.html#line82">line 82</a>
     </li></ul></dd>
     
 
@@ -362,14 +409,19 @@
         
             
 <dt>
-    <h4 class="name" id="SaxonErrorHandler"><span class="type-signature">&lt;inner> </span>SaxonErrorHandler<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="requestQueryTransform"><span class="type-signature"></span>requestQueryTransform<span class="signature">(xsl, xml, parameters, success)</span><span class="type-signature"></span></h4>
 
     
 </dt>
 <dd>
 
     
-
+    <div class="description">
+        Have the XSLT 2.0 processor perform a "transformToFragment" transformation with
+the provided parameters. Currently used to transform TEI XML bibliography to JSON for use
+in the browse/search functionality. Transform success handler is provided. Errors 
+are handled by an Openbibl global error handler.
+    </div>
     
 
     
@@ -377,77 +429,122 @@
     
 
     
-<dl class="details">
-    
+        <h5>Parameters:</h5>
+        
 
-    
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="saxon.js.html">openbibl/saxon.js</a>, <a href="saxon.js.html#line86">line 86</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>notify user of transformation error</li>
-        </ul>
-    </dd>
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
-<dt>
-    <h4 class="name" id="SaxonRequestXMLHandler"><span class="type-signature">&lt;inner> </span>SaxonRequestXMLHandler<span class="signature">()</span><span class="type-signature"></span></h4>
+                <td class="name"><code>xsl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">url for xsl stylesheet</td>
+        </tr>
 
     
-</dt>
-<dd>
+
+        <tr>
+            
+                <td class="name"><code>xml</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">url for xml source file</td>
+        </tr>
 
     
 
-    
+        <tr>
+            
+                <td class="name"><code>parameters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">array of array of stylesheet parameters of form: [ [ "namespace"/null, "key", "value" ], ... ]</td>
+        </tr>
 
     
 
+        <tr>
+            
+                <td class="name"><code>success</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">transform success callback</td>
+        </tr>
+
+    
+    </tbody>
+</table>
     
 
     
@@ -473,7 +570,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="saxon.js.html">openbibl/saxon.js</a>, <a href="saxon.js.html#line75">line 75</a>
+        <a href="saxon.js.html">openbibl/saxon.js</a>, <a href="saxon.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -522,7 +619,7 @@
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Sat May 31 2014 11:49:57 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Sat May 31 2014 12:37:46 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>
