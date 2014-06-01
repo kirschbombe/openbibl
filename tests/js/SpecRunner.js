@@ -65,8 +65,8 @@
       , 'tests/js/spec/openbibl/query'
       , 'tests/js/spec/openbibl/saxon'
       , 'tests/js/spec/openbibl/search'
-      , 'tests/js/spec/openbibl/sort'
 */
+      , 'tests/js/spec/openbibl/sort'
       , 'tests/js/spec/openbibl/theme'
       , 'tests/js/spec/openbibl/toc'
       , 'tests/js/spec/openbibl/tooltip'
