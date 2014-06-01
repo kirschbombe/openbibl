@@ -9,6 +9,9 @@ define(
                 expect(browse).toBeDefined();
             }); // it
             it('initialized state', function() {
+                obpstate.rebase({
+                    bibliographies : {count : 0}
+                });
                 expect(browse.filter_indices()).toEqual([]);
                 expect(browse.highlight_items()).toEqual(
                     { element : [] }
