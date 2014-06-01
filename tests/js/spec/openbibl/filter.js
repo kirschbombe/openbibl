@@ -41,8 +41,8 @@ define(
             }); // it
             it('Click event results in expected number/index of entries', function(){
                 var obpstate = require('obpstate');
-                obpstate.rebase(window.obp.obpstate);
                 loadFixtures('otherEurope.full.html');
+                obpstate.rebase(window.obp.obpstate);
                 browse.init();
                 var indices = [0];
                 var source = {

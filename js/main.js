@@ -33,7 +33,7 @@ require.config({
         , 'tooltip'     : 'openbibl/tooltip'
     }
     , shim : {
-          'tyepahead' : { deps: ['jquery'] }
+          'typeahead' : { deps: ['jquery'] }
     }
 });
 /**
