@@ -29,7 +29,9 @@ define(
                 themer.change_theme($(this).attr('data-stylesheet-file'));
                 $(this).closest('.obp-menu-li').find('a[data-toggle]').click();
             });
-            themer.change_theme($.cookie('theme-stylesheet'));
+            if ($.cookie('theme-stylesheet') !== undefined) {
+                themer.change_theme($.cookie('theme-stylesheet'));
+            }
         },
         /**
          * Method to change the current stylesheet @href attribute value,
