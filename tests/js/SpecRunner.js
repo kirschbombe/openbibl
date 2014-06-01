@@ -48,6 +48,9 @@
           deps: ['jasmine', 'jasmine-html']
         , exports: 'window.jasmineRequire'
       }
+      , 'bootstrap' : {
+          deps: ['jquery']
+      }
     }
   });
 
