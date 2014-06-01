@@ -42,19 +42,30 @@ define(
          * @instance
          */
         change_theme : function(stylesheet) {
-            var parts, $theme_css;
+            var path, $theme_css;
             if (stylesheet === undefined || stylesheet === '') {
                 throw "Undefined or empty stylesheet name in openebibl.theme.change_theme()";
             }
             $('.obp-theme-input[data-stylesheet-file="' + stylesheet + '"]').prop('checked', 'checked');
             $theme_css = $('#theme-css');
             $.cookie('theme-stylesheet',stylesheet);
-            parts = $theme_css.attr('href').split('/');
-            parts[parts.length-1] = stylesheet;
-            stylesheet = parts.join('/');
-            if ($theme_css.attr('href') !== stylesheet) {
-                $theme_css.attr('href', stylesheet);
+            path = this.change_filename($theme_css.attr('href'), stylesheet);
+            if ($theme_css.attr('href') !== path) {
+                $theme_css.attr('href', path);
             }
+        },
+        /**
+         * Utility function to update a path with a new filename.
+         * @method
+         * @private
+         * @instance
+         */
+        change_filename : function(path,name) {
+            var parts = (path !== undefined)
+                       ? path.split('/')
+                       : [];
+            parts[parts.length-1] = name;
+            return parts.join('/');
         }
     };
 });
