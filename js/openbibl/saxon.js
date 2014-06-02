@@ -12,8 +12,8 @@
  * @module openbibl/saxon
  */
 define(
-  [ 'obpconfig' ]
-, function(obpconfig) {
+  [ 'obpconfig', 'jquery' ]
+, function(obpconfig,$) {
     'use strict';
     return {
         /**
@@ -108,11 +108,28 @@ define(
          * @instance
          */
         SaxonRequestXMLHandler : function(url,errors) {
-            var xml;
+            var saxon = this
+              , xml;
             try {
-                xml = this.Saxon.requestXML(url);
+                if (obpconfig.async) {
+                    xml = this.Saxon.requestXML(url);
+                } else {
+                    /*jslint unparam: true*/
+                    $.ajax({
+                          "url":      url
+                        , "dataType": "text"
+                        , "async":    false
+                        , "type":     "GET"
+                        , "success":  function(data) {
+                            xml = saxon.Saxon.parseXML(data);
+                         }
+                         , "error" : function(jqXHR, textStatus, errorThrown) {
+                            throw "Error retrieving '" + url + "': " + errorThrown;
+                        }
+                    });
+                }
             } catch (e) {
-                if (this.debug) { this.console.log("Error requesting XML resource: " + e.toString()); }
+                if (saxon.debug) { this.console.log("Error requesting XML resource: " + e.toString()); }
                 errors.push("Failed to load resource '" + url + "'");
             }
             return xml;

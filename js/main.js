@@ -81,10 +81,17 @@ define(
     };
     module.exports.register_query_data = function() {
         // request query data
-        var dir = obpstate.bibliographies.xml.replace(/[^\/\\]+$/,''),
-            query_data_file = dir + obpconfig.query.file;
-        query.subscribers = [search, browse];
-        query.request_query_data(query_data_file);
+        var dir = obpstate.bibliographies.xml.replace(/[^\/\\]+$/,'')
+          , query_data_file = dir + obpconfig.query.file
+          , cb;
+        query.init([search, browse]);
+        // have data for browse/search functionality fetched/generated
+        // TODO: evaluate whether this data should be stored globally
+        // since it can be weighty
+        cb = function(data) {
+            obpstate.query.data = data;
+        };
+        query.request_query_data(query_data_file, cb);
     };
     // If XML file is requested in browser, have the bibliography entries
     // transformed to HTML for injection into the page using the Saxon-CE
