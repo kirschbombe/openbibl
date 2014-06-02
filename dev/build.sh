@@ -8,7 +8,7 @@ DOCS_DIR="$DEV_DIR/../docs"
 
 echo "-> Compiling LESS files"
 "$LESS_DIR/openbibl.less.sh" -c -v
-if ["$?" ne "0"]; then
+if [ "$?" != "0" ]; then
     echo "Error compiling LESS files. Exiting."
     exit 1
 fi
