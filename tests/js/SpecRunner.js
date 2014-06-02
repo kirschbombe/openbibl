@@ -27,7 +27,7 @@
         , 'filter'      : 'js/openbibl/filter'
         , 'highlight'   : 'js/openbibl/highlight'
         , 'query'       : 'js/openbibl/query'
-        , 'saxon'    : 'js/openbibl/saxon'
+        , 'saxon'       : 'js/openbibl/saxon'
         , 'search'      : 'js/openbibl/search'
         , 'sort'        : 'js/openbibl/sort'
         , 'theme'       : 'js/openbibl/theme'
@@ -67,10 +67,8 @@
       , 'tests/js/spec/openbibl/filter'
       , 'tests/js/spec/openbibl/highlight'
       , 'tests/js/spec/openbibl/query'
-/*
       , 'tests/js/spec/openbibl/saxon'
-      , 'tests/js/spec/openbibl/search'
-*/
+/*      , 'tests/js/spec/openbibl/search'*/
       , 'tests/js/spec/openbibl/sort'
       , 'tests/js/spec/openbibl/theme'
       , 'tests/js/spec/openbibl/toc'
