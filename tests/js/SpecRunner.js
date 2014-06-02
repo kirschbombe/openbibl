@@ -2,8 +2,9 @@
   'use strict';
 
   require.config({
-    baseUrl: '../..',
-    paths: {
+      baseUrl: '../..'
+    // , waitSeconds : 9999
+    , paths: {
           'jasmine'        : 'tests/js/lib/jasmine-2.0.0/jasmine'
         , 'jasmine-html'   : 'tests/js/lib/jasmine-2.0.0/jasmine-html'
         , 'jasmine-jquery' : 'tests/js/lib/jasmine-jquery-2.1.0'
@@ -16,6 +17,7 @@
         , 'underscore'  : 'js/lib/underscore-1.6.0.min'
         , 'filesaver'   : 'js/lib/FileSaver'
         , 'bootstrap'   : 'js/lib/bootstrap-3.1.1'
+        , 'saxonce'     : 'js/lib/saxon-ce/1.1/Saxonce.nocache'
 
         , 'browse'      : 'js/openbibl/browse'
         , 'obpconfig'   : 'js/openbibl/config'
@@ -25,7 +27,7 @@
         , 'filter'      : 'js/openbibl/filter'
         , 'highlight'   : 'js/openbibl/highlight'
         , 'query'       : 'js/openbibl/query'
-        , 'saxon'       : 'js/openbibl/saxon'
+        , 'saxon'    : 'js/openbibl/saxon'
         , 'search'      : 'js/openbibl/search'
         , 'sort'        : 'js/openbibl/sort'
         , 'theme'       : 'js/openbibl/theme'
@@ -51,6 +53,9 @@
       , 'bootstrap' : {
           deps: ['jquery']
       }
+      , 'saxonce' : {
+          exports : 'window.Saxon'
+      }
     }
   });
 
@@ -61,8 +66,8 @@
       , 'tests/js/spec/openbibl/event'
       , 'tests/js/spec/openbibl/filter'
       , 'tests/js/spec/openbibl/highlight'
-/*
       , 'tests/js/spec/openbibl/query'
+/*
       , 'tests/js/spec/openbibl/saxon'
       , 'tests/js/spec/openbibl/search'
 */
