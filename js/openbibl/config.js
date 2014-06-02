@@ -37,6 +37,13 @@ define( []
     };
     return {
         /**
+         * Whether or not to perform async requests.
+         * @default true
+         * @property
+         * @public
+         */
+        async : true,
+        /**
          * Debug state of Openbibl javascript code.
          * @default false
          * @property
