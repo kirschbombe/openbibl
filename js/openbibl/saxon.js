@@ -109,7 +109,7 @@ define(
          */
         SaxonRequestXMLHandler : function(url,errors) {
             var saxon = this
-              , xml;
+              , xml, att;
             try {
                 if (obpconfig.async) {
                     xml = this.Saxon.requestXML(url);
@@ -121,7 +121,17 @@ define(
                         , "async":    false
                         , "type":     "GET"
                         , "success":  function(data) {
+                            // NOTE: when xml is passed in as a string, it the parsed
+                            // XML document has a null baseURI property, which causes
+                            // a failure during the transform for an xsl stylesheet
+                            // containing imports. So an @xml:base attribute is added
+                            // here, using (possibly imprecisely) the (directory of the)
+                            // baseURI of the global Document, plus the relative path of
+                            // the XML/XSL file passed in
                             xml = saxon.Saxon.parseXML(data);
+                            att = xml.createAttribute('xml:base');
+                            att.nodeValue = document.baseURI.replace(/[^\/\\]+$/,'') + url;
+                            xml.documentElement.setAttributeNode(att)
                          }
                          , "error" : function(jqXHR, textStatus, errorThrown) {
                             throw "Error retrieving '" + url + "': " + errorThrown;
