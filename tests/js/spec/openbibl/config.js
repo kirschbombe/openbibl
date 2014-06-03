@@ -19,12 +19,12 @@ define(
         }); // describe
 
         describe('rebase', function() {
-            it('config.rebase() requires an object', function() {
+            it('config.rebase() is varargs', function() {
                 expect(function() {
                     config.rebase();
-                }).toThrow();
+                }).not.toThrow();
                 expect(function() {
-                    config.rebase({});
+                    config.rebase({},false);
                 }).not.toThrow();
             }); // it
             it('config.rebase() requires a supported key', function() {

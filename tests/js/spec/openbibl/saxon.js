@@ -24,6 +24,14 @@ define(
                 originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = saxonTimeout;
                 loadFixtures('otherEurope.boot.html');
+                // retrieve files synchronously to simplify debugging
+                obpconfig.rebase(
+                    {     async : false
+                        , paths : { obp_root : window.obp.appdir }
+                        , saxonLogLevel : 'OFF'
+                    }
+                    , true
+                );
             });
 
             it('load/init', function(done){
@@ -43,12 +51,13 @@ define(
                 var testSaxon;
                 testSaxon = function() {
                     if (Saxon !== undefined) {
-                        // retrieve files synchronously to simplify debugging
-                        obpconfig.async = false;
-                        //obpconfig.saxonLogLevel = 'FINE';
                         obpsaxon.onSaxonLoad(Saxon);
                         // override Saxon error handler
+                        // NB: this will be called for any logging for Saxon log levels
+                        // above 'OFF'
+                        var errorCalled = false;
                         obpsaxon.SaxonErrorHandler = function(saxonError) {
+                            errorCalled = true;
                             console.log("SaxonErrorHandler (" + saxonError.level + "): " + saxonError.message);
                         }
                         var successCalled = false;
@@ -57,18 +66,17 @@ define(
                                 successCalled = true;
                             }
                         };
-                        var xsl = '../../xsl/openbibl.xsl';
+                        var xsl = obpconfig.paths.obp_root + 'xsl/openbibl.xsl';
                         var xml = jasmine.getFixtures().fixturesPath
                                 + '/'
                                 + 'otherEurope.xml';
-                        var failureSpy = spyOn(obpsaxon,'SaxonErrorHandler');
                         obpsaxon.requestInitialTransform(xsl,xml,[],success.cb);
                         var saxonCountdown = saxonInterval/saxonTimeout;
                         var intervalID;
                         var timeout = function() {
                             expect($('div.entry').length).toEqual(9);
                             expect(successCalled).toEqual(true);
-                            expect(failureSpy).not.toHaveBeenCalled();
+                            expect(errorCalled).toEqual(false);
                             done();
                             clearInterval(intervalID);
                         };
