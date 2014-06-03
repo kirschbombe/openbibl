@@ -20,32 +20,35 @@ define(
         init : function(s) {
             search = s;
             var view = this;
+            _.templateSettings = {
+                interpolate: (new RegExp(obpconfig.template_pattern))
+            };
             obpev.subscribe("obp:search-term-change", module.id, function() {
                 view.search_change();
             });
-            $('.obp-search-clear').click(function(event){
-                var search_terms = $(event.target)
-                    .closest('.obp-search-panel')
-                    .find('a.obp-search-item')
-                    .map(function(){
-                        return this.getAttribute('data-selection');
-                    });
-                search.remove_terms(search_terms);
-                event.preventDefault();
-            });
-            $('.obp-filter-mode').change(function(event){
-                search.filter_mode_change($(event.target).val());
-            });
-            // set focus for search <input> when made visible
-            $('.obp-search-panel').bind('shown.bs.collapse', function() {
-                $(this).find('.obp-search-panel-input').focus();
-            });
-            $('.obp-search-form').on('submit', function(event) {
-                // prevent the search field from causing a page
-                // reload when a typeahead suggestion is unavailable
-                event.preventDefault();
-            });
-            domReady(function() {
+            domReady(function(){
+                $('.obp-search-clear').click(function(event){
+                    var search_terms = $(event.target)
+                        .closest('.obp-search-panel')
+                        .find('a.obp-search-item')
+                        .map(function(){
+                            return this.getAttribute('data-selection');
+                        });
+                    search.remove_terms(search_terms);
+                    event.preventDefault();
+                });
+                $('.obp-filter-mode').change(function(event){
+                    search.filter_mode_change($(event.target).val());
+                });
+                // set focus for search <input> when made visible
+                $('.obp-search-panel').bind('shown.bs.collapse', function() {
+                    $(this).find('.obp-search-panel-input').focus();
+                });
+                $('.obp-search-form').on('submit', function(event) {
+                    // prevent the search field from causing a page
+                    // reload when a typeahead suggestion is unavailable
+                    event.preventDefault();
+                });
                 view.retrieve_templates();
                 $('.search-input').typeahead({
                       "items"   : obpconfig.typeahead.list_len
@@ -111,13 +114,14 @@ define(
                 /*jslint unparam: true */
                 path = obpconfig.paths.template_dir + '/' + template;
                 $.ajax({
-                    url:        path,
-                    cache:      true,
-                    success:    function(data) {
+                      url:        path
+                    , async:      obpconfig.async
+                    , cache:      false
+                    , success:    function(data) {
                         obpconfig.templates[template] = data;
                         view.compiled_templates[template] = _.template(data);
-                    },
-                    error : function(jqXHR, textStatus, errorThrown) {
+                    }
+                    , error : function(jqXHR, textStatus, errorThrown) {
                         if (obpconfig.debug) {
                             obpconfig.console.log("Seach-template AJAX error for template '"+ template + "': " + textStatus);
                         }
@@ -138,7 +142,7 @@ define(
         source : function() {
             return _.without(
                 Object.keys(model.document_data),
-                search.active_search_terms
+                search.active_search_terms()
             );
         },
         /**

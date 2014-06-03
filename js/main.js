@@ -69,16 +69,9 @@ define(
     } else {
         obpstate.bibliographies.count = 0;
         obpconfig.paths.obp_root = window.obp.appdir;
-        Object.keys(obpconfig.paths).forEach(function(item){
-            if (item !== 'obp_root') {
-                obpconfig.paths[item] = obpconfig.paths.obp_root + obpconfig.paths[item];
-            }
-        });
+        obpconfig.rebase({},true);
     }
     obpev.init();
-    _.templateSettings = {
-        interpolate: (new RegExp(obpconfig.template_pattern))
-    };
     module.exports.register_query_data = function() {
         // request query data
         var dir = obpstate.bibliographies.xml.replace(/[^\/\\]+$/,'')

@@ -34,6 +34,19 @@ define( []
         , typeahead         : true
         , rebase            : false
         , stringify         : false
+    },
+    /**
+     * File-system paths for resources referenced in the Openbibl JS code.
+     * The values in this file are relative to the Openbibl root directory, and
+     * made absolute at runtime, or by a call to 'rebase()'.
+     * @property
+     * @public
+     * @constant
+     */
+    project_paths = {
+          obp_root        : ''
+        , template_dir    : 'js/templates'
+        , query_xsl       : 'xsl/openbibl.query.xsl'
     };
     return {
         /**
@@ -75,19 +88,6 @@ define( []
          * @public
          */
         saxonPollInterval: 100,
-        /**
-         * File-system paths for resources referenced in the Openbibl JS code.
-         * The values in this file are relative to the Openbibl root directory, and
-         * made absolute at runtime.
-         * @property
-         * @public
-         * @constant
-         */
-        paths : {
-              obp_root        : ''
-            , template_dir    : 'js/templates'
-            , query_xsl       : 'xsl/openbibl.query.xsl'
-        },
         /**
          * Milisecond speed of the scrolling done when a TOC entry is clicked.
          * @default 200 ms
@@ -134,22 +134,30 @@ define( []
          * Method to re-base configuration values, used when JSON data is re-hydrated
          * from window.obp serialization for an HTML-based view of a bibliography
          * during main.js initialization.
+         * @param {object} config values to use for rebasing (optional)
+         * @param {boolean} flag indicating whether to rebase file paths
          * @method
          * @public
          * @instance
          */
-        rebase : function(obj) {
+        rebase : function(obj,paths) {
             var config = this;
-            if (typeof obj !== "object") {
-                throw "obp.config.rebase() requires an object";
+            if (typeof obj === "object") {
+                Object.keys(obj).map(function(key){
+                    if (config.hasOwnProperty(key)) {
+                        config[key] = obj[key];
+                    } else {
+                        throw "Unsupported config key in obp.config.rebase: " + key;
+                    }
+                });
             }
-            Object.keys(obj).map(function(key){
-                if (config.hasOwnProperty(key)) {
-                    config[key] = obj[key];
-                } else {
-                    throw "Unsupported config key in obp.config.rebase: " + key;
-                }
-            });
+            if (paths === true) {
+                Object.keys(project_paths).forEach(function(item){
+                    if (item !== 'obp_root') {
+                        config.paths[item] = config.paths.obp_root + project_paths[item];
+                    }
+                });
+            }
         },
         /**
          * Method to stringify Openbibl configuration data as JSON for serialization.
@@ -167,6 +175,7 @@ define( []
                 }
             });
             return JSON.stringify(ret);
-        }
+        },
+        paths : project_paths
     };
 });
