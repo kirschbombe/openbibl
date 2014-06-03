@@ -209,11 +209,17 @@
         <span>.&#x0020;</span>
     </xsl:template>
 
-    <!-- make tooltip text -->
+    <!-- make tooltip text
+         TODO: do not embed the tooltip text in the @title attribute; instead
+               use a javascript function to return the text of the tooltip;
+               using a function should avoid potential issues with potential illegal
+               content in attribute values, and should enable richer content, e.g.,
+               hyperlinks
+    -->
     <xsl:key name="tooltip-note" match="*[@xml:id]" use="@xml:id"/>
     <xsl:template match="text()[parent::*[@ref]]" mode="web">
         <xsl:variable name="ref" select="string(parent::*/@ref)" as="xs:string"/>
-        <xsl:variable name="tooltip-text" select="string(key('tooltip-note',substring-after($ref,'#'))/tei:note)" as="xs:string"/>
+        <xsl:variable name="tooltip-text" select="normalize-space(string(key('tooltip-note',substring-after($ref,'#'))/tei:note))" as="xs:string"/>
         <xsl:choose>
             <!-- add a tooltip anchor only for the first occurrence of the mention within a tei:div -->
             <xsl:when test="
