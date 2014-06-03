@@ -60,7 +60,7 @@
   });
 
   var specs = [
-        'tests/js/spec/openbibl/browse'
+/*        'tests/js/spec/openbibl/browse'
       , 'tests/js/spec/openbibl/config'
       , 'tests/js/spec/openbibl/download'
       , 'tests/js/spec/openbibl/event'
@@ -68,12 +68,12 @@
       , 'tests/js/spec/openbibl/highlight'
       , 'tests/js/spec/openbibl/query'
       , 'tests/js/spec/openbibl/saxon'
-/*      , 'tests/js/spec/openbibl/search'*/
-      , 'tests/js/spec/openbibl/sort'
+      ,*/ 'tests/js/spec/openbibl/search'
+/*      , 'tests/js/spec/openbibl/sort'
       , 'tests/js/spec/openbibl/theme'
       , 'tests/js/spec/openbibl/toc'
       , 'tests/js/spec/openbibl/tooltip'
-  ];
+*/  ];
 
   // jasmine bootloader
   require(['boot'], function () {
