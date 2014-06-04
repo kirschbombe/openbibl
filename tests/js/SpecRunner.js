@@ -55,6 +55,9 @@
       }
       , 'saxonce' : {
           exports : 'window.Saxon'
+      }, 'typeahead' : {
+            deps : ['jquery']
+          , exports : '$.fn.typeahead'
       }
     }
   });
