@@ -15,10 +15,13 @@
     exclude-result-prefixes="xs obp tei schema ixsl"
     version="2.0">
 
-    <xsl:import href="openbibl.date.xsl"/>
-
     <xsl:strip-space elements="*"/>
     <xsl:output method="xhtml" indent="yes"/>
+
+    <!-- value to use when an entry's date is missing (or in an unhandled attribute)
+         TODO: devise a better scheme for handling missing dates
+    -->
+    <xsl:variable name="date-sort-key-default" select="'0000-00-00'"/>
 
     <!-- #result is the wrapper element used in the JS -->
     <xsl:template match="/">
@@ -44,11 +47,7 @@
 
         <!-- add data-* attributes to simplify sorting -->
         <xsl:variable name="div-index" select="count(preceding-sibling::tei:div[@type='entry'])"/>
-        <xsl:variable name="sort-date">
-            <xsl:call-template name="date-sort-key">
-                <xsl:with-param name="date-elt" select="tei:biblStruct/tei:monogr/tei:imprint/tei:date"/>
-            </xsl:call-template>
-        </xsl:variable>
+        <xsl:variable name="sort-date" select="obp:date-sort-key(tei:biblStruct/tei:monogr/tei:imprint/tei:date)"/>
         <xsl:variable name="sort-author" select="normalize-space(tei:biblStruct/tei:monogr/tei:author/tei:persName)"/>
 
         <!-- id for collapsed notes/refs panels -->
@@ -282,5 +281,66 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
+
+    <!-- return a 'yyyy-mm-dd'-formatted string representing the date for the
+        bibliography entry to use as a sorting-key
+    -->
+    <xsl:function name="obp:date-sort-key" as="xs:string">
+
+        <!-- tei:biblStruct/tei:monogr/tei:imprint/tei:date -->
+        <xsl:param name="date-elt" as="element()*"/>
+        <xsl:choose>
+
+            <!-- tei:date element is missing -->
+            <xsl:when test="empty($date-elt)">
+                <xsl:value-of select="$date-sort-key-default"/>
+            </xsl:when>
+
+            <!-- use @when-iso, padding as necessary -->
+            <xsl:when test="$date-elt/@when-iso">
+                <xsl:value-of select="obp:str-to-yyyymmdd(string($date-elt/@when-iso))"/>
+            </xsl:when>
+
+            <!--  use @notBefore, padding as necessary -->
+            <xsl:when test="$date-elt/@notBefore">
+                <xsl:value-of select="obp:str-to-yyyymmdd(string($date-elt/@notBefore))"/>
+            </xsl:when>
+
+            <!-- fallback value, neither @when* attribute is available
+                 TODO: evaluate missing date scenario for entry sorting
+            -->
+            <xsl:otherwise>
+                <xsl:value-of select="$date-sort-key-default"/>
+            </xsl:otherwise>
+
+        </xsl:choose>
+
+    </xsl:function>
+
+    <!-- normalize date values for sorting : pad a date out to yyyy-mm-dd with 01s as
+         necessary when month/day are missing
+         TODO: review TEI guidelines on date formatting and date elmeents in the schema
+               and make this parsing more robust
+    -->
+    <xsl:function name="obp:str-to-yyyymmdd" as="xs:string">
+        <xsl:param name="str" as="xs:string*"/>
+        <xsl:choose>
+            <xsl:when test="empty($str) or $str = ''">
+                <xsl:value-of select="$date-sort-key-default"/>
+            </xsl:when>
+            <xsl:when test="matches($str,'\d{4}-\d{2}-\d{2}')">
+                <xsl:value-of select="$str"/>
+            </xsl:when>
+            <xsl:when test="matches($str,'\d{4}-\d{2}')">
+                <xsl:value-of select="concat($str,'-01')"/>
+            </xsl:when>
+            <xsl:when test="matches($str,'\d{4}')">
+                <xsl:value-of select="concat($str,'-01-01')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$date-sort-key-default"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
 
 </xsl:stylesheet>
