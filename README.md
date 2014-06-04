@@ -10,4 +10,4 @@ A detailed README is coming soon. We will soon have open <bibl> project styleshe
 2) XSLT, CSS, javascript
 4) schema.org extensions
 
-In the meantime, if you have questions about the project or would like to be involved, please contact us via GitHub.
+In the meantime, if you have questions about the project or would like to be involved, please contact us at dawn@psu.edu.
