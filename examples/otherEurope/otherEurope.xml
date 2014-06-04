@@ -20,9 +20,9 @@
             <publicationStmt>
                 <authority/>
                 <availability>
-                    <ab><!-- copyright or copyleft information here --></ab>
+                    <ab><!-- copyright or copyleft information here -->All work on "Printing From the Other Europe" by Dawn Childress is licensed under a Creative Commons Attribution-ShareAlike 4.0 Unported License.</ab>
                 </availability>
-                <date schema:itemprop="datePublished" when-iso="2014">2014</date>
+                <date schema:itemprop="datePublished" when-iso="2014">2008, 2014</date>
                 <distributor/>
                 <pubPlace schema:itemtype="http://schema.org/Place" itemscope="itemscope"
                     schema:itemprop="name">University Park, PA</pubPlace>
