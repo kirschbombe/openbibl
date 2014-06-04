@@ -37,9 +37,11 @@
     <text>
         <front>
             <!-- front matter, if any, goes in <div>s, here -->
-            <head><!--for example, Introduction or About--></head>
+            <head><!--for example, Introduction or About-->Preface</head>
             <div>
-                <p><!--introductory or About information here--></p>
+                <p><!--introductory or About information here-->Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lobortis et neque nec vulputate. Nullam accumsan venenatis laoreet. Cras convallis tempor ipsum, nec porta risus eleifend sed. Maecenas non ante et nulla vulputate laoreet. Donec malesuada elit a erat commodo, at aliquet sapien aliquam. Aenean laoreet facilisis ligula. Suspendisse potenti. Cras dignissim leo ac metus vulputate luctus. Sed id fringilla enim, sit amet ultricies elit. Proin vulputate eleifend venenatis. Vivamus venenatis vulputate dolor sit amet viverra.
+
+Integer elit purus, mattis at dui vitae, auctor rutrum magna. Aenean pulvinar sapien velit. Sed rutrum dui turpis, id rhoncus quam suscipit non. Donec semper sed tortor et pellentesque. Morbi suscipit blandit eros, a luctus lectus rhoncus et. Donec et turpis ac augue ornare volutpat eget eget leo. Pellentesque tempor mi eget elit bibendum fringilla. Suspendisse dapibus aliquam augue, sit amet rhoncus metus blandit a. Fusce varius mauris rutrum erat aliquet auctor. Donec ac arcu in massa imperdiet dignissim sed egestas metus. Quisque hendrerit odio nibh, lobortis aliquet leo sollicitudin eget.</p>
             </div>
         </front>
         <body>
