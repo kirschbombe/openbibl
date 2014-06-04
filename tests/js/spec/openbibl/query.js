@@ -50,12 +50,17 @@ define(
 
         describe('request file data asynchronously', function(){
             var originalTimeout;
-
             beforeEach(function(){
                 originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = saxonTimeout;
+                loadFixtures('otherEurope.full.html');
+                obpconfig.rebase(
+                    {     async : false
+                        , paths : { obp_root : window.obp.appdir }
+                    }
+                    , true
+                );
             });
-
             it('generate query data using Saxon', function(done){
                 var testSaxon;
                 testSaxon = function() {
@@ -65,16 +70,23 @@ define(
                         obpsaxon.onSaxonLoad(Saxon);
                         obpstate.query.data = {};
                         // baseURI is set to that of the SpecRunner.html
-                        obpconfig.paths.query_xsl = '../../' + obpconfig.paths.query_xsl;
+                        obpconfig.paths.query_xsl   = obpconfig.paths.query_xsl;
                         obpstate.bibliographies.xml = jasmine.getFixtures().fixturesPath
                                                     + '/'
                                                     + 'otherEurope.first.xml';
+                        // override saxon error handler
+                        var errorCalled = false;
+                        obpsaxon.SaxonErrorHandler = function(saxonError) {
+                            errorCalled = true;
+                            console.log("SaxonErrorHandler (" + saxonError.level + "): " + saxonError.message);
+                        }
                         var query_data;
                         var cb = function(data){
                             query_data = data;
                         };
                         query.request_saxon_query(cb);
                         expect(query_data).toEqual(fixture_json);
+                        expect(errorCalled).toEqual(false);
                         done();
                     } else {
                         setTimeout(testSaxon, 500);
