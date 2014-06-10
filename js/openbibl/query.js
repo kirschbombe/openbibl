@@ -23,14 +23,18 @@ define(
          * @public
          * @instance
          */
-        init : function(subscribers) {
-            if (subscribers instanceof Array) {
-                this.subscribers = subscribers;
-            } else if (typeof subscribers === 'string') {
-                this.subscribers = [subscribers];
+        init : function(options) {
+            if (options.subscribers instanceof Array) {
+                this.subscribers = options.subscribers;
+            } else if (typeof options.subscribers === 'string') {
+                this.subscribers = [options.subscribers];
             } else {
                 this.subscribers = [];
             }
+            // have data for browse/search functionality fetched/generated
+            // TODO: evaluate whether this data should be stored globally
+            // since it can be weighty
+            this.request_query_data();
         },
         /**
          * Subscribers of queried data.
@@ -42,27 +46,25 @@ define(
          * Method to retrieve "query data", the json produced for the
          * browse/search functionality. Performs AJAX request for given file,
          * and on failure has the Saxon-CE processor generate the data.
-         * @param {string} file to test
-         * @param cb {function} callback to handle data
          * @todo notify user about failure to receive data
          * @method
          * @public
          * @instance
          */
-        request_query_data : function(file, cb) {
+        request_query_data : function() {
             /*jslint unparam: true*/
             var query = this;
             $.ajax({
-                "url":      file
+                  "url":      obpconfig.path('query_xsl')
                 , "async":    obpconfig.async
                 , "type":     "GET"
                 , "dataType": "json"
                 , "success":  function(data) {
-                    cb(data);
+                    obpstate.query.data = data;
                     query.notify_subscribers();
                  }
                  , "error" : function(jqXHR, textStatus, errorThrown) {
-                    query.request_saxon_query(cb);
+                    query.request_saxon_query();
                 }
             });
         },
@@ -86,23 +88,23 @@ define(
          * @private
          * @instance
          */
-        request_saxon_query : function(cb) {
+        request_saxon_query : function() {
             var query = this
                , json;
-            saxon.requestQueryTransform(
-                  obpconfig.paths.query_xsl
-                , obpstate.bibliographies.xml
-                , []
-                , function(data) {
+            saxon.requestTransform({
+                  method : 'transformToFragment'
+                , stylesheet : obpconfig.path('query_xsl')
+                , source : obpstate.bibliographies.xml
+                , success : function(data) {
                     try {
                         json = JSON.parse(data.getResultDocument().textContent);
-                        cb(json);
+                        obpstate.query.data = json;
                         query.notify_subscribers();
                     } catch (e) {
                         console.log('Failure to generate query data: ' + e.toString());
                     }
                 }
-            );
+            });
         }
     };
 });

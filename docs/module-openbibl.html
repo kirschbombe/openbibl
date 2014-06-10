@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: main.js</title>
+    <title>JSDoc: Module: openbibl</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,63 +17,98 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: main.js</h1>
+    <h1 class="page-title">Module: openbibl</h1>
 
     
 
 
+
+<section>
+
+<header>
+    <h2>
+    openbibl
+    </h2>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/*
-* Openbibl Framework v0.1.0
-* Copyright 2014, Dawn Childress
-* Contact: https://github.com/kirschbombe/openbibl
-* License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
-*/
-/*jslint white: true, todo: true, nomen: true, regexp: true */
-/*global require: true */
+</header>
 
-/**
- * Main entry point for the Openbibl framework.
- *
- * This module is loaded according to the RequireJS @data-main attribute and performs 
- * setting of configuration options for RequireJS and for the Openbibl framework modules.
- * 
- * @module main
- */
-require.config({
-      paths : {
-          'domReady'    : 'lib/domReady-2.0.1'
-        , 'jquery'      : 'lib/jquery-2.1.0.min'
-        , 'typeahead'   : 'lib/bootstrap-typeahead-2.3.2'
-        , 'cookie'      : 'lib/jquery.cookie'
-        , 'underscore'  : 'lib/underscore-1.6.0.min'
-        , 'filesaver'   : 'lib/FileSaver'
+<article>
+    <div class="container-overview">
+    
 
-        , 'browse'      : 'openbibl/browse'
-        , 'obpconfig'   : 'openbibl/config'
-        , 'download'    : 'openbibl/download'
-        , 'obpev'       : 'openbibl/event'
-        , 'filter'      : 'openbibl/filter'
-        , 'highlight'   : 'openbibl/highlight'
-        , 'obp'         : 'openbibl/obp'
-        , 'query'       : 'openbibl/query'
-        , 'saxon'       : 'openbibl/saxon'
-        , 'search'      : 'openbibl/search'
-        , 'sort'        : 'openbibl/sort'
-        , 'obpstate'    : 'openbibl/state'
-        , 'theme'       : 'openbibl/theme'
-        , 'toc'         : 'openbibl/toc'
-        , 'tooltip'     : 'openbibl/tooltip'
-    }
-    , shim : {
-          'typeahead' : { deps: ['jquery'] }
-    }
-});
-</code></pre>
-        </article>
-    </section>
+    
+        
+            <div class="description">Primary application controller for openbibl framework.
+
+This module is loaded during initial "boot" of the bibliography :
+<ul>
+<li>setting of configuration options for RequireJS and for the Openbibl framework modules</li>
+<li>initialization of Openbibl framework modules requiring initialization (e.g., to bind to DOM events or to Openbibl events)</li>
+<li>binding of global Openbibl events to DOM events</li>
+<li>binding of DOM events that for behavior is not specific to a particular module</li>
+<li>request for bibliography content and index data loading</li>
+</ul></div>
+        
+
+        
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="obp.js.html">openbibl/obp.js</a>, <a href="obp.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

@@ -9,12 +9,12 @@ define(
                 expect(config).toBeDefined();
             }); // it
             it('config properties', function() {
-                var props = [ 'debug', 'console', 'saxonLogLevel', 'saxonPollInterval',
-                              'paths', 'scroll_speed', 'query', 'templates', 'template_pattern',
-                              'typeahead', 'rebase' ];
-                for (var i = 0; i < props.length; i++) {
-                    expect(config.hasOwnProperty(props[i])).toBe(true);
-                }
+                [ 'async', 'debug', 'console', 'saxonLogLevel', 'saxonPollInterval',
+                  'path', 'scroll_speed', 'query', 'tooltip',
+                  'typeahead', 'rebase', 'stringify' ].forEach(
+                  function(item) {
+                    expect(config.hasOwnProperty(item)).toBe(true);
+                })
             }); // it
         }); // describe
 

@@ -1,19 +1,21 @@
+var timeout_override = 10000;
+
 define(
-  ['module', 'jquery', 'jasmine-jquery', 'obpev', 'filter', 'browse']
-, function(module, $, jj, obpev, filter, browse) {
+  ['module', 'jquery', 'jasmine-jquery', 'obpev', 'obpstate','filter', 'browse']
+, function(module, $, jj, obpev, obpstate, filter, browse) {
 
     describe(module.id, function(){
 
         describe('load/initialization', function() {
             beforeEach(function() {
+                obpev.init();
                 filter.init();
             });
             it('load', function(){
                 expect(filter).toBeDefined();
             }); // it
             it('initialized state', function() {
-                var sources = filter.sources;
-                expect(sources).toEqual([]);
+                expect(filter.sources).toEqual([]);
             }); // it
         }); // describe
 
@@ -39,10 +41,33 @@ define(
                 $('.obp-browse-checkbox').first().click();
                 expect(source.filter_indices).toHaveBeenCalled();
             }); // it
-            it('Click event results in expected number/index of entries', function(){
-                var obpstate = require('obpstate');
+            
+        }); // describe
+            
+        describe('entry visibility filter', function() {
+            var originalTimeout;
+
+            beforeEach(function(done){
+                originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = timeout_override;
+
                 loadFixtures('otherEurope.full.html');
-                obpstate.rebase(window.obp.obpstate);
+                var timeout_count = 10;
+                var check_require = function() {
+                    if (obpstate.bibliographies.count === 9) {
+                        obpev.init();
+                        done();
+                    } else if (--timeout_count > 0) {
+                        setTimeout(check_require,1000);
+                    } else {
+                        done();
+                    }
+                };
+                check_require();
+            }); // beforeEach
+
+            it('Click event results in expected number/index of entries', function(){
+                //var obpstate = require('obpstate');
                 browse.init();
                 var indices = [0];
                 var source = {
@@ -63,6 +88,10 @@ define(
                                  + ']';
                     expect($(selector)).not.toBe([]);
                 });
+            });
+
+            afterEach(function(){
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
             });
 
         }); // describe

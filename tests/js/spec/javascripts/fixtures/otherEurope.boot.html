@@ -355,18 +355,26 @@
             <div id="footer"><span>Dawn Childress, 2014, University Park, PA</span> | <span>Published using the <a href="https://github.com/kirschbombe/openbibl" target="_blank">Open &lt;bibl&gt;</a> Project</span></div>
          </div>
       </div>
-      <!--[if lt IE 9]<   >![endif]--><script data-main="../../js/main.js" src="../../js/lib/require-2.1.11.js"></script><script type="text/javascript" language="javascript">
+      <!--[if lt IE 9]<   >![endif]-->
+       <script data-main="../../js/main.js" src="../../js/lib/require-2.1.11.js"></script>
+       <script type="text/javascript" language="javascript">
             require.config({
-              baseUrl : '../../js/'
-            });
-            window.obp = {
-                  appdir : '../../'
-                , bibliographies : {
-                      xml : document.location.href
-                    , xsl : '../../xsl/openbibl.xsl'
+                  
+                paths : {
+                      'obp'      : 'js/openbibl/obp'
+                    , 'obpstate' : 'js/openbibl/state'
                 }
-                , saxonLoaded : false
-            };
+            });
+            require(['obp','obpstate'], function(obp,obpstate) {
+                obpstate.rebase({
+                      paths : { root : '../../' }
+                    , bibliographies : {
+                          count    : 9
+                        , xml      : 'spec/javascripts/fixtures/otherEurope.xml'
+                        , xsl_load : false
+                    }
+                });
+            });
         </script>
        <script type="text/javascript" language="javascript" src="../../js/lib/jquery-2.1.0.min.js"></script>
        <script type="text/javascript" language="javascript" src="../../js/lib/bootstrap-3.1.1.min.js"></script>

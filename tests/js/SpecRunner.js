@@ -21,15 +21,17 @@
 
         , 'browse'      : 'js/openbibl/browse'
         , 'obpconfig'   : 'js/openbibl/config'
-        , 'obpev'       : 'js/openbibl/event'
-        , 'obpstate'    : 'js/openbibl/state'
         , 'download'    : 'js/openbibl/download'
+        , 'obpev'       : 'js/openbibl/event'
         , 'filter'      : 'js/openbibl/filter'
         , 'highlight'   : 'js/openbibl/highlight'
+        , 'obp'         : 'js/openbibl/obp'
         , 'query'       : 'js/openbibl/query'
         , 'saxon'       : 'js/openbibl/saxon'
         , 'search'      : 'js/openbibl/search'
         , 'sort'        : 'js/openbibl/sort'
+        , 'obpstate'    : 'js/openbibl/state'
+        , 'template'    : 'js/openbibl/template'
         , 'theme'       : 'js/openbibl/theme'
         , 'toc'         : 'js/openbibl/toc'
         , 'tooltip'     : 'js/openbibl/tooltip'
@@ -64,7 +66,7 @@
 
   var specs = [
         'tests/js/spec/openbibl/browse'
-      , 'tests/js/spec/openbibl/config'
+      ,'tests/js/spec/openbibl/config'
       , 'tests/js/spec/openbibl/download'
       , 'tests/js/spec/openbibl/event'
       , 'tests/js/spec/openbibl/filter'

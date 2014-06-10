@@ -39,8 +39,8 @@
  * @module openbibl/search/view
  */
 define(
-  [ 'module', 'obpconfig', 'jquery', 'obpev', 'domReady', 'underscore', './model', '../filter' , 'typeahead' ]
-, function(module,obpconfig,$,obpev,domReady,_,model,filter) {
+  [ 'module', 'obpconfig', 'jquery', 'obpev', 'domReady', 'underscore', './model', '../filter', 'saxon', 'typeahead' ]
+, function(module,obpconfig,$,obpev,domReady,_,model,filter,saxon) {
     'use strict';
     var search;
     return {
@@ -50,30 +50,23 @@ define(
             obpev.subscribe("obp:search-term-change", module.id, function() {
                 view.search_change();
             });
-            $('.obp-search-clear').click(function(event){
-                var search_terms = $(event.target)
-                    .closest('.obp-search-panel')
-                    .find('a.obp-search-item')
-                    .map(function(){
-                        return this.getAttribute('data-selection');
-                    });
-                search.remove_terms(search_terms);
-                event.preventDefault();
-            });
-            $('.obp-filter-mode').change(function(event){
-                search.filter_mode_change($(event.target).val());
-            });
-            // set focus for search &lt;input> when made visible
-            $('.obp-search-panel').bind('shown.bs.collapse', function() {
-                $(this).find('.obp-search-panel-input').focus();
-            });
-            $('.obp-search-form').on('submit', function(event) {
-                // prevent the search field from causing a page
-                // reload when a typeahead suggestion is unavailable
-                event.preventDefault();
-            });
-            domReady(function() {
-                view.retrieve_templates();
+            domReady(function(){
+                $('.obp-search-clear').click(function(event){
+                    search.clear_terms();
+                    event.preventDefault();
+                });
+                $('.obp-filter-mode').change(function(event){
+                    search.filter_mode_change($(event.target).val());
+                });
+                // set focus for search &lt;input> when made visible
+                $('.obp-search-panel').bind('shown.bs.collapse', function() {
+                    $(this).find('.obp-search-panel-input').focus();
+                });
+                $('.obp-search-form').on('submit', function(event) {
+                    // prevent the search field from causing a page
+                    // reload when a typeahead suggestion is unavailable
+                    event.preventDefault();
+                });
                 $('.search-input').typeahead({
                       "items"   : obpconfig.typeahead.list_len
                     , "matcher" : view.matcher
@@ -81,16 +74,6 @@ define(
                     , "updater" : view.updater
                 });
             });
-        },
-        /**
-         * Compiled Underscore partial-view templates used by this view.
-         * Maps the name of the template to the function used to produce
-         * the final partial view.
-         * @property
-         * @private
-         */
-        compiled_templates : {
-            'search.term-li.handlebars': null   // string -> function
         },
         /**
          * The current filter mode of the search control.
@@ -109,52 +92,6 @@ define(
             this.current_search_mode = val;
         },
         /**
-         * Initialization method to retrieve and compile all partial-view
-         * templates used in this view module.
-         * @method
-         * @private
-         * @instance
-         */
-        retrieve_templates : function() {
-            var view = this;
-            Object.keys(view.compiled_templates).map(function(template) {
-                view.retrieve_template(template);
-            });
-        },
-        /**
-         * Method to retrieve (via AJAX for XML scenario, or from serialized
-         * config in HTML scenario) a named partial-view template.
-         * @param {string} name of template to retrieve and compile
-         * @todo Disable search or add fallback functionality when template
-         *       data cannot be retrieved
-         * @method
-         * @private
-         * @instance
-         */
-        retrieve_template : function(template) {
-            var view = this
-              , path;
-            if (obpconfig.templates[template] === undefined) {
-                /*jslint unparam: true */
-                path = obpconfig.paths.template_dir + '/' + template;
-                $.ajax({
-                    url:        path,
-                    cache:      true,
-                    success:    function(data) {
-                        obpconfig.templates[template] = data;
-                        view.compiled_templates[template] = _.template(data);
-                    },
-                    error : function(jqXHR, textStatus, errorThrown) {
-                        if (obpconfig.debug) {
-                            obpconfig.console.log("Seach-template AJAX error for template '"+ template + "': " + textStatus);
-                        }
-                    }
-                });
-           } else {
-                view.compiled_templates[template] = _.template(obpconfig.templates[template]);
-            }
-        },
-        /**
          * Callback to return a list of possible search terms, produced by removing currently active
          * search terms from all search terms.
          * @todo don't inspect model's data directly
@@ -165,7 +102,7 @@ define(
         source : function() {
             return _.without(
                 Object.keys(model.document_data),
-                search.active_search_terms
+                search.active_search_terms()
             );
         },
         /**
@@ -198,30 +135,37 @@ define(
          * @instance
          */
         search_change : function() {
+            /*jslint unparam: true */
             var active_search_terms = search.active_search_terms()
-              , search_rows, i, new_row, $tbody, term;
+              , term, path, success;
             $('.' + search.term_list_item_class ).parent().remove();
-            search_rows = [];
-            for (i = 0; i &lt; active_search_terms.length; i++) {
-                new_row = this.compiled_templates['search.term-li.handlebars']({
-                    "cls"   : search.term_list_item_class,
-                    "term"  : active_search_terms[i]
-                });
-                search_rows.push(new_row);
-            }
-            if (search_rows.length > 0) {
-                /*jslint unparam: true */
-                $('.obp-search-results-list').each(function(i,elt){
-                    $tbody = $(elt);
-                    $tbody.append(search_rows);
-                });
+            success = function() {
                 $('.' + search.term_list_item_class).click(function(e) {
                     term = e.target.parentElement.getAttribute('data-selection');
                     if (term) {
                         search.remove_terms([term]);
                     }
                 });
-            }
+            };
+            active_search_terms.forEach(function(term){
+                /*jslint unparam: true */
+                $('.obp-search-results-list').each(function(i,elt) {
+                    // xpath to match the the current search term list
+                    // Saxon appends to the first xpath match, so we need to 
+                    // call the transform once for each list
+                    path = '(//ul[contains(./@class,"obp-search-results-list")])[' + (i + 1) + ']';
+                    saxon.requestTransform({
+                          initialTemplate   : 'main'
+                        , method            : 'updateHTMLDocument'
+                        , parameters        : {   class     : search.term_list_item_class
+                                                , term      : term
+                                                , "list-path" :  path 
+                                            }
+                        , stylesheet        : obpconfig.path('search_xsl')
+                        , success           : success
+                    });
+                });
+            });
         }
     };
 });
@@ -235,13 +179,13 @@ define(
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="download.html">openbibl/download</a></li><li><a href="event.html">openbibl/event</a></li><li><a href="filter.html">openbibl/filter</a></li><li><a href="highlight.html">openbibl/highlight</a></li><li><a href="query.html">openbibl/query</a></li><li><a href="saxon.html">openbibl/saxon</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li><li><a href="sort.html">openbibl/sort</a></li><li><a href="state.html">openbibl/state</a></li><li><a href="theme.html">openbibl/theme</a></li><li><a href="toc.html">openbibl/toc</a></li><li><a href="tooltip.html">openbibl/tooltip</a></li></ul><h3>Global</h3><ul><li><a href="global.html#obp:bibliography-added">obp:bibliography-added</a></li><li><a href="global.html#obp:browse-term-change">obp:browse-term-change</a></li><li><a href="global.html#obp:filter-change">obp:filter-change</a></li><li><a href="global.html#obp:filter-complete">obp:filter-complete</a></li><li><a href="global.html#obp:filter-mode-change">obp:filter-mode-change</a></li><li><a href="global.html#obp:search-term-change">obp:search-term-change</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="module-openbibl.html">openbibl</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="download.html">openbibl/download</a></li><li><a href="event.html">openbibl/event</a></li><li><a href="filter.html">openbibl/filter</a></li><li><a href="highlight.html">openbibl/highlight</a></li><li><a href="query.html">openbibl/query</a></li><li><a href="saxon.html">openbibl/saxon</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li><li><a href="sort.html">openbibl/sort</a></li><li><a href="state.html">openbibl/state</a></li><li><a href="theme.html">openbibl/theme</a></li><li><a href="toc.html">openbibl/toc</a></li><li><a href="tooltip.html">openbibl/tooltip</a></li></ul><h3>Global</h3><ul><li><a href="global.html#obp:bibliography-added">obp:bibliography-added</a></li><li><a href="global.html#obp:browse-term-change">obp:browse-term-change</a></li><li><a href="global.html#obp:filter-change">obp:filter-change</a></li><li><a href="global.html#obp:filter-complete">obp:filter-complete</a></li><li><a href="global.html#obp:filter-mode-change">obp:filter-mode-change</a></li><li><a href="global.html#obp:search-term-change">obp:search-term-change</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Mon Jun 02 2014 14:57:51 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Mon Jun 09 2014 18:55:33 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

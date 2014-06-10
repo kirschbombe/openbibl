@@ -64,6 +64,17 @@ define(
             model.handle_query_data(obpstate.query.data);
         },
         /**
+         * Method called when the Clear button is clicked.
+         * @method
+         * @public
+         * @instance
+         */
+        clear_terms : function() {
+            model.clear_terms();
+            obpev.raise("obp:search-term-change",module.id);
+            obpev.raise("obp:filter-change",module.id);
+        },
+        /**
          * Method called when one or all search terms have been
          * removed.
          * @method

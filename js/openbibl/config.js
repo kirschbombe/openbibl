@@ -12,8 +12,8 @@
  *
  * @module openbibl/config
  */
-define( []
-, function() {
+define( ['obpstate']
+, function(obpstate) {
     'use strict';
     /**
      * Flags for which configuration items are serialized when an
@@ -29,8 +29,6 @@ define( []
         , paths             : true
         , scroll_speed      : true
         , query             : true
-        , templates         : false
-        , template_pattern  : true
         , typeahead         : true
         , rebase            : false
         , stringify         : false
@@ -40,13 +38,14 @@ define( []
      * The values in this file are relative to the Openbibl root directory, and
      * made absolute at runtime, or by a call to 'rebase()'.
      * @property
-     * @public
+     * @private
      * @constant
      */
     project_paths = {
-          obp_root        : ''
-        , template_dir    : 'js/templates'
+          entry_xsl       : 'xsl/openbibl.entry.xsl'
         , query_xsl       : 'xsl/openbibl.query.xsl'
+        , tooltip_xsl     : 'xsl/partials/tooltip.xsl'
+        , search_xsl      : 'xsl/partials/search-list.xsl'
     };
     return {
         /**
@@ -55,7 +54,7 @@ define( []
          * @property
          * @public
          */
-        async : true,
+        async : false,
         /**
          * Debug state of Openbibl javascript code.
          * @default false
@@ -106,20 +105,16 @@ define( []
              file  : 'obp.query.json'               // serialized json file
         },
         /**
-         * Runtime cache of HTML partial-view templates.
+         * Configuration points for the Bootstrap Tooltips widgetry.
          * @property
          * @public
          */
-        templates : {},
-        /**
-         * String to use as RegExp pattern for the Underscore partial-view templating. This
-         * regex enables Handlebars-style templates.
-         * @default "\\{\\{(.+?)\\}\\}"
-         * @property
-         * @public
-         * @constant
-         */
-        template_pattern : "\\{\\{(.+?)\\}\\}",
+        tooltip : {
+              show      : 500
+            , hide      : 100
+            , hover     : 500
+            , placement : 'top'
+        },
         /**
          * Configuration for the Bootstrap/Typeahead auto-suggestion used in the search-term field.
          * "list_len" : maximum number of items to use for suggestions
@@ -140,7 +135,7 @@ define( []
          * @public
          * @instance
          */
-        rebase : function(obj,paths) {
+        rebase : function(obj) {
             var config = this;
             if (typeof obj === "object") {
                 Object.keys(obj).map(function(key){
@@ -151,13 +146,9 @@ define( []
                     }
                 });
             }
-            if (paths === true) {
-                Object.keys(project_paths).forEach(function(item){
-                    if (item !== 'obp_root') {
-                        config.paths[item] = config.paths.obp_root + project_paths[item];
-                    }
-                });
-            }
+            this.console = (typeof console === 'object')
+                  ? console
+                  : { log : function(){ return; } };
         },
         /**
          * Method to stringify Openbibl configuration data as JSON for serialization.
@@ -169,13 +160,36 @@ define( []
         stringify : function() {
             var config = this
               , ret = {};
-            Object.keys(this).map(function(key) {
-                if (serialize[key]) {
-                    ret[key] = config[key];
+            Object.keys(this).map(function(entry) {
+                if (typeof serialize[entry] === 'boolean') {
+                    if (serialize[entry]) {
+                        ret[entry] = config[entry];
+                    }
+                } else if (typeof serialize[entry] === 'object') {
+                    ret[entry] = {};
+                    Object.keys(serialize[entry]).map(function(key) {
+                        if (serialize[entry][key]) {
+                            ret[entry][key] = config[entry][key];
+                        }
+                    });
                 }
             });
             return JSON.stringify(ret);
         },
-        paths : project_paths
+        /**
+         * Return path to requested resource.
+         * @param {string} item requested
+         * @returns {string} URI of requested resource
+         * @throws
+         * @method
+         * @public
+         * @instance
+         */
+        path : function(resource) {
+            if (!project_paths.hasOwnProperty(resource)) {
+                throw "Unknown resource requested: " + resource;
+            }
+            return obpstate.paths.root + '/' + project_paths[resource];
+        }
     };
 });

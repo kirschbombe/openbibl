@@ -1,6 +1,9 @@
+
+var timeout_override = 10000;
+
 define(
-  ['module', 'jquery', 'jasmine-jquery', 'obpev', 'toc', 'filter']
-, function(module, $, jj, obpev, toc, filter) {
+  ['module', 'jquery', 'jasmine-jquery', 'obpev', 'toc', 'filter', 'obpstate']
+, function(module, $, jj, obpev, toc, filter, obpstate) {
 
     describe(module.id, function(){
 
@@ -11,14 +14,27 @@ define(
         }); // describe
 
         describe('toc contents', function(){
+            var originalTimeout;
 
-            beforeEach(function(){
-                var obpstate = require('obpstate');
-                obpev.init();
+            beforeEach(function(done){
+                originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = timeout_override;
+
                 loadFixtures('otherEurope.full.html');
-                obpstate.rebase(window.obp.obpstate);
-                toc.init();
-            });
+                var timeout_count = 10;
+                var check_require = function() {
+                    if (obpstate.bibliographies.count === 9) {
+                        obpev.init();
+                        toc.init();
+                        done();
+                    } else if (--timeout_count > 0) {
+                        setTimeout(check_require,1000);
+                    } else {
+                        done();
+                    }
+                };
+                check_require();
+            }); // beforeEach
 
             it('toc contents correct on initial display', function(){
                 expect($('li.toc:visible').length)
@@ -48,6 +64,11 @@ define(
                     expect($(selector)).not.toBe([]);
                 });
             }); // it
+            
+            afterEach(function(){
+                jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+            });
+            
         }); // describe
 
 /*      TODO: determine if scroll position can be determined in jasmine
@@ -56,7 +77,6 @@ define(
                 var obpstate = require('obpstate');
                 obpev.init();
                 loadFixtures('otherEurope.full.html');
-                obpstate.rebase(window.obp.obpstate);
                 toc.init();
             });
             it('body scrolls to ', function(){

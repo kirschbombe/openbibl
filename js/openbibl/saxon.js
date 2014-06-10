@@ -5,7 +5,7 @@
 * License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
 */
 /*jslint white: true, todo: true, nomen: true */
-/*global define: true */
+/*global define: true, document: true */
 /**
  * Wrapper for Saxon-CE processor for Openbibl application.
  *
@@ -35,113 +35,83 @@ define(
             this.Saxon.setLogLevel(obpconfig.saxonLogLevel);
         },
         /**
-         * Method to set up a transformation using the Saxon-CE processor.
+         * Method to set up a transformation using the Saxon-CE processor. Properties listed here are
+         * from documentation at http://www.saxonica.com/ce/user-doc/1.1/index.html#!api/command. They
+         * are passed into requestTransform() as an object.
+         * @param errorHandler {function} The callback function for handling processing errors.
+         * @param initialMode {string} The initial mode for the transform
+         * @param initialTemplate {string} The initial template for the transform
+         * @param logLevel {string} Sets the error and event logging threshold.
+         * @param method {string} The transform method to use [Default: updateHTMLDocument]
+         * @param parameters {object} XSLT parameters are set from the matching values of properties of the parameters object.
+         * @param source {String|Document} The XML document source for the transform
+         * @param stylesheet {String|Document} Sets the stylesheet for the transform
+         * @param success {Function} The success callback function - called after a transform.
          * @todo improve user notification for error handling
-         * @param {string} xsl url for xsl stylesheet
-         * @param {string} xml url for xml source file
-         * @param {array} parameters array of array of stylesheet parameters of form: [ [ "namespace"/null, "key", "value" ], ... ]
-         * @param {function} success transform success callback
-         * @param {string} method name of method to call on processor (e.g., "updateHTMLDocument", "transformToFragment")
          * @method
          * @private
          * @instance
          */
-        requestTransform : function(xsl_url, xml_url, parameters, handler, process) {
-            var errors = []
-              , xsl = this.SaxonRequestXMLHandler(xsl_url,errors)   // asyncURI obj
-              , xml = this.SaxonRequestXMLHandler(xml_url,errors)   // asyncURI obj
-              , proc;
-            if (errors.length > 0) {
-                if (this.debug) { this.console.log("Failed to load XML resource(s): " + errors.toString()); }
-                return;
+        requestTransform : function(options) {
+            if (!options.hasOwnProperty('errorHandler')) {
+                options.errorHandler = this.SaxonErrorHandler;
             }
-            proc = this.Saxon.newXSLT20Processor(xsl);
-            parameters.forEach(function(plist){
-                proc.setParameter(plist[0], plist[1], plist[2]);
-            });
-            proc.setSuccess(handler);
-            this.Saxon.setErrorHandler(this.SaxonErrorHandler);
-            /*global document: true */
-            // Document object is passed for the "transformToFragment" call, which
-            // requires a context
-            proc[process](xml, document);
-        },
-        /**
-         * Have the XSLT 2.0 processor perform an "updateHTMLDocument" transformation with
-         * the provided parameters. Currently used to initiate the transform used to supply
-         * HTML for the TEI bibliography entries. Transform success handler is provided. Errors
-         * are handled by an Openbibl global error handler.
-         * @param {string} xsl url for xsl stylesheet
-         * @param {string} xml url for xml source file
-         * @param {array} parameters array of array of stylesheet parameters of form: [ [ "namespace"/null, "key", "value" ], ... ]
-         * @param {function} success transform success callback
-         * @method
-         * @public
-         * @instance
-         */
-        requestInitialTransform : function(xsl_url, xml_url, parameters, handler) {
-            this.requestTransform(xsl_url, xml_url, parameters, handler, 'updateHTMLDocument');
-        },
-        /**
-         * Have the XSLT 2.0 processor perform a "transformToFragment" transformation with
-         * the provided parameters. Currently used to transform TEI XML bibliography to JSON for use
-         * in the browse/search functionality. Transform success handler is provided. Errors
-         * are handled by an Openbibl global error handler.
-         * @param {string} xsl url for xsl stylesheet
-         * @param {string} xml url for xml source file
-         * @param {array} parameters array of array of stylesheet parameters of form: [ [ "namespace"/null, "key", "value" ], ... ]
-         * @param {function} success transform success callback
-         * @method
-         * @public
-         * @instance
-         */
-        requestQueryTransform : function(xsl_url, xml_url, parameters, handler) {
-            this.requestTransform(xsl_url, xml_url, parameters, handler, 'transformToFragment');
+            if (!obpconfig.async) {
+                try {
+                    if (typeof options.source !== 'object') {
+                        options.source = this.synchronousRetrieval(options.source);
+                    }
+                    if (typeof options.stylesheet !== 'object') {
+                        options.stylesheet = this.synchronousRetrieval(options.stylesheet);
+                    }
+                } catch(e) {
+                    throw e.toString();
+                }
+            }
+            this.Saxon.run(options);
         },
         /**
          * Have the Saxon-CE processor create an Async XML object for the provided
          * URL to be used in a transform.
          * @param {string} url for resource (e.g., xml or xsl file)
          * @param {array} array to populate with any caught errors
+         * @returns {document} XMLDocument retrieved
+         * @throws Parse exception and GET exception
          * @method
          * @private
          * @instance
          */
-        SaxonRequestXMLHandler : function(url,errors) {
+        synchronousRetrieval : function(url) {
             var saxon = this
               , xml, att;
-            try {
-                if (obpconfig.async) {
-                    xml = this.Saxon.requestXML(url);
-                } else {
-                    /*jslint unparam: true*/
-                    $.ajax({
-                          "url":      url
-                        , "dataType": "text"
-                        , "async":    false
-                        , "type":     "GET"
-                        , "success":  function(data) {
-                            // NOTE: when xml is passed in as a string, it the parsed
-                            // XML document has a null baseURI property, which causes
-                            // a failure during the transform for an xsl stylesheet
-                            // containing imports. So an @xml:base attribute is added
-                            // here, using (possibly imprecisely) the (directory of the)
-                            // baseURI of the global Document, plus the relative path of
-                            // the XML/XSL file passed in
-                            xml = saxon.Saxon.parseXML(data);
-                            att = xml.createAttribute('xml:base');
-                            att.nodeValue = document.baseURI.replace(/[^\/\\]+$/,'') + url;
-                            xml.documentElement.setAttributeNode(att)
-                         }
-                         , "error" : function(jqXHR, textStatus, errorThrown) {
-                            throw "Error retrieving '" + url + "': " + errorThrown;
-                        }
-                    });
+            /*jslint unparam: true*/
+            $.ajax({
+                  url       : url
+                , dataType  : 'text'
+                , async     : false
+                , type      : 'GET'
+                , success   : function(data) {
+                    // NOTE: when xml is passed in as a string, it the parsed
+                    // XML document has a null baseURI property, which causes
+                    // a failure during the transform for an xsl stylesheet
+                    // containing imports. So an @xml:base attribute is added
+                    // here, using (possibly imprecisely) the (directory of the)
+                    // baseURI of the global Document, plus the relative path of
+                    // the XML/XSL file passed in
+                    try {
+                        /*jslint regexp: true */
+                        xml = saxon.Saxon.parseXML(data);
+                        att = xml.createAttribute('xml:base');
+                        att.nodeValue = url;
+                        xml.documentElement.setAttributeNode(att);
+                    } catch(e) {
+                        throw "Error parsing or modifying file '" + url + "': " + e.toString();
+                    }
+                 }
+                 , "error" : function(jqXHR, textStatus, errorThrown) {
+                    throw "Error retrieving '" + url + "': " + errorThrown;
                 }
-            } catch (e) {
-                if (saxon.debug) { this.console.log("Error requesting XML resource: " + e.toString()); }
-                errors.push("Failed to load resource '" + url + "'");
-            }
+            });
             return xml;
         },
         /**

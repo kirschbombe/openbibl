@@ -71,29 +71,39 @@
 
         <!-- load openbibl and dependencies-->
         <script data-main="{$obp-js-main}" src="{$require-js}"></script>
-        <script type="text/javascript" language="javascript">
+        <script type="text/javascript" language="javascript" id="obp-load-script">
             require.config({
-              baseUrl : '<xsl:value-of select="$obp-root-js"/>'
-            });
-            window.obp = {
-                  appdir : '<xsl:value-of select="$obp-root"/>'
-                , bibliographies : {
-                      xml : document.location.href
-                    , xsl : '<xsl:value-of select="$openbibl-xsl"/>'
+                  baseUrl : '<xsl:value-of select="$obp-root-js "/>'
+                , paths : {
+                      'obp'      : 'openbibl/obp'
+                    , 'obpstate' : 'openbibl/state'
                 }
-                , saxonLoaded : false
-                , xsl_load : true
-            };
+            });
+            var saxonLoaded = false
+              , onSaxonLoad = function() { saxonLoaded = true; };
+            require(['obp','obpstate'], function(obp,obpstate) {
+                var xsl_load = (obpstate.bibliographies.count === 0)
+                  , xml_path = xsl_load
+                             ? (document.location.origin + document.location.pathname)
+                             : obpstate.bibliographies.xml
+                  , root_url = new URL(xml_path + '/../' + '<xsl:value-of select="$obp-root"/>');
+                obpstate.rebase({
+                      paths : { root : root_url.origin + root_url.pathname }
+                    , bibliographies : {
+                          xml      : xml_path
+                        , xsl_load : xsl_load
+                    }
+                });
+                obp.init(
+                    function() { return saxonLoaded }
+                );
+            });
         </script>
 
         <!-- load Saxon; declare onload callback for Saxon-CE,
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
         <script id="obp-saxonce-nocache" type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
-        <script id="obp-saxonce-onload" type="text/javascript" language="javascript">
-            var onSaxonLoad = function() {
-                window.obp.saxonLoaded = true;
-            };
-        </script>
+
         <!-- TODO: integrate these three js libs with asynch loading -->
         <script type="text/javascript" language="javascript" src="{$jquery-js}"></script>
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>

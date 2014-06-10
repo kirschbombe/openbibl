@@ -20,18 +20,24 @@ define(
         describe('asynchronous tests', function(){
             var originalTimeout;
 
-            beforeEach(function(){
+            beforeEach(function(done){
                 originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
                 jasmine.DEFAULT_TIMEOUT_INTERVAL = saxonTimeout;
                 loadFixtures('otherEurope.boot.html');
-                // retrieve files synchronously to simplify debugging
-                obpconfig.rebase(
-                    {     async : false
-                        , paths : { obp_root : window.obp.appdir }
-                        , saxonLogLevel : 'OFF'
+
+                var timeout_count = 10;
+                var check_require = function() {
+                    if (Saxon !== undefined && obpstate.bibliographies.count === 9) {
+                        obpsaxon.onSaxonLoad(Saxon);
+                        obpev.init();
+                        done();
+                    } else if (--timeout_count > 0) {
+                        setTimeout(check_require,1000);
+                    } else {
+                        done();
                     }
-                    , true
-                );
+                };
+                check_require();
             });
 
             it('load/init', function(done){
@@ -66,11 +72,16 @@ define(
                                 successCalled = true;
                             }
                         };
-                        var xsl = obpconfig.paths.obp_root + 'xsl/openbibl.xsl';
+                        var xsl = obpconfig.path('entry_xsl');
                         var xml = jasmine.getFixtures().fixturesPath
                                 + '/'
                                 + 'otherEurope.xml';
-                        obpsaxon.requestInitialTransform(xsl,xml,[],success.cb);
+                        obpsaxon.requestTransform({
+                              stylesheet: xsl
+                            , source : xml
+                            , parameters : {'append-target-id' : '#bibliographies' }
+                            , success : success.cb
+                        });
                         var saxonCountdown = saxonInterval/saxonTimeout;
                         var intervalID;
                         var timeout = function() {

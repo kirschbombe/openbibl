@@ -18,17 +18,20 @@
     <xsl:strip-space elements="*"/>
     <xsl:output method="xhtml" indent="yes"/>
 
+    <!-- value of @id attribute where Saxon-CE produced content should be appended -->
+    <xsl:param name="append-target-id" as="xs:string"/>
+
     <!-- value to use when an entry's date is missing (or in an unhandled attribute)
          TODO: devise a better scheme for handling missing dates
     -->
     <xsl:variable name="date-sort-key-default" select="'0000-00-00'"/>
 
-    <!-- #result is the wrapper element used in the JS -->
+    <!-- $append-target-id wrapper element used in the JS -->
     <xsl:template match="/">
         <xsl:choose>
             <!-- for use in browser: have js processor handle result content -->
             <xsl:when test="system-property('xsl:product-name') = 'Saxon-CE'">
-                <xsl:result-document href="#bibliographies" method="ixsl:append-content">
+                <xsl:result-document href="{$append-target-id}" method="ixsl:append-content">
                     <xsl:apply-templates select="//tei:div"/>
                 </xsl:result-document>
             </xsl:when>
@@ -208,35 +211,12 @@
         <span>.&#x0020;</span>
     </xsl:template>
 
-    <!-- make tooltip text
-         TODO: do not embed the tooltip text in the @title attribute; instead
-               use a javascript function to return the text of the tooltip;
-               using a function should avoid potential issues with potential illegal
-               content in attribute values, and should enable richer content, e.g.,
-               hyperlinks
-    -->
-    <xsl:key name="tooltip-note" match="*[@xml:id]" use="@xml:id"/>
+    <!-- wrap tooltip-able content in a span for async tagging -->
     <xsl:template match="text()[parent::*[@ref]]" mode="web">
         <xsl:variable name="ref" select="string(parent::*/@ref)" as="xs:string"/>
-        <xsl:variable name="tooltip-text" select="normalize-space(string(key('tooltip-note',substring-after($ref,'#'))/tei:note))" as="xs:string"/>
-        <xsl:choose>
-            <!-- add a tooltip anchor only for the first occurrence of the mention within a tei:div -->
-            <xsl:when test="
-                (generate-id((ancestor::tei:div[@type='entry']//@ref[.=$ref])[1]) = generate-id(parent::*/@ref))
-                and string-length($tooltip-text) &gt; 0
-            ">
-                <a href="#" data-toggle="tooltip" title="{$tooltip-text}">
-                    <span data-ed-ref="{substring-after($ref,'#')}">
-                        <xsl:value-of select="."/>
-                    </span>
-                </a>
-            </xsl:when>
-            <xsl:otherwise>
-                <span data-ed-ref="{substring-after($ref,'#')}">
-                    <xsl:value-of select="."/>
-                </span>
-            </xsl:otherwise>
-        </xsl:choose>
+        <span data-ed-ref="{substring-after($ref,'#')}" id="{generate-id(parent::*)}">
+            <xsl:value-of select="."/>
+        </span>
     </xsl:template>
 
     <!-- suppress attribute text() nodes; this template is required for the previous
@@ -264,6 +244,7 @@
 
     <!-- output <tei:p> elements in a <span>, adding a trailing period if
          one was not provided in the original
+         TODO: externalize/parameterize punctuation here
     -->
     <xsl:template match="tei:p" mode="web">
         <xsl:apply-templates select="@*|node()" mode="web"/>

@@ -33,33 +33,43 @@ define(
           , obpconfig = require('obpconfig')
           , $clone = $(document.cloneNode(true))
           , $state_script = $('<script></script>')
-          , text, blob, filename, obp_global;
+          , text, blob, filename;
 
         // remove Download link from page
         $clone.find('.obp-download-page').closest('li').remove();
 
-        // remove Saxon/XSLT code, which is used only for xml->html convesion
+        // remove GWT elements for Saxon load
         $clone.find('#Saxonce').remove();
-        $clone.find('#obp-saxonce-onload').remove();
-        $clone.find('#obp-saxonce-nocache').remove();
-        $clone.find('script').each(function(i,elt){
-            if (elt.text.match(/saxon/i)) {
+        $clone.find('script[defer="defer"]').each(function(i,elt){
+            if (elt.text.match(/Saxonce\.onInjectionDone/)) {
                 $(elt).remove();
             }
         });
 
-        // set this global flag for js loading in html
-        obp_global = window.obp;
-        obp_global.xsl_load = false;
-
         // remove script tags injected by require-js
         $clone.find('script[data-requiremodule]').remove();
 
+        // remove Bootstrap Tooltip attributes
+        $clone.find('[data-toggle="tooltip"')
+            .removeAttr('data-original-title')
+            .removeAttr('title');
+
         // serialize application state and configuration data
-        text = 'window.obp='           + JSON.stringify(obp_global) + ';\n'
-             + 'window.obp.obpstate='  + obpstate.stringify()       + ';\n'
-             + 'window.obp.obpconfig=' + obpconfig.stringify()      + ';\n';
-        $state_script.append(text);
+        // TODO externalize, possibly using template
+        text = '//<![CDATA[                                         \n\
+require.config({                                                    \n\
+    paths : {                                                       \n\
+          "obpconfig" : "openbibl/config"                           \n\
+        , "obpstate"  : "openbibl/state"                            \n\
+    }                                                               \n\
+});                                                                 \n\
+require(["obpconfig","obpstate"], function(obpconfig,obpstate) {    \n\
+    obpstate.rebase(' + obpstate.stringify() + ');                  \n\
+    obpconfig.rebase(' + obpconfig.stringify() + ',true);           \n\
+});                                                                 \n\
+//]]>                                                               \n\
+';
+        $state_script.text(text);
         $clone.find('body').append($state_script);
 
         // have browser download/save to file
