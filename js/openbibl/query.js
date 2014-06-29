@@ -55,7 +55,7 @@ define(
             /*jslint unparam: true*/
             var query = this;
             $.ajax({
-                  "url":      obpconfig.path('query_xsl')
+                  "url":      obpconfig.query.file
                 , "async":    obpconfig.async
                 , "type":     "GET"
                 , "dataType": "json"
