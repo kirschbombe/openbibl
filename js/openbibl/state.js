@@ -22,6 +22,7 @@ define(['jquery']
      */
     var serialize = {
           bibliographies : true
+        , paths          : true
         , saxonInterval  : false
         , query          : false
         , rebase         : true

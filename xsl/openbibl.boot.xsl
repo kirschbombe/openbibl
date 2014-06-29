@@ -70,10 +70,18 @@
         </xsl:comment>
 
         <!-- load openbibl and dependencies-->
-        <script data-main="{$obp-js-main}" src="{$require-js}"></script>
+        <script src="{$uri-js}"></script>
+        <script data-main="{$obp-require-main}" src="{$require-js}"></script>
         <script type="text/javascript" language="javascript" id="obp-load-script">
+            var xml_path = URI(''.concat(document.location.origin).concat(document.location.pathname))
+              , obp_root = URI('<xsl:value-of select="$obp-root"/>')
+              , js_root  = URI('<xsl:value-of select="$obp-root-js"/>');
+            if (obp_root.is('relative')) {
+                obp_root = obp_root.absoluteTo(xml_path);
+                js_root = js_root.absoluteTo(xml_path);
+            }
             require.config({
-                  baseUrl : '<xsl:value-of select="$obp-root-js "/>'
+                  baseUrl : js_root.toString()
                 , paths : {
                       'obp'      : 'openbibl/obp'
                     , 'obpstate' : 'openbibl/state'
@@ -82,16 +90,11 @@
             var saxonLoaded = false
               , onSaxonLoad = function() { saxonLoaded = true; };
             require(['obp','obpstate'], function(obp,obpstate) {
-                var xsl_load = (obpstate.bibliographies.count === 0)
-                  , xml_path = xsl_load
-                             ? (document.location.origin + document.location.pathname)
-                             : obpstate.bibliographies.xml
-                  , root_url = new URL(xml_path + '/../' + '<xsl:value-of select="$obp-root"/>');
                 obpstate.rebase({
-                      paths : { root : root_url.origin + root_url.pathname }
+                      paths : { root : obp_root.toString() }
                     , bibliographies : {
-                          xml      : xml_path
-                        , xsl_load : xsl_load
+                          xml      : xml_path.toString()
+                        , xsl_load : true
                     }
                 });
                 obp.init(

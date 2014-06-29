@@ -33,6 +33,9 @@ define(
           , obpconfig = require('obpconfig')
           , $clone = $(document.cloneNode(true))
           , $state_script = $('<script></script>')
+          , xml_uri = URI(obpstate.bibliographies.xml)
+          , state_clone = $.extend({}, obpstate)
+          , config_clone = $.extend({}, obpconfig)
           , text, blob, filename;
 
         // remove Download link from page
@@ -54,18 +57,42 @@ define(
             .removeAttr('data-original-title')
             .removeAttr('title');
 
+        // remove the XML/XSL loader script
+        $clone.find('#obp-load-script').remove();
+
+        // make all @src and @rel values absolute
+        $clone.find('*[src]').each(function(i,elt) {
+            var $elt = $(elt);
+            var src = URI($elt.attr('src'));
+            if (src.is('relative')) {
+                src = src.absoluteTo(xml_uri);
+            }
+            $elt.attr('src', src.toString());
+        });
+
+        // this flag is false for a serialize HTML document
+        state_clone.bibliographies.xsl_load = false;
+
         // serialize application state and configuration data
         // TODO externalize, possibly using template
         text = '//<![CDATA[                                         \n\
 require.config({                                                    \n\
     paths : {                                                       \n\
-          "obpconfig" : "openbibl/config"                           \n\
+          "obp"       : "openbibl/obp"                              \n\
+        , "obpconfig" : "openbibl/config"                           \n\
         , "obpstate"  : "openbibl/state"                            \n\
     }                                                               \n\
 });                                                                 \n\
 require(["obpconfig","obpstate"], function(obpconfig,obpstate) {    \n\
-    obpstate.rebase(' + obpstate.stringify() + ');                  \n\
-    obpconfig.rebase(' + obpconfig.stringify() + ',true);           \n\
+    obpstate.rebase(' + state_clone.stringify() + ');               \n\
+    obpconfig.rebase(' + config_clone.stringify() + ',true);        \n\
+});                                                                 \n\
+var saxonLoaded = false                                             \n\
+  , onSaxonLoad = function() { saxonLoaded = true; };               \n\
+require(["obp","obpstate"], function(obp,obpstate) {                \n\
+    obp.init(                                                       \n\
+        function() { return saxonLoaded }                           \n\
+    );                                                              \n\
 });                                                                 \n\
 //]]>                                                               \n\
 ';

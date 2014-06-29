@@ -189,7 +189,7 @@ define( ['obpstate']
             if (!project_paths.hasOwnProperty(resource)) {
                 throw "Unknown resource requested: " + resource;
             }
-            return obpstate.paths.root + '/' + project_paths[resource];
+            return "".concat(obpstate.paths.root).concat('/').concat(project_paths[resource]);
         }
     };
 });
