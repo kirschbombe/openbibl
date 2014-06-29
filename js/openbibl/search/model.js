@@ -68,6 +68,15 @@ define(
             }
         },
         /**
+         * Clear the list of active search terms.
+         * @method
+         * @public
+         * @instance
+         */
+        clear_terms : function() {
+            this.active_search_terms = [];
+        },
+        /**
          * Remove provided search terms from the active term list.
          * @param {array} list of terms to remove
          * @method

@@ -39,8 +39,8 @@
  *
  * @module openbibl/config
  */
-define( []
-, function() {
+define( ['obpstate']
+, function(obpstate) {
     'use strict';
     /**
      * Flags for which configuration items are serialized when an
@@ -56,13 +56,32 @@ define( []
         , paths             : true
         , scroll_speed      : true
         , query             : true
-        , templates         : false
-        , template_pattern  : true
         , typeahead         : true
         , rebase            : false
         , stringify         : false
+    },
+    /**
+     * File-system paths for resources referenced in the Openbibl JS code.
+     * The values in this file are relative to the Openbibl root directory, and
+     * made absolute at runtime, or by a call to 'rebase()'.
+     * @property
+     * @private
+     * @constant
+     */
+    project_paths = {
+          entry_xsl       : 'xsl/openbibl.entry.xsl'
+        , query_xsl       : 'xsl/openbibl.query.xsl'
+        , tooltip_xsl     : 'xsl/partials/tooltip.xsl'
+        , search_xsl      : 'xsl/partials/search-list.xsl'
     };
     return {
+        /**
+         * Whether or not to perform async requests.
+         * @default true
+         * @property
+         * @public
+         */
+        async : false,
         /**
          * Debug state of Openbibl javascript code.
          * @default false
@@ -96,19 +115,6 @@ define( []
          */
         saxonPollInterval: 100,
         /**
-         * File-system paths for resources referenced in the Openbibl JS code.
-         * The values in this file are relative to the Openbibl root directory, and
-         * made absolute at runtime.
-         * @property
-         * @public
-         * @constant
-         */
-        paths : {
-              obp_root        : ''
-            , template_dir    : 'js/templates'
-            , query_xsl       : 'xsl/openbibl.query.xsl'
-        },
-        /**
          * Milisecond speed of the scrolling done when a TOC entry is clicked.
          * @default 200 ms
          * @property
@@ -126,20 +132,16 @@ define( []
              file  : 'obp.query.json'               // serialized json file
         },
         /**
-         * Runtime cache of HTML partial-view templates.
+         * Configuration points for the Bootstrap Tooltips widgetry.
          * @property
          * @public
          */
-        templates : {},
-        /**
-         * String to use as RegExp pattern for the Underscore partial-view templating. This
-         * regex enables Handlebars-style templates.
-         * @default "\\{\\{(.+?)\\}\\}"
-         * @property
-         * @public
-         * @constant
-         */
-        template_pattern : "\\{\\{(.+?)\\}\\}",
+        tooltip : {
+              show      : 500
+            , hide      : 100
+            , hover     : 500
+            , placement : 'top'
+        },
         /**
          * Configuration for the Bootstrap/Typeahead auto-suggestion used in the search-term field.
          * "list_len" : maximum number of items to use for suggestions
@@ -154,22 +156,26 @@ define( []
          * Method to re-base configuration values, used when JSON data is re-hydrated
          * from window.obp serialization for an HTML-based view of a bibliography
          * during main.js initialization.
+         * @param {object} config values to use for rebasing (optional)
+         * @param {boolean} flag indicating whether to rebase file paths
          * @method
          * @public
          * @instance
          */
         rebase : function(obj) {
             var config = this;
-            if (typeof obj !== "object") {
-                throw "obp.config.rebase() requires an object";
+            if (typeof obj === "object") {
+                Object.keys(obj).map(function(key){
+                    if (config.hasOwnProperty(key)) {
+                        config[key] = obj[key];
+                    } else {
+                        throw "Unsupported config key in obp.config.rebase: " + key;
+                    }
+                });
             }
-            Object.keys(obj).map(function(key){
-                if (config.hasOwnProperty(key)) {
-                    config[key] = obj[key];
-                } else {
-                    throw "Unsupported config key in obp.config.rebase: " + key;
-                }
-            });
+            this.console = (typeof console === 'object')
+                  ? console
+                  : { log : function(){ return; } };
         },
         /**
          * Method to stringify Openbibl configuration data as JSON for serialization.
@@ -181,12 +187,36 @@ define( []
         stringify : function() {
             var config = this
               , ret = {};
-            Object.keys(this).map(function(key) {
-                if (serialize[key]) {
-                    ret[key] = config[key];
+            Object.keys(this).map(function(entry) {
+                if (typeof serialize[entry] === 'boolean') {
+                    if (serialize[entry]) {
+                        ret[entry] = config[entry];
+                    }
+                } else if (typeof serialize[entry] === 'object') {
+                    ret[entry] = {};
+                    Object.keys(serialize[entry]).map(function(key) {
+                        if (serialize[entry][key]) {
+                            ret[entry][key] = config[entry][key];
+                        }
+                    });
                 }
             });
             return JSON.stringify(ret);
+        },
+        /**
+         * Return path to requested resource.
+         * @param {string} item requested
+         * @returns {string} URI of requested resource
+         * @throws
+         * @method
+         * @public
+         * @instance
+         */
+        path : function(resource) {
+            if (!project_paths.hasOwnProperty(resource)) {
+                throw "Unknown resource requested: " + resource;
+            }
+            return obpstate.paths.root + '/' + project_paths[resource];
         }
     };
 });
@@ -200,13 +230,13 @@ define( []
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="download.html">openbibl/download</a></li><li><a href="event.html">openbibl/event</a></li><li><a href="filter.html">openbibl/filter</a></li><li><a href="highlight.html">openbibl/highlight</a></li><li><a href="query.html">openbibl/query</a></li><li><a href="saxon.html">openbibl/saxon</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li><li><a href="sort.html">openbibl/sort</a></li><li><a href="state.html">openbibl/state</a></li><li><a href="theme.html">openbibl/theme</a></li><li><a href="toc.html">openbibl/toc</a></li><li><a href="tooltip.html">openbibl/tooltip</a></li></ul><h3>Global</h3><ul><li><a href="global.html#obp:bibliography-added">obp:bibliography-added</a></li><li><a href="global.html#obp:browse-term-change">obp:browse-term-change</a></li><li><a href="global.html#obp:filter-change">obp:filter-change</a></li><li><a href="global.html#obp:filter-complete">obp:filter-complete</a></li><li><a href="global.html#obp:filter-mode-change">obp:filter-mode-change</a></li><li><a href="global.html#obp:search-term-change">obp:search-term-change</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="module-openbibl.html">openbibl</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="download.html">openbibl/download</a></li><li><a href="event.html">openbibl/event</a></li><li><a href="filter.html">openbibl/filter</a></li><li><a href="highlight.html">openbibl/highlight</a></li><li><a href="query.html">openbibl/query</a></li><li><a href="saxon.html">openbibl/saxon</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li><li><a href="sort.html">openbibl/sort</a></li><li><a href="state.html">openbibl/state</a></li><li><a href="theme.html">openbibl/theme</a></li><li><a href="toc.html">openbibl/toc</a></li><li><a href="tooltip.html">openbibl/tooltip</a></li></ul><h3>Global</h3><ul><li><a href="global.html#obp:bibliography-added">obp:bibliography-added</a></li><li><a href="global.html#obp:browse-term-change">obp:browse-term-change</a></li><li><a href="global.html#obp:filter-change">obp:filter-change</a></li><li><a href="global.html#obp:filter-complete">obp:filter-complete</a></li><li><a href="global.html#obp:filter-mode-change">obp:filter-mode-change</a></li><li><a href="global.html#obp:search-term-change">obp:search-term-change</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Sat May 31 2014 12:58:45 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Mon Jun 09 2014 18:55:33 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

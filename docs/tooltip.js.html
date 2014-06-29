@@ -39,9 +39,10 @@
  * @module openbibl/tooltip
  */
 define(
-  [ 'module', 'jquery', 'obpev' ]
-, function(module,$,obpev) {
+  [ 'module', 'jquery', 'obpev', 'obpconfig', 'obpstate', 'saxon' ]
+, function(module,$,obpev,obpconfig,obpstate, saxon) {
     'use strict';
+    var tooltip;
     return {
         /**
          * Initialize tooltip by registering callbacks for Openbibl
@@ -51,13 +52,45 @@ define(
          * @instance
          */
         init : function() {
-            var tooltip = this;
+            tooltip = this;
             obpev.subscribe("obp:bibliography-added", module.id, function() {
                 tooltip.enable_tooltips();
             });
             obpev.subscribe("obp:filter-complete", module.id, function() {
                 tooltip.enable_tooltips();
             });
+        },
+        /**
+         * Mapping of &lt;a> element @id values to strings, to be used for 
+         * popover titles.
+         * @property
+         * @private
+         * @instance
+         */
+        titles : {},
+        /**
+         *  
+         * @property
+         * @private
+         * @instance
+         */
+        request_data : function(options) {
+            saxon.requestTransform(
+                $.extend({
+                      stylesheet : obpconfig.path('tooltip_xsl')
+                    , source     : obpstate.bibliographies.xml
+                }, options));
+        },
+        /**
+         * Method to be used to register a string for a tooltip popover.
+         * @method
+         * @public
+         * @instance
+         */
+        register_title : function(a_id,script_id,tt_id) {
+            $('#' + script_id).remove();
+            tooltip.titles[a_id] = $('#' + tt_id).remove().html();
+            tooltip.enable_tooltip(a_id);
         },
         /**
          * Register DOM events on tooltip-able elements, which may have just
@@ -67,12 +100,63 @@ define(
          * @instance
          */
         enable_tooltips : function() {
-            $('[data-toggle="tooltip"]').click(function(e){
+            /*jslint unparam: true */
+            $('[data-toggle="tooltip"]').each(function(i,elt){
+                tooltip.enable_tooltip(elt.getAttribute('id'));
+            });
+        },
+        /**
+         * Register DOM and popover events for a single tooltip item, which
+         * may have just re-appeared.
+         * @method
+         * @private
+         * @instance 
+         */
+        enable_tooltip : function(id) {
+            /*jslint unparam: true */
+            var $elt = $('#' + id);
+            $elt.click(function(e){
                 e.preventDefault();
             });
-            $('[data-toggle="tooltip"]').tooltip({
-                  placement : "top"
-                , trigger   : "hover"
+            $elt.tooltip({
+                  html      : true
+                , container : $elt
+                , placement : obpconfig.tooltip.placement
+                , trigger   : 'manual'
+                , delay     : { 
+                      show    : obpconfig.tooltip.show
+                    , hide    : obpconfig.tooltip.hide
+                }
+                , title     : function() {
+                    return tooltip.titles[id];
+                }
+            // mouse events are explicitly set to attempt to 
+            // keep flicker down
+            }).mouseenter(function(e) {
+                if($elt.find('div.tooltip').length === 0) {
+                    $elt.tooltip('show');
+                }
+            }).mouseleave(function(e) {
+                setTimeout(function() {
+                    if ($elt.find('div.tooltip').length !== 0) {
+                        $elt.tooltip('hide');
+                     }
+                }, obpconfig.tooltip.hover);
+            });
+            // enable link in the tooltip, if any
+            $elt.on('shown.bs.tooltip', function() {
+                $elt.find('a').click(function(e){
+                    // TODO: factor this and openbibl/toc code
+                    var $target = $('div[data-src-index="' + $(e.target).attr('data-src-index') + '"]');
+                    if ($target.length === 0) {
+                        return;
+                    }
+                    $elt.tooltip('hide');
+                    $('html,body').animate({
+                        scrollTop: ($target.offset().top - $('#bibliographies').offset().top)
+                        }, obpconfig.scroll_speed
+                    );
+                });
             });
         }
     };
@@ -87,13 +171,13 @@ define(
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="download.html">openbibl/download</a></li><li><a href="event.html">openbibl/event</a></li><li><a href="filter.html">openbibl/filter</a></li><li><a href="highlight.html">openbibl/highlight</a></li><li><a href="query.html">openbibl/query</a></li><li><a href="saxon.html">openbibl/saxon</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li><li><a href="sort.html">openbibl/sort</a></li><li><a href="state.html">openbibl/state</a></li><li><a href="theme.html">openbibl/theme</a></li><li><a href="toc.html">openbibl/toc</a></li><li><a href="tooltip.html">openbibl/tooltip</a></li></ul><h3>Global</h3><ul><li><a href="global.html#obp:bibliography-added">obp:bibliography-added</a></li><li><a href="global.html#obp:browse-term-change">obp:browse-term-change</a></li><li><a href="global.html#obp:filter-change">obp:filter-change</a></li><li><a href="global.html#obp:filter-complete">obp:filter-complete</a></li><li><a href="global.html#obp:filter-mode-change">obp:filter-mode-change</a></li><li><a href="global.html#obp:search-term-change">obp:search-term-change</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="module-openbibl.html">openbibl</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="download.html">openbibl/download</a></li><li><a href="event.html">openbibl/event</a></li><li><a href="filter.html">openbibl/filter</a></li><li><a href="highlight.html">openbibl/highlight</a></li><li><a href="query.html">openbibl/query</a></li><li><a href="saxon.html">openbibl/saxon</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li><li><a href="sort.html">openbibl/sort</a></li><li><a href="state.html">openbibl/state</a></li><li><a href="theme.html">openbibl/theme</a></li><li><a href="toc.html">openbibl/toc</a></li><li><a href="tooltip.html">openbibl/tooltip</a></li></ul><h3>Global</h3><ul><li><a href="global.html#obp:bibliography-added">obp:bibliography-added</a></li><li><a href="global.html#obp:browse-term-change">obp:browse-term-change</a></li><li><a href="global.html#obp:filter-change">obp:filter-change</a></li><li><a href="global.html#obp:filter-complete">obp:filter-complete</a></li><li><a href="global.html#obp:filter-mode-change">obp:filter-mode-change</a></li><li><a href="global.html#obp:search-term-change">obp:search-term-change</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Sat May 31 2014 12:58:45 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Mon Jun 09 2014 18:55:33 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

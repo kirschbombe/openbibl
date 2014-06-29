@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_ms.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?><?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_ms.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?><?xml-stylesheet type="text/xsl" href="../xsl/openbibl.xsl"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:schema="http://schema.org">
+    <teiHeader schema:itemtype="http://schema.org/CreativeWork" itemscope="itemscope" type="text">
+        <fileDesc>
+            <titleStmt>
+                <title schema:itemprop="name"><!-- Title of the work --></title>
+                <author>
+                    <persName schema:itemprop="author" instant="false" full="yes"><!--Author of work--></persName>
+                </author>
+                <respStmt>
+                    <persName schema:itemprop="contributor" instant="false" full="yes"/>
+                    <resp><!--Transcription, translation, editor, etc.--></resp>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <authority/>
+                <availability default="false" status="unknown">
+                    <ab part="N"><!-- copyright or copyleft information here --></ab>
+                </availability>
+                <date schema:itemprop="datePublished" instant="false"/>
+                <idno/>
+                <pubPlace schema:itemtype="http://schema.org/Place" itemscope="itemscope" schema:itemprop="name"/>
+                <publisher schema:itemprop="publisher"/>
+            </publicationStmt>
+            <sourceDesc default="false">
+                <bibl default="false">
+                    <!-- source information here; better yet, use a <biblStruct> instead -->
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <front>
+            <!-- front matter, if any, goes in <div>s, here -->
+            <head><!--for example, Introduction or About--></head>
+            <div org="uniform" sample="complete" part="N">
+                <p><!--introductory or About information here--></p>
+            </div>
+        </front>
+        <body>
+            <div schema:itemtype="http://schema.org/CreativeWork" itemscope="itemscope" type="entry" org="uniform" sample="complete" part="N">
+                <head><!--Entry Heading--></head>
+                
+                <!-- Bibliographic info of the work or title transcription. These elements should display together as one paragraph -->
+                <biblStruct default="false">
+                    <monogr>
+                        <author schema:itemprop="author"><!--LAST, First--></author>
+                        <title schema:itemprop="name"><!--Title--></title>
+                        <edition><!--Edition--></edition>
+                        <editor schema:itemprop="editor"><!--Last, First--></editor>
+                        <respStmt schema:itemprop="contributor">
+                            <name><!--Last, First--></name>
+                            <resp><!--Translator, printer, editor, etc.--></resp>
+                        </respStmt>
+                        <imprint schema:itemtype="http://schema.org/Place" itemscope="itemscope" schema:itemprop="name">
+                            <pubPlace schema:itemtype="http://schema.org/Place" itemscope="itemscope" schema:itemprop="name"><!--Place of publication--></pubPlace>
+                            <publisher schema:itemprop="publisher"><!--Publisher name--></publisher>
+                            <distributor><!--or Distributor name--></distributor>
+                            <date schema:itemprop="datePublished" when-iso="" instant="false"><!--Date--></date>
+                        </imprint>
+                    </monogr>
+                </biblStruct>
+                
+                <msDesc>
+                    <!--Repository, call number, identifier, location, etc.-->
+                    <msIdentifier>
+                        <repository schema:itemtype="http://schema.org/Place" itemscope="itemscope" schema:itemprop="name"/>
+                        <collection/>
+                        <idno><!--call number, identifier, etc.--></idno>
+                    </msIdentifier>
+                    
+                    <!-- Contents statement -->
+                    <msContents defective="false"/>
+                    
+                    <!-- Collation, physical description, provenance. These elements should display together as one paragraph -->
+                    <physDesc>
+                        <objectDesc>
+                            <p><!--format, collation, pagination, leaves, plates, illus., inserts, half-titles, etc.--></p>
+                        </objectDesc>
+                        <bindingDesc>
+                            <p><!--binding description--></p>
+                            <condition/>
+                            <decoNote/>
+                        </bindingDesc>
+                        <accMat><!--accompanying material--></accMat>
+                    </physDesc>
+                    <history>
+                        <provenance><!--bookplates, other notes / evidence of history--></provenance>
+                        <acquisition/>
+                    </history>
+                </msDesc>
+                
+                <!-- Notes and annotations -->
+                <note anchored="true">
+                    <p><!--notes, commentary, and annotations here--></p>
+                </note>
+                
+                <!-- References -->
+                <listBibl type="refs" default="false">
+                    <bibl default="false"><!--Reference abbr, such as "NUC pre-1956, 244:266"--></bibl>
+                </listBibl>
+            </div>
+        </body>
+        <back>
+            <!-- contextual information: -->
+            <div type="editorial" org="uniform" sample="complete" part="N">
+                <listPerson default="false">
+                    <person instant="false">
+                        <persName instant="false" full="yes"><!-- canonical name --></persName>
+                        <birth instant="false">
+                            <placeName instant="false"><!-- where born; date on when= of <birth> --></placeName>
+                        </birth>
+                        <death instant="false">
+                            <placeName instant="false"><!-- where died; date on when= of <death> --></placeName>
+                        </death>
+                    </person>
+                </listPerson>
+            </div>
+        </back>
+    </text>
+</TEI>

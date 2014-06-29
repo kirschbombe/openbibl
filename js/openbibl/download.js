@@ -33,33 +33,72 @@ define(
           , obpconfig = require('obpconfig')
           , $clone = $(document.cloneNode(true))
           , $state_script = $('<script></script>')
-          , text, blob, filename, obp_global;
+          , xml_uri = URI(obpstate.bibliographies.xml)
+          , state_clone = $.extend({}, obpstate)
+          , config_clone = $.extend({}, obpconfig)
+          , text, blob, filename, update_path;
 
         // remove Download link from page
         $clone.find('.obp-download-page').closest('li').remove();
 
-        // remove Saxon/XSLT code, which is used only for xml->html convesion
+        // remove GWT elements for Saxon load
         $clone.find('#Saxonce').remove();
-        $clone.find('#obp-saxonce-onload').remove();
-        $clone.find('#obp-saxonce-nocache').remove();
-        $clone.find('script').each(function(i,elt){
-            if (elt.text.match(/saxon/i)) {
+        $clone.find('script[defer="defer"]').each(function(i,elt){
+            if (elt.text.match(/Saxonce\.onInjectionDone/)) {
                 $(elt).remove();
             }
         });
 
-        // set this global flag for js loading in html
-        obp_global = window.obp;
-        obp_global.xsl_load = false;
-
         // remove script tags injected by require-js
         $clone.find('script[data-requiremodule]').remove();
 
+        // remove Bootstrap Tooltip attributes
+        $clone.find('[data-toggle="tooltip"')
+            .removeAttr('data-original-title')
+            .removeAttr('title');
+
+        // remove the XML/XSL loader script
+        $clone.find('#obp-load-script').remove();
+
+        // make all @src and @rel values absolute
+        var update_path = function($elt,att) {
+            var src = URI($elt.attr(att));
+            if (src.is('relative')) {
+                src = src.absoluteTo(xml_uri);
+            }
+            $elt.attr(att, src.toString());
+        };
+        $clone.find('*[src]'      ).each(function(i,elt) { update_path($(elt), 'src'       ) });
+        $clone.find('*[data-main]').each(function(i,elt) { update_path($(elt), 'data-main' ) });
+        $clone.find('*[href]'     ).each(function(i,elt) { update_path($(elt), 'href'      ) });
+
+        // this flag is false for a serialize HTML document
+        state_clone.bibliographies.xsl_load = false;
+
         // serialize application state and configuration data
-        text = 'window.obp='           + JSON.stringify(obp_global) + ';\n'
-             + 'window.obp.obpstate='  + obpstate.stringify()       + ';\n'
-             + 'window.obp.obpconfig=' + obpconfig.stringify()      + ';\n';
-        $state_script.append(text);
+        // TODO externalize, possibly using template
+        text = '//<![CDATA[                                         \n\
+require.config({                                                    \n\
+    paths : {                                                       \n\
+          "obp"       : "openbibl/obp"                              \n\
+        , "obpconfig" : "openbibl/config"                           \n\
+        , "obpstate"  : "openbibl/state"                            \n\
+    }                                                               \n\
+});                                                                 \n\
+require(["obpconfig","obpstate"], function(obpconfig,obpstate) {    \n\
+    obpstate.rebase(' + state_clone.stringify() + ');               \n\
+    obpconfig.rebase(' + config_clone.stringify() + ',true);        \n\
+});                                                                 \n\
+var saxonLoaded = false                                             \n\
+  , onSaxonLoad = function() { saxonLoaded = true; };               \n\
+require(["obp","obpstate"], function(obp,obpstate) {                \n\
+    obp.init(                                                       \n\
+        function() { return saxonLoaded }                           \n\
+    );                                                              \n\
+});                                                                 \n\
+//]]>                                                               \n\
+';
+        $state_script.text(text);
         $clone.find('body').append($state_script);
 
         // have browser download/save to file

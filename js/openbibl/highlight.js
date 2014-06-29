@@ -27,6 +27,7 @@ define(
             var highlight = this;
             highlight.sources = sources;
             obpev.subscribe("obp:bibliography-added", highlight.id, function() {
+                highlight.hide_filter_items();
                 highlight.unhighlight_filter_items();
                 highlight.highlight_filter_items();
                 highlight.unhide_filter_items();
@@ -62,9 +63,8 @@ define(
          */
         hide_filter_items : function() {
             /*jslint unparam: true */
-            $('.obp-match').each(function(i,elt){
-                $(elt).closest('.panel-collapse:not(.collapse)').addClass('collapse');
-                $(elt).closest('.panel.panel-default').find('.accordion-toggle').addClass('collapsed');
+            $('#bibliographies').find('div.panel-collapse.collapse.in,div.panel-collapse.collapse.collapsing').each(function(i,elt){
+                $(elt).closest('.panel').find('h2').click();
             });
         },
         /**
@@ -76,9 +76,8 @@ define(
          */
         unhide_filter_items : function() {
             /*jslint unparam: true */
-            $('.obp-match:hidden').each(function(i,elt){
-                $(elt).closest('.panel.panel-default').find('.accordion-toggle.collapsed').removeClass('collapsed');
-                $(elt).closest('.panel-collapse.collapse').removeClass('collapse');
+            $('.obp-match:hidden').each(function(i,elt) {
+                $(elt).closest('.panel').find('h2').click();
             });
         },
         /**
@@ -112,19 +111,10 @@ define(
          * @instance
          */
         highlight_elt : function(selector) {
-            /*jslint unparam: true */
-            var highlight = this
-               , $elt, span;
-            // simply adding a class is insufficient (at least in Chrome)
-            // for having the match color applied, so insert a child
-            // <span> element
+            /*jslint unparam: true*/
+            var highlight = this;
             $(selector).map(function(i,elt) {
-                $elt = $(elt);
-                span = document.createElement('span');
-                span.appendChild(document.createTextNode($elt.text()));
-                $(span).addClass(highlight.match_class);
-                $elt.text('');
-                $elt.append(span);
+                $(elt).addClass(highlight.match_class);
             });
         },
         /**
@@ -171,12 +161,20 @@ define(
          * @instance
          */
         unhighlight_filter_items : function() {
+            /*jslint unparam: true*/
             var highlight = this
-              , text, text_node;
-            $('#bibliographies').find('.'  + highlight.match_class).map(function() {
-                text = this.textContent || this.innerText;
-                text_node = document.createTextNode(text);
-                this.parentNode.replaceChild(text_node,this);
+              , text, text_node, $elt;
+            $('#bibliographies').find('.'  + highlight.match_class).map(function(i,elt) {
+                $elt = $(elt);
+                // if it is a highlighted search term, remove the highlight <span> wrapper
+                if ($elt.hasClass(highlight.match_attr_name)) {
+                    text = this.textContent || this.innerText;
+                    text_node = document.createTextNode(text);
+                    this.parentNode.replaceChild(text_node,this);
+                // a pre-existing highlighted <span>, just remove class
+                } else {
+                    $(elt).removeClass(highlight.match_class);
+                }
             });
         }
     };

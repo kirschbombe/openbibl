@@ -25,7 +25,13 @@ define(
          */
         init : function(sources) {
             var filter = this;
-            this.sources = sources;
+            if (sources instanceof Array) {
+                this.sources = sources;
+            } else if (typeof sources === 'string') {
+                this.sources = [sources];
+            } else {
+                this.sources = [];
+            }
             obpev.subscribe("obp:filter-change", module.id, function() {
                 filter.filter_entries();
             });

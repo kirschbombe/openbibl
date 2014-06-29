@@ -6,20 +6,19 @@ LESS_DIR="$DEV_DIR/openbibl-less"
 JS_DIR="$DEV_DIR/../js"
 DOCS_DIR="$DEV_DIR/../docs"
 
-# compile LESS/CSS files
-echo Compiling LESS files
+echo "-> Compiling LESS files"
 "$LESS_DIR/openbibl.less.sh" -c -v
-if ["$?" ne "0"]; then
+if [ "$?" != "0" ]; then
     echo "Error compiling LESS files. Exiting."
     exit 1
 fi
 
-# lint js files
+echo "-> Linting JS files"
 for f in $(find "$JS_DIR" -name *.js -d 1 && find "$JS_DIR/openbibl" -name *.js ); do
     jslint $f
 done
 
-# update JS documentation
+echo "-> Updating JS documentation"
 $DOCS_DIR/docs.sh
 
 # minify javascript

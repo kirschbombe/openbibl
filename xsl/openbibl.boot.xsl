@@ -70,30 +70,43 @@
         </xsl:comment>
 
         <!-- load openbibl and dependencies-->
-        <script data-main="{$obp-js-main}" src="{$require-js}"></script>
-        <script type="text/javascript" language="javascript">
+        <script src="{$uri-js}"></script>
+        <script data-main="{$obp-require-main}" src="{$require-js}"></script>
+        <script type="text/javascript" language="javascript" id="obp-load-script">
+            var xml_path = URI(''.concat(document.location.origin).concat(document.location.pathname))
+              , obp_root = URI('<xsl:value-of select="$obp-root"/>')
+              , js_root  = URI('<xsl:value-of select="$obp-root-js"/>');
+            if (obp_root.is('relative')) {
+                obp_root = obp_root.absoluteTo(xml_path);
+                js_root = js_root.absoluteTo(xml_path);
+            }
             require.config({
-              baseUrl : '<xsl:value-of select="$obp-root-js"/>'
-            });
-            window.obp = {
-                  appdir : '<xsl:value-of select="$obp-root"/>'
-                , bibliographies : {
-                      xml : document.location.href
-                    , xsl : '<xsl:value-of select="$openbibl-xsl"/>'
+                  baseUrl : js_root.toString()
+                , paths : {
+                      'obp'      : 'openbibl/obp'
+                    , 'obpstate' : 'openbibl/state'
                 }
-                , saxonLoaded : false
-                , xsl_load : true
-            };
+            });
+            var saxonLoaded = false
+              , onSaxonLoad = function() { saxonLoaded = true; };
+            require(['obp','obpstate'], function(obp,obpstate) {
+                obpstate.rebase({
+                      paths : { root : obp_root.toString() }
+                    , bibliographies : {
+                          xml      : xml_path.toString()
+                        , xsl_load : true
+                    }
+                });
+                obp.init(
+                    function() { return saxonLoaded }
+                );
+            });
         </script>
 
         <!-- load Saxon; declare onload callback for Saxon-CE,
             which loads openbibl xsl-2.0 stylesheet and re-loads XML file -->
         <script id="obp-saxonce-nocache" type="text/javascript" language="javascript" src="{$saxon-nocache}"></script>
-        <script id="obp-saxonce-onload" type="text/javascript" language="javascript">
-            var onSaxonLoad = function() {
-                window.obp.saxonLoaded = true;
-            };
-        </script>
+
         <!-- TODO: integrate these three js libs with asynch loading -->
         <script type="text/javascript" language="javascript" src="{$jquery-js}"></script>
         <script type="text/javascript" language="javascript" src="{$bootstrap-js}"></script>

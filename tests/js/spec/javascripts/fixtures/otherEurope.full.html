@@ -1,1518 +1,430 @@
-<!DOCTYPE html>
-<html xmlns:schema="http://schema.org" lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta charset="utf-8" />
-        <meta name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <meta name="description" content="openbibl bibliography" />
-        <meta name="author" content="TEI author" />
-        <link rel="shortcut icon" href="assets/ico/favicon.png" />
-        <link rel="stylesheet" type="text/css" id="theme-css" href="../../../../../css/theme/clean.css" />
-        <title itemprop="name">Printing from the Other Europe: Central and East European Printing
-            from 1484 to 1697 in the Lilly Library</title>
-    </head>
-    <body>
-        <div id="obp-sidebar-offcanvas-sm"
-            class="navmenu navmenu-default navmenu-fixed-left-offcanvas">
-            <ul class="nav navmenu-nav obp-navmenu">
-                <li class="obp-menu-li">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><a data-toggle="collapse"
-                                data-target=".obp-theme-toggle">Theme</a></div>
-                        <div class="panel-collapse collapse obp-theme-toggle">
-                            <div class="panel-body">
-                                <div class="obp-menu-panel-body">
-                                    <form>
-                                        <table class="obp-control-tbl">
-                                            <tbody>
-                                                <tr class="obp-control-tbl">
-                                                  <td><label><input type="radio" name="theme-form"
-                                                  class="obp-theme-input"
-                                                  data-stylesheet-file="clean.css" checked="checked"
-                                                   /><span>Clean</span></label></td>
-                                                </tr>
-                                                <tr class="obp-control-tbl">
-                                                  <td><label><input type="radio" name="theme-form"
-                                                  class="obp-theme-input"
-                                                  data-stylesheet-file="bookish.css"
-                                                   /><span>Bookish</span></label></td>
-                                                </tr>
-                                                <tr class="obp-control-tbl">
-                                                  <td><label><input type="radio" name="theme-form"
-                                                  class="obp-theme-input"
-                                                  data-stylesheet-file="fiche.css"
-                                                   /><span>Fiche</span></label></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="obp-menu-li">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><a data-toggle="collapse"
-                                data-target=".obp-sort-toggle">Sort</a></div>
-                        <div class="panel-collapse collapse obp-sort-toggle">
-                            <div class="panel-body">
-                                <div class="obp-menu-panel-body">
-                                    <form>
-                                        <table class="obp-control-tbl">
-                                            <tbody>
-                                                <tr class="obp-control-tbl">
-                                                  <td><label><input type="radio" name="sort-form"
-                                                  class="obp-sort-input" data-sort-key="data-author"
-                                                  checked="checked"
-                                                   /><span>Author</span></label></td>
-                                                </tr>
-                                                <tr>
-                                                  <td><label><input type="radio" name="sort-form"
-                                                  class="obp-sort-input" data-sort-key="data-date"
-                                                   /><span>Date</span></label></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="obp-menu-li">
-                    <div class="panel panel-default obp-search-panel">
-                        <div class="panel-heading"><a data-toggle="collapse"
-                                data-target=".obp-search-toggle">Search</a></div>
-                        <div class="panel-collapse collapse obp-search-toggle">
-                            <div class="panel-body">
-                                <div class="obp-search-panel-body">
-                                    <form>
-                                        <table class="obp-control-tbl">
-                                            <tbody>
-                                                <tr class="obp-control-tbl">
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp0"
-                                                  value="obp-filter-intersection" checked="checked"
-                                                   /><span>all</span></label></td>
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp0" value="obp-filter-union"
-                                                   /><span>any</span></label></td>
-                                                  <td><button class="obp-search-clear btn btn-xs"
-                                                  type="submit">clear</button></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                    <div class="nav-form">
-                                        <form class="obp-search-form"><input autocomplete="off"
-                                                class="search-input typeahead obp-search-panel-input"
-                                                data-provide="typeahead" placeholder="Search"
-                                                spellcheck="false" type="text" /></form>
-                                    </div>
-                                    <ul class="list-group obp-search-results-list"></ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="obp-menu-li">
-                    <div class="panel panel-default obp-browse-list" data-ed-list="listPerson">
-                        <div class="panel-heading"><a data-toggle="collapse"
-                                data-target=".idp151920">People</a></div>
-                        <div class="panel-collapse collapse idp151920">
-                            <div class="panel-body">
-                                <div class="obp-menu-panel-body">
-                                    <form>
-                                        <table class="obp-control-tbl">
-                                            <tbody>
-                                                <tr class="obp-control-tbl">
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp151920"
-                                                  value="obp-filter-intersection" checked="checked"
-                                                   /><span>all</span></label></td>
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp151920"
-                                                  value="obp-filter-union"
-                                                   /><span>any</span></label></td>
-                                                  <td><button class="obp-browse-clear btn btn-xs"
-                                                  type="submit">clear</button></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                    <div class="obp-menu-panel-checkboxes">
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="a_magnus" /><span
-                                                  class="obp-browse-item">Albertus, Magnus, Saint
-                                                  (–1280)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="j_alakraw" /><span
-                                                  class="obp-browse-item">Alakraw, Johann
-                                                  (1400–1492)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="c_stahel" /><span
-                                                  class="obp-browse-item">Stahel, Conrad
-                                                  (1450–1491)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="b_mayr" /><span
-                                                  class="obp-browse-item">Mayir, Benedictus
-                                                  (1400–1400)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="j_severyn" /><span
-                                                  class="obp-browse-item">Severyn, Jan
-                                                  (1400–1544)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="j_hus" /><span
-                                                  class="obp-browse-item">Hus, Jan
-                                                  (1372–1415)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="mathias_scharffenberg" /><span
-                                                  class="obp-browse-item">Scharffenberg, Mathias
-                                                  (–1547)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="m_lupac" /><span
-                                                  class="obp-browse-item">Lupac, Martin
-                                                  (1400–1468)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="j_hevelius" /><span
-                                                  class="obp-browse-item">Hevelius, Johannes
-                                                  (1611–1687)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="a_hünefeldianis" /><span
-                                                  class="obp-browse-item">Hünefeldianis, Andreas
-                                                  (1581–1666)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="f_faber" /><span
-                                                  class="obp-browse-item">Faber, Ferdinand
-                                                  (1784–1866)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="sv_hoffmann" /><span
-                                                  class="obp-browse-item">Hoffmann, Samuel Verplank
-                                                  (1802–1880)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="m_tischniowa" /><span
-                                                  class="obp-browse-item">Martin of Tischniowa
-                                                  (1400–1400)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="k_wladislaw" /><span
-                                                  class="obp-browse-item">King Wladislaw of Bohemia
-                                                  (1456–1516)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="jt_gernon" /><span
-                                                  class="obp-browse-item">Gernon, John Talbot
-                                                  (1800–1900)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="m_miechowa" /><span
-                                                  class="obp-browse-item">Maciej Miechowa
-                                                  (1457–1523)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="s_scharffenberg" /><span
-                                                  class="obp-browse-item">Scharffenberg, Stanislawa
-                                                  (1500–1584)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="marcus_scharffenberg" /><span
-                                                  class="obp-browse-item">Scharffenberg, Marcus
-                                                  (1490–1545)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="f_leonard" /><span
-                                                  class="obp-browse-item">Leonard
-                                                (1500–1500)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="sigismund" /><span
-                                                  class="obp-browse-item">Sigismund (Zigmunt) II
-                                                  Augustus I (1520–1572)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="j_nicz" /><span
-                                                  class="obp-browse-item">Jan Nicz
-                                                  (1523–1572)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="z_solin" /><span
-                                                  class="obp-browse-item">Solin, Zacharius
-                                                  (1500–1500)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="j_vzerotin" /><span
-                                                  class="obp-browse-item">von Zerotin, John
-                                                  (1500–1587)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="k_ostrozhskii" /><span
-                                                  class="obp-browse-item">Ostrozhskii, Konstantine
-                                                  (1460–1530)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="i_federov" /><span
-                                                  class="obp-browse-item">Federov, Ivan
-                                                  (1510–1583)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="j_chrysostom" /><span
-                                                  class="obp-browse-item">Chrysostom, John
-                                                  (0347–0407)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="anthimus" /><span
-                                                  class="obp-browse-item">Anthimus of Iberia
-                                                  (1650–1716)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="s_grecenu" /><span
-                                                  class="obp-browse-item">Grecénu, Serban
-                                                  (1500–1500)</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="r_grecenu" /><span
-                                                  class="obp-browse-item">Grecénu, Radul
-                                                  (1500–1500)</span></label></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="obp-menu-li">
-                    <div class="panel panel-default obp-browse-list" data-ed-list="listPlace">
-                        <div class="panel-heading"><a data-toggle="collapse"
-                                data-target=".idp215456">Places</a></div>
-                        <div class="panel-collapse collapse idp215456">
-                            <div class="panel-body">
-                                <div class="obp-menu-panel-body">
-                                    <form>
-                                        <table class="obp-control-tbl">
-                                            <tbody>
-                                                <tr class="obp-control-tbl">
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp215456"
-                                                  value="obp-filter-intersection" checked="checked"
-                                                   /><span>all</span></label></td>
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp215456"
-                                                  value="obp-filter-union"
-                                                   /><span>any</span></label></td>
-                                                  <td><button class="obp-browse-clear btn btn-xs"
-                                                  type="submit">clear</button></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                    <div class="obp-menu-panel-checkboxes">
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="winterberg" /><span
-                                                  class="obp-browse-item">Winterberg,
-                                                Germany</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="prague" /><span
-                                                  class="obp-browse-item"
-                                            >Prague</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="gdansk" /><span
-                                                  class="obp-browse-item">Gdansk,
-                                                Poland</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="kuttenberg" /><span
-                                                  class="obp-browse-item">Kuttenberg (Kutná Hora),
-                                                  Bohemia</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="krakow" /><span
-                                                  class="obp-browse-item">Krakow,
-                                                Poland</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="kralice" /><span
-                                                  class="obp-browse-item">Kralice,
-                                                Bohemia</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="ostrog" /><span
-                                                  class="obp-browse-item">Ostroh,
-                                                Ukraine</span></label></div>
-                                        <div class="checkbox"><label class="browse-label"><input
-                                                  type="checkbox" class="obp-browse-checkbox"
-                                                  data-browse-item="bucharest" /><span
-                                                  class="obp-browse-item">Bucharest,
-                                                Romania</span></label></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="container">
-            <nav class="navbar navbar-default navbar-collapse navbar-fixed-top">
-                <div class="visible-sm visible-xs"></div>
-            </nav>
-            <div class="visible-md visible-lg">
-                <nav class="navmenu navmenu-default navmenu-fixed-left" role="navigation">
-                    <ul class="nav navmenu-nav obp-navmenu">
-                        <li class="obp-menu-li">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><a data-toggle="collapse"
-                                        data-target=".obp-theme-toggle">Theme</a></div>
-                                <div class="panel-collapse collapse obp-theme-toggle">
-                                    <div class="panel-body">
-                                        <div class="obp-menu-panel-body">
-                                            <form>
-                                                <table class="obp-control-tbl">
-                                                  <tbody>
-                                                  <tr class="obp-control-tbl">
-                                                  <td><label><input type="radio" name="theme-form"
-                                                  class="obp-theme-input"
-                                                  data-stylesheet-file="clean.css" checked="checked"
-                                                   /><span>Clean</span></label></td>
-                                                  </tr>
-                                                  <tr class="obp-control-tbl">
-                                                  <td><label><input type="radio" name="theme-form"
-                                                  class="obp-theme-input"
-                                                  data-stylesheet-file="bookish.css"
-                                                   /><span>Bookish</span></label></td>
-                                                  </tr>
-                                                  <tr class="obp-control-tbl">
-                                                  <td><label><input type="radio" name="theme-form"
-                                                  class="obp-theme-input"
-                                                  data-stylesheet-file="fiche.css"
-                                                   /><span>Fiche</span></label></td>
-                                                  </tr>
-                                                  </tbody>
-                                                </table>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="obp-menu-li">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><a data-toggle="collapse"
-                                        data-target=".obp-sort-toggle">Sort</a></div>
-                                <div class="panel-collapse collapse obp-sort-toggle">
-                                    <div class="panel-body">
-                                        <div class="obp-menu-panel-body">
-                                            <form>
-                                                <table class="obp-control-tbl">
-                                                  <tbody>
-                                                  <tr class="obp-control-tbl">
-                                                  <td><label><input type="radio" name="sort-form"
-                                                  class="obp-sort-input" data-sort-key="data-author"
-                                                  checked="checked"
-                                                   /><span>Author</span></label></td>
-                                                  </tr>
-                                                  <tr>
-                                                  <td><label><input type="radio" name="sort-form"
-                                                  class="obp-sort-input" data-sort-key="data-date"
-                                                   /><span>Date</span></label></td>
-                                                  </tr>
-                                                  </tbody>
-                                                </table>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="obp-menu-li">
-                            <div class="panel panel-default obp-search-panel">
-                                <div class="panel-heading"><a data-toggle="collapse"
-                                        data-target=".obp-search-toggle">Search</a></div>
-                                <div class="panel-collapse collapse obp-search-toggle">
-                                    <div class="panel-body">
-                                        <div class="obp-search-panel-body">
-                                            <form>
-                                                <table class="obp-control-tbl">
-                                                  <tbody>
-                                                  <tr class="obp-control-tbl">
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp0"
-                                                  value="obp-filter-intersection" checked="checked"
-                                                   /><span>all</span></label></td>
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp0" value="obp-filter-union"
-                                                   /><span>any</span></label></td>
-                                                  <td><button class="obp-search-clear btn btn-xs"
-                                                  type="submit">clear</button></td>
-                                                  </tr>
-                                                  </tbody>
-                                                </table>
-                                            </form>
-                                            <div class="nav-form">
-                                                <form class="obp-search-form"><input
-                                                  autocomplete="off"
-                                                  class="search-input typeahead obp-search-panel-input"
-                                                  data-provide="typeahead" placeholder="Search"
-                                                  spellcheck="false" type="text" /></form>
-                                            </div>
-                                            <ul class="list-group obp-search-results-list"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="obp-menu-li">
-                            <div class="panel panel-default obp-browse-list"
-                                data-ed-list="listPerson">
-                                <div class="panel-heading"><a data-toggle="collapse"
-                                        data-target=".idp151920">People</a></div>
-                                <div class="panel-collapse collapse idp151920">
-                                    <div class="panel-body">
-                                        <div class="obp-menu-panel-body">
-                                            <form>
-                                                <table class="obp-control-tbl">
-                                                  <tbody>
-                                                  <tr class="obp-control-tbl">
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp151920"
-                                                  value="obp-filter-intersection" checked="checked"
-                                                   /><span>all</span></label></td>
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp151920"
-                                                  value="obp-filter-union"
-                                                   /><span>any</span></label></td>
-                                                  <td><button class="obp-browse-clear btn btn-xs"
-                                                  type="submit">clear</button></td>
-                                                  </tr>
-                                                  </tbody>
-                                                </table>
-                                            </form>
-                                            <div class="obp-menu-panel-checkboxes">
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="a_magnus" /><span
-                                                  class="obp-browse-item">Albertus, Magnus, Saint
-                                                  (–1280)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="j_alakraw" /><span
-                                                  class="obp-browse-item">Alakraw, Johann
-                                                  (1400–1492)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="c_stahel" /><span
-                                                  class="obp-browse-item">Stahel, Conrad
-                                                  (1450–1491)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="b_mayr" /><span
-                                                  class="obp-browse-item">Mayir, Benedictus
-                                                  (1400–1400)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="j_severyn" /><span
-                                                  class="obp-browse-item">Severyn, Jan
-                                                  (1400–1544)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="j_hus" /><span
-                                                  class="obp-browse-item">Hus, Jan
-                                                  (1372–1415)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="mathias_scharffenberg" /><span
-                                                  class="obp-browse-item">Scharffenberg, Mathias
-                                                  (–1547)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="m_lupac" /><span
-                                                  class="obp-browse-item">Lupac, Martin
-                                                  (1400–1468)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="j_hevelius" /><span
-                                                  class="obp-browse-item">Hevelius, Johannes
-                                                  (1611–1687)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="a_hünefeldianis" /><span
-                                                  class="obp-browse-item">Hünefeldianis, Andreas
-                                                  (1581–1666)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="f_faber" /><span
-                                                  class="obp-browse-item">Faber, Ferdinand
-                                                  (1784–1866)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="sv_hoffmann" /><span
-                                                  class="obp-browse-item">Hoffmann, Samuel Verplank
-                                                  (1802–1880)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="m_tischniowa" /><span
-                                                  class="obp-browse-item">Martin of Tischniowa
-                                                  (1400–1400)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="k_wladislaw" /><span
-                                                  class="obp-browse-item">King Wladislaw of Bohemia
-                                                  (1456–1516)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="jt_gernon" /><span
-                                                  class="obp-browse-item">Gernon, John Talbot
-                                                  (1800–1900)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="m_miechowa" /><span
-                                                  class="obp-browse-item">Maciej Miechowa
-                                                  (1457–1523)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="s_scharffenberg" /><span
-                                                  class="obp-browse-item">Scharffenberg, Stanislawa
-                                                  (1500–1584)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="marcus_scharffenberg" /><span
-                                                  class="obp-browse-item">Scharffenberg, Marcus
-                                                  (1490–1545)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="f_leonard" /><span
-                                                  class="obp-browse-item">Leonard
-                                                  (1500–1500)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="sigismund" /><span
-                                                  class="obp-browse-item">Sigismund (Zigmunt) II
-                                                  Augustus I (1520–1572)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="j_nicz" /><span
-                                                  class="obp-browse-item">Jan Nicz
-                                                  (1523–1572)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="z_solin" /><span
-                                                  class="obp-browse-item">Solin, Zacharius
-                                                  (1500–1500)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="j_vzerotin" /><span
-                                                  class="obp-browse-item">von Zerotin, John
-                                                  (1500–1587)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="k_ostrozhskii" /><span
-                                                  class="obp-browse-item">Ostrozhskii, Konstantine
-                                                  (1460–1530)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="i_federov" /><span
-                                                  class="obp-browse-item">Federov, Ivan
-                                                  (1510–1583)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="j_chrysostom" /><span
-                                                  class="obp-browse-item">Chrysostom, John
-                                                  (0347–0407)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="anthimus" /><span
-                                                  class="obp-browse-item">Anthimus of Iberia
-                                                  (1650–1716)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="s_grecenu" /><span
-                                                  class="obp-browse-item">Grecénu, Serban
-                                                  (1500–1500)</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="r_grecenu" /><span
-                                                  class="obp-browse-item">Grecénu, Radul
-                                                  (1500–1500)</span></label></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="obp-menu-li">
-                            <div class="panel panel-default obp-browse-list"
-                                data-ed-list="listPlace">
-                                <div class="panel-heading"><a data-toggle="collapse"
-                                        data-target=".idp215456">Places</a></div>
-                                <div class="panel-collapse collapse idp215456">
-                                    <div class="panel-body">
-                                        <div class="obp-menu-panel-body">
-                                            <form>
-                                                <table class="obp-control-tbl">
-                                                  <tbody>
-                                                  <tr class="obp-control-tbl">
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp215456"
-                                                  value="obp-filter-intersection" checked="checked"
-                                                   /><span>all</span></label></td>
-                                                  <td><label><input class="obp-filter-mode"
-                                                  type="radio" name="idp215456"
-                                                  value="obp-filter-union"
-                                                   /><span>any</span></label></td>
-                                                  <td><button class="obp-browse-clear btn btn-xs"
-                                                  type="submit">clear</button></td>
-                                                  </tr>
-                                                  </tbody>
-                                                </table>
-                                            </form>
-                                            <div class="obp-menu-panel-checkboxes">
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="winterberg" /><span
-                                                  class="obp-browse-item">Winterberg,
-                                                  Germany</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="prague" /><span
-                                                  class="obp-browse-item"
-                                                  >Prague</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="gdansk" /><span
-                                                  class="obp-browse-item">Gdansk,
-                                                  Poland</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="kuttenberg" /><span
-                                                  class="obp-browse-item">Kuttenberg (Kutná Hora),
-                                                  Bohemia</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="krakow" /><span
-                                                  class="obp-browse-item">Krakow,
-                                                  Poland</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="kralice" /><span
-                                                  class="obp-browse-item">Kralice,
-                                                  Bohemia</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="ostrog" /><span
-                                                  class="obp-browse-item">Ostroh,
-                                                  Ukraine</span></label></div>
-                                                <div class="checkbox"><label class="browse-label"
-                                                  ><input type="checkbox"
-                                                  class="obp-browse-checkbox"
-                                                  data-browse-item="bucharest" /><span
-                                                  class="obp-browse-item">Bucharest,
-                                                  Romania</span></label></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
-                <div id="bibliographies" class="bibliographies">
-                    <h1 class="bibliographies">Printing from the Other Europe: Central and East
-                        European Printing from 1484 to 1697 in the Lilly Library</h1>
-                    <hr id="asterism-rule" />
-                    <div id="asterism"></div>
-                    <ul id="toc" class="toc">
-                        <li class="toc" data-src-index="0" style="display: list-item;">
-                            <span class="leader"><a class="toc-click" data-src-index="0">Holy
-                                    Communion</a></span><span>ALBERTUS, Magnus, Saint</span></li>
-                        <li class="toc" data-src-index="1" style="display: list-item;">
-                            <span class="leader"><a class="toc-click" data-src-index="1">The Prague
-                                    Bible</a></span><span>[UNKNOWN]</span></li>
-                        <li class="toc" data-src-index="2" style="display: list-item;">
-                            <span class="leader"><a class="toc-click" data-src-index="2"
-                                    >Selenographia</a></span><span>HEVELIUS, Johannes</span></li>
-                        <li class="toc" data-src-index="3" style="display: list-item;">
-                            <span class="leader"><a class="toc-click" data-src-index="3">Biblia
-                                    Bohemica</a></span><span>[UNKNOWN]</span></li>
-                        <li class="toc" data-src-index="4" style="display: list-item;">
-                            <span class="leader"><a class="toc-click" data-src-index="4">Health and
-                                    Nutrition</a></span><span>MACIEJ, Z. of Miechowa.</span></li>
-                        <li class="toc" data-src-index="5" style="display: list-item;">
-                            <span class="leader"><a class="toc-click" data-src-index="5">Biblia
-                                    Leopolity</a></span><span>[UNKNOWN]</span></li>
-                        <li class="toc" data-src-index="6" style="display: list-item;">
-                            <span class="leader"><a class="toc-click" data-src-index="6">Kralitz
-                                    Bible</a></span><span>[UNKNOWN]</span></li>
-                        <li class="toc" data-src-index="7" style="display: list-item;">
-                            <span class="leader"><a class="toc-click" data-src-index="7">Ostrih
-                                    Bible</a></span><span>[UNKNOWN]</span></li>
-                        <li class="toc" data-src-index="8" style="display: list-item;">
-                            <span class="leader"><a class="toc-click" data-src-index="8"
-                                >Pearls</a></span><span>CHRYSOTOM, John, Saint.</span></li>
-                    </ul>
-                    <div class="entry" data-date="1484-10-16" data-author="ALBERTUS, Magnus, Saint"
-                        data-src-index="0" itemtype="http://schema.org/CreativeWork">
-                        <div class="panel-group" id="w4ab3b3b3b1-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="bibliography panel-title accordion-toggle collapsed"
-                                        data-toggle="collapse" data-target="#w4ab3b3b3b1"
-                                        data-parent="#w4ab3b3b3b1-group"><span>Holy
-                                        Communion</span></h2>
-                                </div>
-                                <p class="bibliography"><span><span><span itemprop="author"><span><a
-                                                  href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Also known as Albert the Great and Albert of Cologne. Catholic saint and German philosopher and theologian of the Middle Ages. The Catholic Church honours him as a Doctor of the Church, one of only 35 so honoured.">
-                                                  <span data-ed-ref="a_magnus">ALBERTUS, Magnus,
-                                                  Saint</span></a></span></span><span>.</span>
-                                            <span itemprop="name">Summa de eucharistiae
-                                                sacramento... [De corpore
-                                                Domini]</span><span>.</span>
-                                            <i><span><span itemtype="http://schema.org/Place"
-                                                  itemprop="name"><span><span
-                                                  data-ed-ref="winterberg"
-                                                  >Winterberg</span></span></span><span>,</span>
-                                                  <span itemprop="publisher"><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="Johann Alakraw is known to have produced one tract at Passau in 1482 before establishing the first press at Winterberg in 1484 with the same printing material. His surviving printed output consists of three works: the present edition of Soliloquia ('Agnoscam te' (considered by BMC to take precedence), a work by Albertus Magnus, and a broadside almanac in Czech for 1485.">
-                                                  <span data-ed-ref="j_alakraw">Johann
-                                                  Alakraw</span></a></span><span>,</span>
-                                                  <span itemprop="datePublished">16 Oct.
-                                                  1484</span></span></i></span></span></p>
-                                <p class="bibliography"><span><span><span>2°, [220] p. Capital
-                                                spaces, unfilled. First two leaves of the sixth
-                                                gathering are supplied from another, shorter copy.
-                                                </span><span>Bound in 19th-century cloth-backed
-                                                boards, marbled edges. </span></span></span></p>
-                                <div id="w4ab3b3b3b1" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <p class="bibliography"><span>Writings on the Eucharist by
-                                                the Dominican friar and German philosopher
-                                                  <span><span data-ed-ref="a_magnus">Albertus
-                                                  Magnus</span></span> (1206-1280), also known as
-                                                  <span><span data-ed-ref="a_magnus">Saint Albert
-                                                  the Great</span></span>. <span><span
-                                                  data-ed-ref="a_magnus">Albertus</span></span> was
-                                                one of the first medieval scholars to apply
-                                                Aristotle’s philosophy to Christian thought. and was
-                                                an advocate for the coexistence of science and
-                                                religion. <span><span data-ed-ref="a_magnus"
-                                                  >Albertus</span></span>’ Summa was a standard
-                                                orthodox treatise on Holy Communion, and was likely
-                                                important to the Czech Romanists in their conflict
-                                                with the Utraquists. The Utraquists, a moderate
-                                                faction of the Hussites, maintained the Eucharist
-                                                should be administered to the people in both bread
-                                                and wine, but wine was then reserved only for the
-                                                priests. <span><span data-ed-ref="winterberg"
-                                                  >Winterberg (Vimperk)</span></span>, a small town
-                                                in the southwest near the Bavarian border, was the
-                                                second Czech town with a printing press. The printer
-                                                  <span><span data-ed-ref="j_alakraw">Johannes
-                                                  Alakraw</span></span> produced only two books in
-                                                Winterberg in 1484, one of which was the Summa.
-                                                  <span><span data-ed-ref="j_alakraw"
-                                                  >Alakraw</span></span> worked previously in Passau
-                                                with the printer <span><span data-ed-ref="k_stahel"
-                                                  >Konrad Stahel</span></span> and with <span><a
-                                                  href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Active between 1480-1484; early printer of Passau."
-                                                  ><span data-ed-ref="b_mayr"> Benedictus
-                                                  Mayr</span></a></span>, from whom he borrowed the
-                                                unusual practice of signing his books by the sheet,
-                                                with consecutive letters of the alphabet, rather
-                                                than by the quire. In 1485 he returned to Passau
-                                                where he printed until 1492. </span></p>
-                                        <p class="bibliography"><span>References:</span>
-                                            <span><span>BM 15th cent., III, p. 814
-                                                  (IB.51603)</span><span>;</span>
-                                                <span>Pellechet, 294</span><span>;</span>
-                                                <span>Pet Stoleti</span></span></p>
-                                        <p class="bibliography"><span><span>BX2215.A33 S95
-                                                  1484</span></span><span>   </span><span>1)
-                                                  <span>Vault</span></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="entry" data-date="1488-08-01" data-author="" data-src-index="1"
-                        itemtype="http://schema.org/CreativeWork">
-                        <div class="panel-group" id="w4ab3b3b3b3-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="bibliography panel-title accordion-toggle collapsed"
-                                        data-toggle="collapse" data-target="#w4ab3b3b3b3"
-                                        data-parent="#w4ab3b3b3b3-group"><span>The Prague
-                                            Bible</span></h2>
-                                </div>
-                                <p class="bibliography"><span><span><span itemprop="name">[BIBLE.
-                                                CZECH.]</span><span>.</span>
-                                            <i><span><span itemtype="http://schema.org/Place"
-                                                  itemprop="name"><span data-ed-ref="prague"
-                                                  >Prague</span></span><span>,</span>
-                                                  <span itemprop="publisher"><span
-                                                  data-ed-ref="j_kamp">Jan Kamp</span> and <span
-                                                  data-ed-ref="j_severin">Jan
-                                                  Severyn</span></span><span>,</span>
-                                                  <span itemprop="datePublished">August
-                                                  1488</span></span></i></span></span></p>
-                                <p class="bibliography"><span><span><span>2°, [1220] p. Double
-                                                columns, 46-47 lines each, rubricated in yellow and
-                                                red, initials in red and blue, floral scroll
-                                                illuminations at beginning of testaments. Color
-                                                illustrations in margins. </span><span>1619 binding,
-                                                blind-stamped leather over boards, spine restored,
-                                                bosses on four corners and middle of front and back
-                                                covers, book clasps. </span></span></span></p>
-                                <div id="w4ab3b3b3b3" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <p class="bibliography"><span>Printed in Prague by the
-                                                partners <span><span data-ed-ref="j_severin">Jan
-                                                  Severyn</span></span> and <span><span
-                                                  data-ed-ref="j_kamp">Jan Kamp</span></span>, this
-                                                is the first printing of the complete Bible in the
-                                                Czech language. The text is a translation from early
-                                                texts into the Bohemian vernacular by unknown Czech
-                                                scholars associated with the Hussite movement, and
-                                                revised by <span><a href="#" data-toggle="tooltip"
-                                                  title=""
-                                                  data-original-title="Hus was a Czech priest, philosopher, reformer, and master at Charles University in Prague. He is also considered one of the first Church reformers.">
-                                                  <span data-ed-ref="j_hus">Jan
-                                                  Hus</span></a></span>, <span><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="With the assistance of some scholars, Lupac retranslated the entire New Testament into the Bohemian language.">
-                                                  <span data-ed-ref="m_lupac">Martin
-                                                  Lupác</span></a></span>, and others. The Prague
-                                                Bible has often been called the first Protestant
-                                                Bible because of the connection with the Hussites,
-                                                although there was an earlier printing in 1475 of
-                                                the New Testament in Czech. </span></p>
-                                        <p class="bibliography"><span>References:</span>
-                                            <span><span>BM 15th cent., III, 808
-                                                  (IB.51405)</span><span>;</span>
-                                                <span>The Bible in the Lilly
-                                                  Library</span><span>;</span>
-                                                <span>Pet Stoleti</span><span>;</span>
-                                                <span>Darlow &amp; Moule</span></span></p>
-                                        <p class="bibliography"><span><span>BS220 .C9
-                                                1488</span></span><span>   </span><span>1)
-                                                  <span>Vault</span></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="entry" data-date="1647-01-01" data-author="HEVELIUS, Johannes"
-                        data-src-index="2" itemtype="http://schema.org/CreativeWork">
-                        <div class="panel-group" id="w4ab3b3b3b5-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="bibliography panel-title accordion-toggle collapsed"
-                                        data-toggle="collapse" data-target="#w4ab3b3b3b5"
-                                        data-parent="#w4ab3b3b3b5-group"
-                                        ><span>Selenographia</span></h2>
-                                </div>
-                                <p class="bibliography"><span><span><span itemprop="author"><span><a
-                                                  href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Hevelius was a councilmember and mayor of Danzig (Gdansk) and an astronomer, for which he became known as the &quot;founder of lunar topography&quot; and described ten new constellations (seven are still recognized).">
-                                                  <span data-ed-ref="j_hevelius">HEVELIUS,
-                                                  Johannes</span></a></span></span><span>.</span>
-                                            <span itemprop="name">Selenographia, sive, Lunae
-                                                descriptio; atque accurata, tam macularum ejus, quam
-                                                mottum diversorum, aliarumque omnium vicissitudinum,
-                                                phasiumque, telescopii ope deprehensarum, delineatio
-                                                : in quâsimul caeterorum omnium planetarum nativa
-                                                facies, variaeque observationes ... sub aspectum
-                                                ponuntur ... : Addita est, lentes expoliendi nova
-                                                ratio...</span><span>.</span>
-                                            <i><span><span itemtype="http://schema.org/Place"
-                                                  itemprop="name"><span><span data-ed-ref="gdansk"
-                                                  >Gdansk</span></span></span><span>,</span>
-                                                  <span itemprop="publisher"><span
-                                                  data-ed-ref="Hünefeldianis"
-                                                  >Hünefeldianis</span></span><span>,</span>
-                                                  <span itemprop="datePublished"
-                                                >1647</span></span></i></span></span></p>
-                                <p class="bibliography"><span><span><span>2°, [593] p., 95 leaves of
-                                                plates, with 3 double-page plates, 19 leaves printed
-                                                on both sides. Extra engraved title inserted after
-                                                half-title. </span><span>Bound in old vellum,
-                                                handwritten title on spine<span>.</span>
-                                            </span></span><span><span>Bookplates of <span><a
-                                                  href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="There is not much information available on Faber, except for a genealogical entry indicating that Faber was the son of Jakob Faber and Klara Haimann of Mertloch (Germany).">
-                                                  <span data-ed-ref="f_faber">Ferdinand
-                                                  Faber</span></a></span> and <span><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="Brother of Eugene Augustus Hoffman, renowned clergyman, and father of Dean Hoffman, known as the &quot;most munificent benefactor&quot; of the Episcopal Church and the &quot;richest clergyman in America&quot; (in the 19th century). He was the seventh child of Harmanus Hoffmann and Catharine Verplanck.">
-                                                  <span data-ed-ref="sv_hoffmann">Samuel Verplanck
-                                                  Hoffman</span></a></span></span><span>.</span></span></span></p>
-                                <div id="w4ab3b3b3b5" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <p class="bibliography"><span>The first detailed lunar
-                                                atlas, depicting more than 200 lunar formations.
-                                                With the invention of the telescope in the early
-                                                17th century, astronomers could map the planets and
-                                                constellations just as cartographers were mapping
-                                                the geography of the earth. As the closest object to
-                                                the earth, the moon quickly became a favorite object
-                                                of study for many astronomers. One of the greatest
-                                                of these astronomers was <span><span
-                                                  data-ed-ref="j_hevelius">Jan
-                                                  Hevelius</span></span> (1611-1687), born in
-                                                  <span><span data-ed-ref="gdansk"
-                                                  >Gdansk</span></span>. In Selenographia,
-                                                  <span><span data-ed-ref="j_hevelius"
-                                                  >Hevelius</span></span> created an authoritative
-                                                atlas and study of the moon derived from his own
-                                                observations. <span><span data-ed-ref="j_hevelius"
-                                                  >Hevelius</span></span> had one of the most
-                                                well-equipped observatories in Europe, covering the
-                                                rooftops of several buildings, complete with a
-                                                revolving observation hut, telescopes and
-                                                astronomical instruments which he made himself, and
-                                                even a printing press to produce his copperplate
-                                                engravings. The majority of plates were engraved by
-                                                  <span><span data-ed-ref="">Hevelius</span></span>
-                                                in his observatory where he could produce the most
-                                                detailed and accurate illustrations. The volume
-                                                contains 133 engraved plates depicting the moon and
-                                                its phases, as well as illustrations of the
-                                                instruments he created. This is perhaps <span><span
-                                                  data-ed-ref="j_hevelius">Hevelius</span></span>’
-                                                greatest work. </span></p>
-                                        <p class="bibliography"><span>References:</span>
-                                            <span><span>NUC pre-1956, 244:266</span><span>;</span>
-                                                <span>BM, 103:256</span><span>;</span>
-                                                <span>Sotheran, Bibl. chem.-math.,
-                                                1913</span></span></p>
-                                        <p class="bibliography"><span><span>QB595 .H596
-                                                1647</span></span><span>   </span><span>1)
-                                                  <span>Vault</span></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="entry" data-date="1489-11-14" data-author="" data-src-index="3"
-                        itemtype="http://schema.org/CreativeWork">
-                        <div class="panel-group" id="w4ab3b3b3b7-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="bibliography panel-title accordion-toggle collapsed"
-                                        data-toggle="collapse" data-target="#w4ab3b3b3b7"
-                                        data-parent="#w4ab3b3b3b7-group"><span>Biblia
-                                            Bohemica</span></h2>
-                                </div>
-                                <p class="bibliography"><span><span><span itemprop="name">[BIBLE.
-                                                CZECH.]</span><span>.</span>
-                                            <i><span><span itemtype="http://schema.org/Place"
-                                                  itemprop="name"><span><span
-                                                  data-ed-ref="kuttenberg"
-                                                  >Kuttenberg</span></span></span><span>,</span>
-                                                  <span itemprop="publisher"><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="The Biblia Bohemica is the only book known to have been published by Martin of Tischniowa and it was the first illustrated book published in Czechoslovakia.">
-                                                  <span data-ed-ref="m_tischniowa">Martin of
-                                                  Tischniowa</span></a></span><span>,</span>
-                                                  <span itemprop="datePublished">14 November
-                                                  1489</span></span></i></span></span></p>
-                                <p class="bibliography"><span><span><span>2°, [1224] p. Double
-                                                columns, 50 lines each. 50 hand-colored woodcuts
-                                                with silver. Book initials in two and three colors
-                                                and chapter initials and paragraph marks in red or
-                                                blue; initials in yellow. Missing initial blank and
-                                                83 printed leaves; several leaves have loss of text,
-                                                others with repairs and minor restoration. Eight
-                                                leaves with 18th-century or later marginalia in
-                                                Latin; three leaves with modern marginalia in Czech.
-                                                </span><span>Bound in modern full brown morocco,
-                                                blind-stamped to resemble 15th-century Viennese
-                                                bindings; rebacked; front hinge cracked, front cover
-                                                cracked down the middle; one brass clasp surviving.
-                                            </span></span></span></p>
-                                <div id="w4ab3b3b3b7" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <p class="bibliography"><span>The text of the 1489 Biblia
-                                                Bohemica follows that of the 1488 Prague Bible
-                                                translated and revised by <span><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="Hus was a Czech priest, philosopher, reformer, and master at Charles University in Prague. He is also considered one of the first Church reformers.">
-                                                  <span data-ed-ref="j_hus">Jan
-                                                  Hus</span></a></span> and his followers, with
-                                                corrections and amended orthography, and the
-                                                addition of the Epistle to the Laodiceans. The
-                                                additional woodcut illustrations are hand-colored
-                                                and were strongly influenced by the illustrations of
-                                                the <span><span data-ed-ref="cologne"
-                                                  >Cologne</span></span> Bible of 1478, or possibly
-                                                they were taken from bibles produced in <span><span
-                                                  data-ed-ref="cologne">Cologne</span></span> during
-                                                the late 1470's. This is the first Czech illustrated
-                                                bible. This work represents one of only two works
-                                                printed in <span><span data-ed-ref="kuttenberg"
-                                                  >Kuttenberg</span></span> in the 15th century and
-                                                the only printer known to have worked there,
-                                                  <span><span data-ed-ref="m_tischniowa">Martin of
-                                                  Tischniova</span></span>. The book concludes with
-                                                a large printer's device of a crowned W, for
-                                                  <span><a href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Also known as Vladislaus II of Hungary, he was King of Bohemia from 1471 to 1490 and King of Hungary from 1490 to 1516.">
-                                                  <span data-ed-ref="k_wladislaw">King
-                                                  Wladislaw</span></a></span> of Bohemia, above the
-                                                arms of <span><span data-ed-ref="kuttenberg"
-                                                  >Kuttenberg</span></span> supported by two miners.
-                                                The device was possibly a token of debt to the Town
-                                                Council, from whom the printer borrowed a large sum
-                                                in order to complete the work. </span></p>
-                                        <p class="bibliography"><span>References:</span>
-                                            <span><span>BM 15th cent., III, p. 816
-                                                  (IB.51804)</span><span>;</span>
-                                                <span>Darlow &amp; Moule, 2178</span><span>;</span>
-                                                <span>The Bible at the Lilly</span><span>;</span>
-                                                <span>Pet Stoleti</span></span></p>
-                                        <p class="bibliography"><span><span>BS220 .C9
-                                                1489</span></span><span>   </span><span>1)
-                                                  <span>Vault</span></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="entry" data-date="1535-01-01" data-author="MACIEJ, Z. of Miechowa."
-                        data-src-index="4" itemtype="http://schema.org/CreativeWork">
-                        <div class="panel-group" id="w4ab3b3b3b9-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="bibliography panel-title accordion-toggle collapsed"
-                                        data-toggle="collapse" data-target="#w4ab3b3b3b9"
-                                        data-parent="#w4ab3b3b3b9-group"><span>Health and
-                                            Nutrition</span></h2>
-                                </div>
-                                <p class="bibliography"><span><span><span itemprop="author"
-                                                  ><span><span data-ed-ref="z_maciej">MACIEJ, Z. of
-                                                  Miechowa.</span></span></span><span>.</span>
-                                            <span itemprop="name">[Conservatio sanitatis] Editio
-                                                venerabilis D. Mathie de Miechow artivm et medicinae
-                                                doctoris eximij. Canonici Cracouien. &amp; c. Pro
-                                                conseruanda hominum sanitate familiarissimo collecta
-                                                stilbo</span><span>.</span>
-                                            <i><span><span itemtype="http://schema.org/Place"
-                                                  itemprop="name"><span><span data-ed-ref="krakow"
-                                                  >Krakow</span></span></span><span>,</span>
-                                                  <span itemprop="publisher"><span
-                                                  data-ed-ref="matthias_scharffenberg">Mathias
-                                                  Scharffenberg</span></span><span>,</span>
-                                                  <span itemprop="datePublished"
-                                                >1535</span></span></i></span></span></p>
-                                <p class="bibliography"><span><span>Contents: Tractatus I. De aere
-                                            -- Tractatus II. De pane et panificis et quibusdam
-                                            commestibilibus -- Tractatus III. De vino et potibus --
-                                            Tractatus de aqua. </span><span><span>12°, [136] p. Fore
-                                                edge close trimmed, affecting some side notes and
-                                                early handwritten annotations. </span><span>Bound in
-                                                modern vellum, black leather labels on gilt spine,
-                                                edges gilt. </span></span><span><span>Bookplate of
-                                                  <span><a href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Gernon was a book collector who donated 1500 cookbooks to the Lilly Library; these books were published throughout Europe as early as the 15th-century.">
-                                                  <span data-ed-ref="jt_gernon">John Talbot
-                                                  Gernon</span></a></span></span><span>.</span>
-                                            <span><span><span data-ed-ref="jt_gernon">John Talbot
-                                                  Gernon</span></span>, a well-known collector of
-                                                books on gastronomy and the culinary arts, began
-                                                collecting in 1940 and by 1970s assembled one of the
-                                                most important collections of cookbooks from the
-                                                16th through the 18th centuries. The Lilly acquired
-                                                the Gernon collection in
-                                    1979.</span></span></span></p>
-                                <div id="w4ab3b3b3b9" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <p class="bibliography"><span>First edition of a rare book
-                                                on health and nutrition by the Polish Renaissance
-                                                scholar <span><span data-ed-ref="mz_miechowa">Maciej
-                                                  Z Miechowa</span></span> (1457-1523) in which he
-                                                discusses food and wine and their effects on health.
-                                                  <span><span data-ed-ref="mz_miechowa"
-                                                  >Maciej</span></span> also addresses medicinal
-                                                uses for food and wine, in particular the benefits
-                                                of a wine derived from absinthe that miraculously
-                                                relieves pain, restores appetite, and works as a
-                                                cure for epilepsy. <span><span
-                                                  data-ed-ref="mz_miechowa">Maciej</span></span> was
-                                                the physician to the kings of Poland and Hungary, as
-                                                well as the founder of several colleges and
-                                                libraries, and is most known for his Chronica
-                                                Polonorum, a valuable history of Poland, and his
-                                                Tractatus de duabus Sarmatiis, considered the first
-                                                accurate geographical and ethnographical description
-                                                of Eastern Europe. </span></p>
-                                        <p class="bibliography"><span>References:</span>
-                                            <span><span>Oberlé, G. Fastes de Bacchus et de Comus,
-                                                  323(2)</span><span>;</span>
-                                                <span>Cagle, W.R. Matter of taste (2nd ed.),
-                                                  1202</span><span>;</span>
-                                                <span>Harrison, Une Affaire de
-                                            Gout</span></span></p>
-                                        <p class="bibliography"><span><span>R128.6 .M15
-                                                1535</span></span><span>   </span><span>1)
-                                                  <span>John Talbot Gernon</span></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="entry" data-date="1577-01-01" data-author="" data-src-index="5"
-                        itemtype="http://schema.org/CreativeWork">
-                        <div class="panel-group" id="w4ab3b3b3c11-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="bibliography panel-title accordion-toggle collapsed"
-                                        data-toggle="collapse" data-target="#w4ab3b3b3c11"
-                                        data-parent="#w4ab3b3b3c11-group"><span>Biblia
-                                            Leopolity</span></h2>
-                                </div>
-                                <p class="bibliography"><span><span><span itemprop="name">[BIBLE.
-                                                POLISH.] Biblia, to iest, Kxieęgi Stharego y Nowego
-                                                Zakonu: ná Polski ięzyk: z pilnośćią według
-                                                jáćińskiego powssechnego przyięthey, nowo
-                                                wyłożona....</span><span>.</span>
-                                            <i><span><span itemtype="http://schema.org/Place"
-                                                  itemprop="name"><span><span data-ed-ref="krakow"
-                                                  >Krakovie</span></span></span><span>,</span>
-                                                  <span itemprop="publisher"><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="Father of Stanislawa Scharffenberg."
-                                                  ><span data-ed-ref="marcus_scharffenberg">M.
-                                                  Szarffenberg</span></a></span><span>,</span>
-                                                  <span itemprop="datePublished"
-                                                >1577</span></span></i></span></span></p>
-                                <p class="bibliography"><span><span><span>2°, [1228] p. Title page
-                                                printed in red and black with woodcut border, large
-                                                coat of arms on verso. Verso of Old Testament
-                                                contents page has large woodcut depicting creation.
-                                                New Testament has separate title page printed in red
-                                                and black with woodcut border. Historiated initials,
-                                                numerous woodcuts. </span><span>Bound in full brown
-                                                calf over boards. </span></span></span></p>
-                                <div id="w4ab3b3b3c11" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <p class="bibliography"><span>A reprint of the Biblia
-                                                Leopolity originally printed in 1561 by <span><span
-                                                  data-ed-ref="marcus_szarffenberg">Marek
-                                                  Szarffenberg</span></span> and son <span><a
-                                                  href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Son of Marek (Marcus) Szarffenberg."
-                                                  ><span data-ed-ref="s_scharffenberg"
-                                                  >Stanisława</span></a></span>, sometimes called
-                                                the Biblia Szarffenbergowska. Although its origins
-                                                are obscure, this version of the Bible is thought to
-                                                have been translated from the Vulgate by an unknown
-                                                translator, but speculation has focused on the
-                                                  <span><a href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Confessor of King Zigmunt II August I (1520-1572), King of Poland and Grand Duke of Lithuania.">
-                                                  <span data-ed-ref="f_leonard">Dominican friar
-                                                  Leonard</span></a></span>. <span><span
-                                                  data-ed-ref="f_leonard">Leonard</span></span> was
-                                                the confessor of <span><span data-ed-ref="">Zygmunt
-                                                  II August I</span></span> (1520-1572), King of
-                                                Poland and Grand Duke of Lithuania, to whom the
-                                                translation is dedicated. Prepared and corrected by
-                                                  <span><a href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Translated the Bible from the Vulgate. The name Biblia Leopolity comes from his name (Jan Nicz of Lwow or Jan Leopolita).">
-                                                  <span data-ed-ref="j_nicz">Jan
-                                                  Nicz</span></a></span> of <span><span
-                                                  data-ed-ref="">Lwow (or Leopolita)</span></span>,
-                                                this was the first Catholic version as well as the
-                                                first complete printing of a Polish language Bible.
-                                            </span></p>
-                                        <p class="bibliography"><span>References:</span>
-                                            <span><span>Darlow &amp; Moule,
-                                                  7383</span><span>;</span>
-                                                <span>Silver, The Bible in the Lilly
-                                                Library</span></span></p>
-                                        <p class="bibliography"><span><span>[call number not
-                                                  listed]</span></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="entry" data-date="1579-01-01" data-author="" data-src-index="6"
-                        itemtype="http://schema.org/CreativeWork">
-                        <div class="panel-group" id="w4ab3b3b3c13-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="bibliography panel-title accordion-toggle collapsed"
-                                        data-toggle="collapse" data-target="#w4ab3b3b3c13"
-                                        data-parent="#w4ab3b3b3c13-group"><span>Kralitz
-                                        Bible</span></h2>
-                                </div>
-                                <p class="bibliography"><span><span><span itemprop="name">[BIBLE.
-                                                CZECH.] Biblj české. V nowé
-                                                wydané</span><span>.</span>
-                                            <i><span><span itemtype="http://schema.org/Place"
-                                                  itemprop="name"><span><span data-ed-ref="kralice"
-                                                  >Kralice</span></span></span><span>,</span>
-                                                  <span itemprop="publisher"><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="Printed the Kralitz Bible at the Kralice Castle with funding from John von Zerotin.">
-                                                  <span data-ed-ref="z_solin">Z.
-                                                  Solín</span></a></span><span>,</span>
-                                                  <span itemprop="datePublished"
-                                                  >1579-1601</span></span></i></span></span></p>
-                                <p class="bibliography"><span><span><span>6 volumes, 4°, [2214]
-                                                leaves. Title pages have decorative woodcut border
-                                                of fruit, lamb in crown of thorn at top and face of
-                                                puti at bottom. Title pages of volumes 2, 6 in
-                                                facsimile. </span><span>Half bound in black calf,
-                                                black cloth, spine lettered in gilt, red edges.
-                                            </span></span></span></p>
-                                <div id="w4ab3b3b3c13" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <p class="bibliography"><span>The first edition of the
-                                                Unitas Fratrum (later, the Moravian Church) version
-                                                of the Bible, known as the Kralitz Bible. Translated
-                                                into Czech from the original languages, the
-                                                translators worked from the Antwerp Polyglot bible,
-                                                as well as existing Latin commentaries. The Bible
-                                                was printed at the <span><span data-ed-ref="kralice"
-                                                  >Kralice Castle</span></span> by the printer
-                                                  <span><span data-ed-ref="z_solin">Zacharius
-                                                  Solin</span></span>, and funded by <span><a
-                                                  href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Baron and owner of Kralice Castle."
-                                                  ><span data-ed-ref="j_vzerotin">John von
-                                                  Zerotin</span></a></span>, an influential baron
-                                                and owner of the <span><span data-ed-ref="kralice"
-                                                  >castle</span></span>. This version marks the
-                                                first time the apocrypha and canonical books are
-                                                separated in a Bohemian bible. With prefaces,
-                                                summaries, marginal annotations, references, tables,
-                                                and commentaries. This celebrated translation became
-                                                the model for classical Czech and at the same time a
-                                                highlight of Czech typography. </span></p>
-                                        <p class="bibliography"><span>References:</span>
-                                            <span><span>Darlow &amp; Moule,
-                                                  2186</span><span>;</span>
-                                                <span>Silver, The Bible in the Lilly
-                                                Library</span></span></p>
-                                        <p class="bibliography"><span><span>BS220
-                                            .C9</span></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="entry" data-date="1581-01-01" data-author="" data-src-index="7"
-                        itemtype="http://schema.org/CreativeWork">
-                        <div class="panel-group" id="w4ab3b3b3c15-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="bibliography panel-title accordion-toggle collapsed"
-                                        data-toggle="collapse" data-target="#w4ab3b3b3c15"
-                                        data-parent="#w4ab3b3b3c15-group"><span>Ostrih
-                                        Bible</span></h2>
-                                </div>
-                                <p class="bibliography"><span><span><span itemprop="name">[BIBLE.
-                                                CHURCH SLAVONIC.] Biblia sirech knigy vetkhago i
-                                                novago zaveta poiazyku
-                                                slovensku</span><span>.</span>
-                                            <i><span><span itemtype="http://schema.org/Place"
-                                                  itemprop="name"><span><span data-ed-ref="ostrog"
-                                                  >Ostrog</span></span></span><span>,</span>
-                                                  <span itemprop="publisher"><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="His last name is also spelled Fedorov. He is considered one of the father's of Russian and Ukrainian printing.">
-                                                  <span data-ed-ref="i_federov">Ivan
-                                                  Federov</span></a></span><span>,</span>
-                                                  <span itemprop="datePublished"
-                                                >1581</span></span></i></span></span></p>
-                                <p class="bibliography"><span><span><span>2°, [628] leaves. Double
-                                                columns, t.p. with architectural border. Woodcuts:
-                                                Coat of arms of <span><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="Prince of Lithuania and founder of the Ostrog community. He was a controversial figure who approached the religious problems of the period pragmatically, rather than theologically.">
-                                                  <span data-ed-ref="k_ostrozhskii">Konstantine
-                                                  Ostrozhskii</span></a></span>, printer's mark (in
-                                                colophon), head- and tailpieces. A brief note in the
-                                                form of a prayer by <span><span
-                                                  data-ed-ref="i_federov">Ivan Fedorov</span></span>
-                                                precedes the colophon. Part of the preface,
-                                                  <span><span data-ed-ref="i_federov"
-                                                  >Fedorov</span></span>'s note and the colophon are
-                                                printed in Greek and Church Slavic. Printed in red
-                                                and black, without signatures, imprint date and
-                                                foliation expressed in Church Slavic characters.
-                                                </span><span>Bound in sheep leather with metal
-                                                fore-edge clasps. </span><span>In a green cloth
-                                                box.</span></span></span></p>
-                                <div id="w4ab3b3b3c15" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <p class="bibliography"><span>First edition of the Ostrih
-                                                Bible printed in 1581 at <span><span
-                                                  data-ed-ref="ostrog">Ostrog</span></span>, Poland
-                                                by <span><span data-ed-ref="i_federov">Ivan
-                                                  Federov</span></span> (d. 1583). Also called the
-                                                ‘Slavonic Gutenberg,’ it is the first complete
-                                                printed Bible in Church Slavonic. In 1575,
-                                                  <span><span data-ed-ref="i_federov"
-                                                  >Federov</span></span>, one of the fathers of
-                                                Russian and Ukrainian printing, was placed in charge
-                                                of the Derman Monastery by <span><span
-                                                  data-ed-ref="k_ostrozhskii">Prince Konstantine
-                                                  Ostrozhskii</span></span>, where he established
-                                                the Ostrih Press. Here, <span>Federov</span>
-                                                published his Ostrih Bible among other books.
-                                            </span></p>
-                                        <p class="bibliography"><span>References:</span>
-                                            <span><span>Darlow &amp; Moule, 8370</span></span></p>
-                                        <p class="bibliography"><span><span>BS110
-                                                1581</span></span><span>   </span><span>1)
-                                                  <span>Vault</span></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="entry" data-date="1691-01-01" data-author="CHRYSOTOM, John, Saint."
-                        data-src-index="8" itemtype="http://schema.org/CreativeWork">
-                        <div class="panel-group" id="w4ab3b3b3c17-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h2 class="bibliography panel-title accordion-toggle collapsed"
-                                        data-toggle="collapse" data-target="#w4ab3b3b3c17"
-                                        data-parent="#w4ab3b3b3c17-group"><span>Pearls</span></h2>
-                                </div>
-                                <p class="bibliography"><span><span><span itemprop="author"
-                                                  ><span><span data-ed-ref="j_chrysotom">CHRYSOTOM,
-                                                  John, Saint.</span></span></span><span>.</span>
-                                            <span itemprop="name">Margaritare, a deka kuvinte de
-                                                multe fieliuri a chelui atru sfintsi parintelui
-                                                nostru Ioan Arkhiepiskopul charigradului a lui
-                                                Zlatoust.</span><span>.</span>
-                                            <i><span><span itemtype="http://schema.org/Place"
-                                                  itemprop="name"><span><span
-                                                  data-ed-ref="bucharest"
-                                                  >Bucharest</span></span></span><span>,</span>
-                                                  <span itemprop="publisher"
-                                                  >[s.n.]</span><span>,</span>
-                                                  <span itemprop="datePublished"
-                                                >1691</span></span></i></span></span></p>
-                                <p class="bibliography"><span><span><span>2°, [184] leaves. Signed
-                                                in 45 Cyrillic characters of Church Slavic.
-                                                </span><span>Bound in contemporary calf leather,
-                                                tooled and blind stamped, one clasp surviving.
-                                            </span></span></span></p>
-                                <div id="w4ab3b3b3c17" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <p class="bibliography"><span>Margaritare, or Pearls, is an
-                                                anthology of the religious homilies of <span><span
-                                                  data-ed-ref="j_chrysotom">St. John
-                                                  Chrysostom</span></span>, the 4th century
-                                                Archbishop of <span><span
-                                                  data-ed-ref="constantinople"
-                                                  >Constantinople</span></span>, compiled by, and
-                                                possibly printed under the direction of the Romanian
-                                                  <span><a href="#" data-toggle="tooltip" title=""
-                                                  data-original-title="Anthimus was a Georgian theologian, scholar, calligrapher, philosopher, in addition to founder of the first printing press in Romania.">
-                                                  <span data-ed-ref="anthimus"
-                                                  >Anthimus</span></a></span> of Iberia. <span><span
-                                                  data-ed-ref="anthimus">Anthimus</span></span>, a
-                                                linguist, typographer, and writer, compiled the
-                                                Margaritare as a guide to living a Christian life.
-                                                This version of the anthology was translated into
-                                                Romanian by the brothers <span><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="With his brother Radul, he was responsible for the first complete translation of the Bible into Romanian.">
-                                                  <span data-ed-ref="s_grecenu"
-                                                  >Serban</span></a></span> and <span><a href="#"
-                                                  data-toggle="tooltip" title=""
-                                                  data-original-title="With his brother Serban, he was responsible for the first complete translation of the Bible into Romanian.">
-                                                  <span data-ed-ref="r_grecenu"
-                                                  >Radul</span></a></span> Grecénu, publishers of
-                                                first Romanian edition of the complete Bible (1688),
-                                                which is considered a monument of 17th century
-                                                Romanian literature for its elegant style and
-                                                diction. </span></p>
-                                        <p class="bibliography"><span>References:</span>
-                                            <span><span>Bianu, I., and Hodos, N. Bibliografia
-                                                  românésca veche 1508-1830, 91</span></span></p>
-                                        <p class="bibliography"><span><span>BR63 .M327
-                                                1691</span></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="footer"><span>Dawn Childress, 2014, University Park, PA</span> |
-                        <span>Published using the <a href="https://github.com/kirschbombe/openbibl"
-                            target="_blank">Open &lt;bibl&gt;</a> Project</span></div>
-            </div>
-        </div>
-        <!--[if lt IE 9]<>![endif]-->
-        <script data-main="../../../../../js/main.js" src="../../../../../js/lib/require-2.1.11.js"></script>
-        <script type="text/javascript" language="javascript" src="../../../../../js/lib/jquery-2.1.0.min.js"></script>
-        <script type="text/javascript" language="javascript" src="../../../../../js/lib/bootstrap-3.1.1.min.js"></script>
-        <script type="text/javascript" language="javascript" src="../../../../../js/lib/bootstrap-offcanvas-3.1.0.js"></script>
-        <script>
-window.obp={"appdir":"../../","bibliographies":{"xml":"http://localhost/~rnathanday/Developer/openbibl/examples/otherEurope/otherEurope.xml","xsl":"../../xsl/openbibl.xsl"},"saxonLoaded":true};
-window.obp.obpstate={"bibliographies":{"count":9,"xml":"http://localhost/~rnathanday/Developer/openbibl/examples/otherEurope/otherEurope.xml","xsl":"../../xsl/openbibl.xsl"}};
-window.obp.obpconfig={"debug":false,"paths":{"obp_root":"../../","template_dir":"../../js/templates","query_xsl":"../../xsl/openbibl.query.xsl"},"scroll_speed":200,"query":{"file":"obp.query.json"},"template_pattern":"{{(.+?)}}","typeahead":{"list_len":20}};
+<html xmlns:schema="http://schema.org" lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="description" content="openbibl bibliography">
+<meta name="author" content="TEI author">
+<link rel="shortcut icon" href="assets/ico/favicon.png">
+<link rel="stylesheet" type="text/css" id="theme-css" href="../../css/theme/clean.css">
+<title itemprop="name">Printing from the Other Europe: Central and East
+                    European Printing from 1484 to 1697 in the Lilly Library</title>
+</head>
+<body>
+<div id="obp-sidebar-offcanvas-sm" class="navmenu navmenu-default navmenu-fixed-left-offcanvas"><ul class="nav navmenu-nav obp-navmenu">
+
+<li class="obp-menu-li"><div class="panel panel-default">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".obp-theme-toggle">Theme</a></div>
+<div class="panel-collapse obp-theme-toggle collapse" style="height: 0px;"><div class="panel-body"><div class="obp-menu-panel-body"><form><table class="obp-control-tbl">
+<tbody><tr class="obp-control-tbl"><td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="clean.css" checked=""><span>Clean</span></label></td></tr>
+<tr class="obp-control-tbl"><td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="bookish.css"><span>Bookish</span></label></td></tr>
+<tr class="obp-control-tbl"><td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="fiche.css"><span>Fiche</span></label></td></tr>
+</tbody></table></form></div></div></div>
+</div></li>
+<li class="obp-menu-li"><div class="panel panel-default">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".obp-sort-toggle">Sort</a></div>
+<div class="panel-collapse collapse obp-sort-toggle"><div class="panel-body"><div class="obp-menu-panel-body"><form><table class="obp-control-tbl">
+<tbody><tr class="obp-control-tbl"><td><label><input type="radio" name="sort-form" class="obp-sort-input" data-sort-key="data-author" checked=""><span>Author</span></label></td></tr>
+<tr><td><label><input type="radio" name="sort-form" class="obp-sort-input" data-sort-key="data-date"><span>Date</span></label></td></tr>
+</tbody></table></form></div></div></div>
+</div></li>
+<li class="obp-menu-li"><div class="panel panel-default obp-search-panel">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".obp-search-toggle">Search</a></div>
+<div class="panel-collapse collapse obp-search-toggle"><div class="panel-body"><div class="obp-search-panel-body">
+<form><table class="obp-control-tbl"><tbody><tr class="obp-control-tbl">
+<td><label><input class="obp-filter-mode" type="radio" name="idp0" value="obp-filter-intersection" checked=""><span>all</span></label></td>
+<td><label><input class="obp-filter-mode" type="radio" name="idp0" value="obp-filter-union"><span>any</span></label></td>
+<td><button class="obp-search-clear btn btn-xs" type="submit">clear</button></td>
+</tr></tbody></table></form>
+<div class="nav-form"><form class="obp-search-form"><input autocomplete="off" class="search-input typeahead obp-search-panel-input" data-provide="typeahead" placeholder="Search" spellcheck="false" type="text"></form></div>
+<ul class="list-group obp-search-results-list"></ul>
+</div></div></div>
+</div></li>
+<li class="obp-menu-li"><div class="panel panel-default obp-browse-list" data-ed-list="listPerson">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".idp105520">People</a></div>
+<div class="panel-collapse collapse idp105520"><div class="panel-body"><div class="obp-menu-panel-body">
+<form><table class="obp-control-tbl"><tbody><tr class="obp-control-tbl">
+<td><label><input class="obp-filter-mode" type="radio" name="idp105520" value="obp-filter-intersection" checked=""><span>all</span></label></td>
+<td><label><input class="obp-filter-mode" type="radio" name="idp105520" value="obp-filter-union"><span>any</span></label></td>
+<td><button class="obp-browse-clear btn btn-xs" type="submit">clear</button></td>
+</tr></tbody></table></form>
+<div class="obp-menu-panel-checkboxes">
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="a_magnus"><span class="obp-browse-item">Albertus, Magnus,
+                            Saint (–1280)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_alakraw"><span class="obp-browse-item">Alakraw, Johann (1400–1492)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="c_stahel"><span class="obp-browse-item">Stahel, Conrad (1450–1491)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="b_mayr"><span class="obp-browse-item">Mayir, Benedictus (1400–1400)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_severyn"><span class="obp-browse-item">Severyn, Jan (1400–1544)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_hus"><span class="obp-browse-item">Hus, Jan (1372–1415)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="mathias_scharffenberg"><span class="obp-browse-item">Scharffenberg, Mathias (–1547)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_lupac"><span class="obp-browse-item">Lupac, Martin (1400–1468)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_hevelius"><span class="obp-browse-item">Hevelius, Johannes (1611–1687)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="a_hünefeldianis"><span class="obp-browse-item">Hünefeldianis, Andreas (1581–1666)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="f_faber"><span class="obp-browse-item">Faber, Ferdinand (1784–1866)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="sv_hoffmann"><span class="obp-browse-item">Hoffmann, Samuel Verplank (1802–1880)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_tischniowa"><span class="obp-browse-item">Martin of Tischniowa (1400–1400)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="k_wladislaw"><span class="obp-browse-item">King Wladislaw of Bohemia (1456–1516)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="jt_gernon"><span class="obp-browse-item">Gernon, John Talbot (1800–1900)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_miechowa"><span class="obp-browse-item">Maciej Miechowa (1457–1523)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="s_scharffenberg"><span class="obp-browse-item">Scharffenberg, Stanislawa (1500–1584)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="marcus_scharffenberg"><span class="obp-browse-item">Scharffenberg, Marcus (1490–1545)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="f_leonard"><span class="obp-browse-item">Leonard (1500–1500)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="sigismund"><span class="obp-browse-item">Sigismund (Zigmunt) II Augustus I (1520–1572)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_nicz"><span class="obp-browse-item">Jan Nicz (1523–1572)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="z_solin"><span class="obp-browse-item">Solin, Zacharius (1500–1500)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_vzerotin"><span class="obp-browse-item">von Zerotin, John (1500–1587)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="k_ostrozhskii"><span class="obp-browse-item">Ostrozhskii, Konstantine (1460–1530)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="i_federov"><span class="obp-browse-item">Federov, Ivan (1510–1583)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_chrysostom"><span class="obp-browse-item">Chrysostom, John (0347–0407)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="anthimus"><span class="obp-browse-item">Anthimus of Iberia (1650–1716)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="s_grecenu"><span class="obp-browse-item">Grecénu, Serban (1500–1500)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="r_grecenu"><span class="obp-browse-item">Grecénu, Radul (1500–1500)</span></label></div>
+</div>
+</div></div></div>
+</div></li>
+<li class="obp-menu-li"><div class="panel panel-default obp-browse-list" data-ed-list="listPlace">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".idm176768">Places</a></div>
+<div class="panel-collapse collapse idm176768"><div class="panel-body"><div class="obp-menu-panel-body">
+<form><table class="obp-control-tbl"><tbody><tr class="obp-control-tbl">
+<td><label><input class="obp-filter-mode" type="radio" name="idm176768" value="obp-filter-intersection" checked=""><span>all</span></label></td>
+<td><label><input class="obp-filter-mode" type="radio" name="idm176768" value="obp-filter-union"><span>any</span></label></td>
+<td><button class="obp-browse-clear btn btn-xs" type="submit">clear</button></td>
+</tr></tbody></table></form>
+<div class="obp-menu-panel-checkboxes">
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="winterberg"><span class="obp-browse-item">Winterberg, Germany</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="prague"><span class="obp-browse-item">Prague</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="gdansk"><span class="obp-browse-item">Gdansk, Poland</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="kuttenberg"><span class="obp-browse-item">Kuttenberg (Kutná Hora), Bohemia</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="krakow"><span class="obp-browse-item">Krakow, Poland</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="kralice"><span class="obp-browse-item">Kralice, Bohemia</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="ostrog"><span class="obp-browse-item">Ostroh, Ukraine</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="bucharest"><span class="obp-browse-item">Bucharest, Romania</span></label></div>
+</div>
+</div></div></div>
+</div></li>
+</ul></div>
+<div class="container">
+<nav class="navbar navbar-default navbar-collapse navbar-fixed-top"><div class="visible-sm visible-xs"><button type="button" class="navbar-toggle" data-autohide="true" data-canvas="body" data-recalc="true" data-target="#obp-sidebar-offcanvas-sm" data-toggle="offcanvas"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div></nav><div class="visible-md visible-lg"><nav class="navmenu navmenu-default navmenu-fixed-left" role="navigation"><ul class="nav navmenu-nav obp-navmenu">
+
+<li class="obp-menu-li"><div class="panel panel-default">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".obp-theme-toggle" class="collapsed">Theme</a></div>
+<div class="panel-collapse obp-theme-toggle collapse" style="height: 0px;"><div class="panel-body"><div class="obp-menu-panel-body"><form><table class="obp-control-tbl">
+<tbody><tr class="obp-control-tbl"><td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="clean.css" checked=""><span>Clean</span></label></td></tr>
+<tr class="obp-control-tbl"><td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="bookish.css"><span>Bookish</span></label></td></tr>
+<tr class="obp-control-tbl"><td><label><input type="radio" name="theme-form" class="obp-theme-input" data-stylesheet-file="fiche.css"><span>Fiche</span></label></td></tr>
+</tbody></table></form></div></div></div>
+</div></li>
+<li class="obp-menu-li"><div class="panel panel-default">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".obp-sort-toggle">Sort</a></div>
+<div class="panel-collapse collapse obp-sort-toggle"><div class="panel-body"><div class="obp-menu-panel-body"><form><table class="obp-control-tbl">
+<tbody><tr class="obp-control-tbl"><td><label><input type="radio" name="sort-form" class="obp-sort-input" data-sort-key="data-author" checked=""><span>Author</span></label></td></tr>
+<tr><td><label><input type="radio" name="sort-form" class="obp-sort-input" data-sort-key="data-date"><span>Date</span></label></td></tr>
+</tbody></table></form></div></div></div>
+</div></li>
+<li class="obp-menu-li"><div class="panel panel-default obp-search-panel">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".obp-search-toggle">Search</a></div>
+<div class="panel-collapse collapse obp-search-toggle"><div class="panel-body"><div class="obp-search-panel-body">
+<form><table class="obp-control-tbl"><tbody><tr class="obp-control-tbl">
+<td><label><input class="obp-filter-mode" type="radio" name="idp0" value="obp-filter-intersection" checked=""><span>all</span></label></td>
+<td><label><input class="obp-filter-mode" type="radio" name="idp0" value="obp-filter-union"><span>any</span></label></td>
+<td><button class="obp-search-clear btn btn-xs" type="submit">clear</button></td>
+</tr></tbody></table></form>
+<div class="nav-form"><form class="obp-search-form"><input autocomplete="off" class="search-input typeahead obp-search-panel-input" data-provide="typeahead" placeholder="Search" spellcheck="false" type="text"></form></div>
+<ul class="list-group obp-search-results-list"></ul>
+</div></div></div>
+</div></li>
+<li class="obp-menu-li"><div class="panel panel-default obp-browse-list" data-ed-list="listPerson">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".idp105520">People</a></div>
+<div class="panel-collapse collapse idp105520"><div class="panel-body"><div class="obp-menu-panel-body">
+<form><table class="obp-control-tbl"><tbody><tr class="obp-control-tbl">
+<td><label><input class="obp-filter-mode" type="radio" name="idp105520" value="obp-filter-intersection" checked=""><span>all</span></label></td>
+<td><label><input class="obp-filter-mode" type="radio" name="idp105520" value="obp-filter-union"><span>any</span></label></td>
+<td><button class="obp-browse-clear btn btn-xs" type="submit">clear</button></td>
+</tr></tbody></table></form>
+<div class="obp-menu-panel-checkboxes">
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="a_magnus"><span class="obp-browse-item">Albertus, Magnus,
+                            Saint (–1280)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_alakraw"><span class="obp-browse-item">Alakraw, Johann (1400–1492)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="c_stahel"><span class="obp-browse-item">Stahel, Conrad (1450–1491)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="b_mayr"><span class="obp-browse-item">Mayir, Benedictus (1400–1400)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_severyn"><span class="obp-browse-item">Severyn, Jan (1400–1544)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_hus"><span class="obp-browse-item">Hus, Jan (1372–1415)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="mathias_scharffenberg"><span class="obp-browse-item">Scharffenberg, Mathias (–1547)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_lupac"><span class="obp-browse-item">Lupac, Martin (1400–1468)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_hevelius"><span class="obp-browse-item">Hevelius, Johannes (1611–1687)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="a_hünefeldianis"><span class="obp-browse-item">Hünefeldianis, Andreas (1581–1666)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="f_faber"><span class="obp-browse-item">Faber, Ferdinand (1784–1866)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="sv_hoffmann"><span class="obp-browse-item">Hoffmann, Samuel Verplank (1802–1880)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_tischniowa"><span class="obp-browse-item">Martin of Tischniowa (1400–1400)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="k_wladislaw"><span class="obp-browse-item">King Wladislaw of Bohemia (1456–1516)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="jt_gernon"><span class="obp-browse-item">Gernon, John Talbot (1800–1900)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="m_miechowa"><span class="obp-browse-item">Maciej Miechowa (1457–1523)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="s_scharffenberg"><span class="obp-browse-item">Scharffenberg, Stanislawa (1500–1584)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="marcus_scharffenberg"><span class="obp-browse-item">Scharffenberg, Marcus (1490–1545)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="f_leonard"><span class="obp-browse-item">Leonard (1500–1500)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="sigismund"><span class="obp-browse-item">Sigismund (Zigmunt) II Augustus I (1520–1572)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_nicz"><span class="obp-browse-item">Jan Nicz (1523–1572)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="z_solin"><span class="obp-browse-item">Solin, Zacharius (1500–1500)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_vzerotin"><span class="obp-browse-item">von Zerotin, John (1500–1587)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="k_ostrozhskii"><span class="obp-browse-item">Ostrozhskii, Konstantine (1460–1530)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="i_federov"><span class="obp-browse-item">Federov, Ivan (1510–1583)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="j_chrysostom"><span class="obp-browse-item">Chrysostom, John (0347–0407)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="anthimus"><span class="obp-browse-item">Anthimus of Iberia (1650–1716)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="s_grecenu"><span class="obp-browse-item">Grecénu, Serban (1500–1500)</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="r_grecenu"><span class="obp-browse-item">Grecénu, Radul (1500–1500)</span></label></div>
+</div>
+</div></div></div>
+</div></li>
+<li class="obp-menu-li"><div class="panel panel-default obp-browse-list" data-ed-list="listPlace">
+<div class="panel-heading"><a data-toggle="collapse" data-target=".idm176768">Places</a></div>
+<div class="panel-collapse collapse idm176768"><div class="panel-body"><div class="obp-menu-panel-body">
+<form><table class="obp-control-tbl"><tbody><tr class="obp-control-tbl">
+<td><label><input class="obp-filter-mode" type="radio" name="idm176768" value="obp-filter-intersection" checked=""><span>all</span></label></td>
+<td><label><input class="obp-filter-mode" type="radio" name="idm176768" value="obp-filter-union"><span>any</span></label></td>
+<td><button class="obp-browse-clear btn btn-xs" type="submit">clear</button></td>
+</tr></tbody></table></form>
+<div class="obp-menu-panel-checkboxes">
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="winterberg"><span class="obp-browse-item">Winterberg, Germany</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="prague"><span class="obp-browse-item">Prague</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="gdansk"><span class="obp-browse-item">Gdansk, Poland</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="kuttenberg"><span class="obp-browse-item">Kuttenberg (Kutná Hora), Bohemia</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="krakow"><span class="obp-browse-item">Krakow, Poland</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="kralice"><span class="obp-browse-item">Kralice, Bohemia</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="ostrog"><span class="obp-browse-item">Ostroh, Ukraine</span></label></div>
+<div class="checkbox"><label class="browse-label"><input type="checkbox" class="obp-browse-checkbox" data-browse-item="bucharest"><span class="obp-browse-item">Bucharest, Romania</span></label></div>
+</div>
+</div></div></div>
+</div></li>
+</ul></nav></div>
+<div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+<div id="bibliographies" class="bibliographies">
+<h1 class="bibliographies">Printing from the Other Europe: Central and East
+                    European Printing from 1484 to 1697 in the Lilly Library</h1>
+<hr id="asterism-rule">
+<div id="asterism"></div>
+<ul id="toc" class="toc">
+
+
+
+
+
+
+
+
+
+<li class="toc" data-src-index="0" style="display: list-item;">
+<span class="leader"><a class="toc-click" data-src-index="0">Holy Communion</a></span><span>ALBERTUS, Magnus,
+                                Saint</span>
+</li><li class="toc" data-src-index="1" style="display: list-item;">
+<span class="leader"><a class="toc-click" data-src-index="1">The Prague Bible</a></span><span>[UNKNOWN]</span>
+</li><li class="toc" data-src-index="2" style="display: list-item;">
+<span class="leader"><a class="toc-click" data-src-index="2">Selenographia</a></span><span>HEVELIUS, Johannes</span>
+</li><li class="toc" data-src-index="3" style="display: list-item;">
+<span class="leader"><a class="toc-click" data-src-index="3">Biblia Bohemica</a></span><span>[UNKNOWN]</span>
+</li><li class="toc" data-src-index="4" style="display: list-item;">
+<span class="leader"><a class="toc-click" data-src-index="4">Health and Nutrition</a></span><span>MACIEJ, Z. of Miechowa.</span>
+</li><li class="toc" data-src-index="5" style="display: list-item;">
+<span class="leader"><a class="toc-click" data-src-index="5">Biblia Leopolity</a></span><span>[UNKNOWN]</span>
+</li><li class="toc" data-src-index="6" style="display: list-item;">
+<span class="leader"><a class="toc-click" data-src-index="6">Kralitz Bible</a></span><span>[UNKNOWN]</span>
+</li><li class="toc" data-src-index="7" style="display: list-item;">
+<span class="leader"><a class="toc-click" data-src-index="7">Ostrih Bible</a></span><span>[UNKNOWN]</span>
+</li><li class="toc" data-src-index="8" style="display: list-item;">
+<span class="leader"><a class="toc-click" data-src-index="8">Pearls</a></span><span>CHRYSOTOM, John, Saint.</span>
+</li></ul>
+<div class="entry" data-date="1484-10-16" data-author="ALBERTUS, Magnus, Saint" data-src-index="0" itemtype="http://schema.org/CreativeWork"><div class="panel-group" id="w2ab3b3b3b1-group"><div class="panel panel-default"><div class="panel-heading"><h2 class="bibliography panel-title accordion-toggle collapsed" data-toggle="collapse" data-target="#w2ab3b3b3b1" data-parent="#w2ab3b3b3b1-group"><span>Holy Communion</span></h2></div><p class="bibliography"><span><span><span itemprop="author"><span><span data-ed-ref="a_magnus" id="w2ab3b3b3b1b5b1b1a"><a id="w2ab3b3b3b1b5b1b1a-a" href="#" data-toggle="tooltip">ALBERTUS, Magnus,
+                                Saint</a></span></span></span><span>. </span><span itemprop="name">Summa de eucharistiae sacramento... [De
+                            corpore Domini]</span><span>. </span><span></span><span itemprop="editor"></span><span itemprop="contributor"><span></span><span></span></span><i><span><span itemtype="http://schema.org/Place" itemprop="name"><span><span data-ed-ref="winterberg" id="w2ab3b3b3b1b5b1c11b1a">Winterberg</span></span></span><span>, </span><span itemprop="publisher"><span data-ed-ref="j_alakraw" id="w2ab3b3b3b1b5b1c11b3a"><a id="w2ab3b3b3b1b5b1c11b3a-a" href="#" data-toggle="tooltip">Johann Alakraw</a></span></span><span>, </span><span></span><span itemprop="datePublished">16 Oct.
+                                1484</span></span></i></span></span></p><p class="bibliography"><span><span><span>2°, [220] p. Capital spaces, unfilled. First two leaves of the sixth
+                                gathering are supplied from another, shorter copy.<span> </span></span><span>Bound in 19th-century cloth-backed boards, marbled edges.<span> </span></span></span><span></span></span></p><div id="w2ab3b3b3b1" class="panel-collapse collapse"><div class="panel-body"><p class="bibliography"><span>Writings on the Eucharist by the Dominican friar and German philosopher
+                            <span><span data-ed-ref="a_magnus" id="w2ab3b3b3b1c11b1b1">Albertus Magnus</span></span> (1206-1280), also
+                        known as <span><span data-ed-ref="a_magnus" id="w2ab3b3b3b1c11b1b3">Saint Albert the Great</span></span>.
+                            <span><span data-ed-ref="a_magnus" id="w2ab3b3b3b1c11b1b5">Albertus</span></span> was one of the first
+                        medieval scholars to apply Aristotle’s philosophy to Christian thought. and
+                        was an advocate for the coexistence of science and religion. <span><span data-ed-ref="a_magnus" id="w2ab3b3b3b1c11b1b7">Albertus</span></span>’ Summa was a standard orthodox
+                        treatise on Holy Communion, and was likely important to the Czech Romanists
+                        in their conflict with the Utraquists. The Utraquists, a moderate faction of
+                        the Hussites, maintained the Eucharist should be administered to the people
+                        in both bread and wine, but wine was then reserved only for the priests.<span> </span><span><span data-ed-ref="winterberg" id="w2ab3b3b3b1c11b3a">Winterberg (Vimperk)</span></span>, a small town
+                        in the southwest near the Bavarian border, was the second Czech town with a
+                        printing press. The printer <span><span data-ed-ref="j_alakraw" id="w2ab3b3b3b1c11b3b2">Johannes
+                            Alakraw</span></span> produced only two books in Winterberg in 1484, one of
+                        which was the Summa. <span><span data-ed-ref="j_alakraw" id="w2ab3b3b3b1c11b3b4">Alakraw</span></span> worked
+                        previously in Passau with the printer <span><span data-ed-ref="k_stahel" id="w2ab3b3b3b1c11b3b6">Konrad
+                            Stahel</span></span> and with <span><span data-ed-ref="b_mayr" id="w2ab3b3b3b1c11b3b8"><a id="w2ab3b3b3b1c11b3b8-a" href="#" data-toggle="tooltip">Benedictus
+                            Mayr</a></span></span>, from whom he borrowed the unusual practice of signing
+                        his books by the sheet, with consecutive letters of the alphabet, rather
+                        than by the quire. In 1485 he returned to Passau where he printed until
+                        1492.<span> </span></span></p><p class="bibliography"><span>References: </span><span><span>BM 15th cent., III, p. 814 (IB.51603)</span><span>; </span><span>Pellechet, 294</span><span>; </span><span>Pet Stoleti</span></span></p><p class="bibliography"><span><span>BX2215.A33 S95 1484</span></span><span>   </span><span>1) <span>Vault</span></span></p></div></div></div></div></div><div class="entry" data-date="1488-08-01" data-author="" data-src-index="1" itemtype="http://schema.org/CreativeWork"><div class="panel-group" id="w2ab3b3b3b3-group"><div class="panel panel-default"><div class="panel-heading"><h2 class="bibliography panel-title accordion-toggle collapsed" data-toggle="collapse" data-target="#w2ab3b3b3b3" data-parent="#w2ab3b3b3b3-group"><span>The Prague Bible</span></h2></div><p class="bibliography"><span><span><span itemprop="author"></span><span itemprop="name">[BIBLE. CZECH.]</span><span>. </span><span></span><span itemprop="editor"></span><span itemprop="contributor"><span></span><span></span></span><i><span><span itemtype="http://schema.org/Place" itemprop="name"><span data-ed-ref="prague" id="w2ab3b3b3b3b5b1c11b1">Prague</span></span><span>, </span><span itemprop="publisher"><span data-ed-ref="j_kamp" id="w2ab3b3b3b3b5b1c11b3a">Jan Kamp</span> and <span data-ed-ref="j_severin" id="w2ab3b3b3b3b5b1c11b3b2">Jan
+                                Severyn</span></span><span>, </span><span></span><span itemprop="datePublished">August
+                                1488</span></span></i></span></span></p><p class="bibliography"><span><span><span>2°, [1220] p. Double columns, 46-47 lines each, rubricated in yellow
+                                and red, initials in red and blue, floral scroll illuminations at
+                                beginning of testaments. Color illustrations in margins.<span> </span></span><span>1619 binding, blind-stamped leather over boards, spine restored,
+                                bosses on four corners and middle of front and back covers, book
+                                clasps.<span> </span></span></span><span></span></span></p><div id="w2ab3b3b3b3" class="panel-collapse collapse"><div class="panel-body"><p class="bibliography"><span>Printed in Prague by the partners <span><span data-ed-ref="j_severin" id="w2ab3b3b3b3c11b1b1">Jan
+                            Severyn</span></span> and <span><span data-ed-ref="j_kamp" id="w2ab3b3b3b3c11b1b3">Jan Kamp</span></span>, this
+                        is the first printing of the complete Bible in the Czech language. The text
+                        is a translation from early texts into the Bohemian vernacular by unknown
+                        Czech scholars associated with the Hussite movement, and revised by
+                            <span><span data-ed-ref="j_hus" id="w2ab3b3b3b3c11b1b5"><a id="w2ab3b3b3b3c11b1b5-a" href="#" data-toggle="tooltip">Jan Hus</a></span></span>, <span><span data-ed-ref="m_lupac" id="w2ab3b3b3b3c11b1b7"><a id="w2ab3b3b3b3c11b1b7-a" href="#" data-toggle="tooltip">Martin Lupác</a></span></span>, and others. The Prague Bible has often been
+                        called the first Protestant Bible because of the connection with the
+                        Hussites, although there was an earlier printing in 1475 of the New
+                        Testament in Czech.<span> </span></span></p><p class="bibliography"><span>References: </span><span><span>BM 15th cent., III, 808 (IB.51405)</span><span>; </span><span>The Bible in the Lilly Library</span><span>; </span><span>Pet Stoleti</span><span>; </span><span>Darlow &amp; Moule</span></span></p><p class="bibliography"><span><span>BS220 .C9 1488</span></span><span>   </span><span>1) <span>Vault</span></span></p></div></div></div></div></div><div class="entry" data-date="1647-01-01" data-author="HEVELIUS, Johannes" data-src-index="2" itemtype="http://schema.org/CreativeWork"><div class="panel-group" id="w2ab3b3b3b5-group"><div class="panel panel-default"><div class="panel-heading"><h2 class="bibliography panel-title accordion-toggle collapsed" data-toggle="collapse" data-target="#w2ab3b3b3b5" data-parent="#w2ab3b3b3b5-group"><span>Selenographia</span></h2></div><p class="bibliography"><span><span><span itemprop="author"><span><span data-ed-ref="j_hevelius" id="w2ab3b3b3b5b5b1b1a"><a id="w2ab3b3b3b5b5b1b1a-a" href="#" data-toggle="tooltip">HEVELIUS, Johannes</a></span></span></span><span>. </span><span itemprop="name">Selenographia, sive, Lunae descriptio; atque
+                            accurata, tam macularum ejus, quam mottum diversorum, aliarumque omnium
+                            vicissitudinum, phasiumque, telescopii ope deprehensarum, delineatio :
+                            in quâsimul caeterorum omnium planetarum nativa facies, variaeque
+                            observationes ... sub aspectum ponuntur ... : Addita est, lentes
+                            expoliendi nova ratio...</span><span>. </span><span></span><span itemprop="editor"></span><span itemprop="contributor"><span></span><span></span></span><i><span><span itemtype="http://schema.org/Place" itemprop="name"><span><span data-ed-ref="gdansk" id="w2ab3b3b3b5b5b1c11b1a">Gdansk</span></span></span><span>, </span><span itemprop="publisher"><span data-ed-ref="Hünefeldianis" id="w2ab3b3b3b5b5b1c11b3a">Hünefeldianis</span></span><span>, </span><span></span><span itemprop="datePublished">1647</span></span></i></span></span></p><p class="bibliography"><span><span><span>2°, [593] p., 95 leaves of plates, with 3 double-page plates, 19
+                                leaves printed on both sides. Extra engraved title inserted after
+                                half-title.<span> </span></span><span>Bound in old vellum, handwritten title on spine<span>.</span><span> </span></span></span><span><span>Bookplates of <span><span data-ed-ref="f_faber" id="w2ab3b3b3b5b7b9b1b1"><a id="w2ab3b3b3b5b7b9b1b1-a" href="#" data-toggle="tooltip">Ferdinand
+                                Faber</a></span></span> and <span><span data-ed-ref="sv_hoffmann" id="w2ab3b3b3b5b7b9b1b3"><a id="w2ab3b3b3b5b7b9b1b3-a" href="#" data-toggle="tooltip">Samuel Verplanck
+                                Hoffman</a></span></span></span><span>. </span></span></span></p><div id="w2ab3b3b3b5" class="panel-collapse collapse"><div class="panel-body"><p class="bibliography"><span>The first detailed lunar atlas, depicting more than 200 lunar formations.
+                        With the invention of the telescope in the early 17th century, astronomers
+                        could map the planets and constellations just as cartographers were mapping
+                        the geography of the earth. As the closest object to the earth, the moon
+                        quickly became a favorite object of study for many astronomers. One of the
+                        greatest of these astronomers was <span><span data-ed-ref="j_hevelius" id="w2ab3b3b3b5c11b1b1">Jan
+                            Hevelius</span></span> (1611-1687), born in <span><span data-ed-ref="gdansk" id="w2ab3b3b3b5c11b1b3">Gdansk</span></span>. In Selenographia, <span><span data-ed-ref="j_hevelius" id="w2ab3b3b3b5c11b1b5">Hevelius</span></span> created an authoritative atlas and study of the
+                        moon derived from his own observations. <span><span data-ed-ref="j_hevelius" id="w2ab3b3b3b5c11b1b7">Hevelius</span></span> had one of the most well-equipped observatories in
+                        Europe, covering the rooftops of several buildings, complete with a
+                        revolving observation hut, telescopes and astronomical instruments which he
+                        made himself, and even a printing press to produce his copperplate
+                        engravings. The majority of plates were engraved by <span><span data-ed-ref="" id="w2ab3b3b3b5c11b1b9">Hevelius</span></span> in his observatory where he could
+                        produce the most detailed and accurate illustrations. The volume contains
+                        133 engraved plates depicting the moon and its phases, as well as
+                        illustrations of the instruments he created. This is perhaps <span><span data-ed-ref="j_hevelius" id="w2ab3b3b3b5c11b1c11">Hevelius</span></span>’ greatest work.<span> </span></span></p><p class="bibliography"><span>References: </span><span><span>NUC pre-1956, 244:266</span><span>; </span><span>BM, 103:256</span><span>; </span><span>Sotheran, Bibl. chem.-math., 1913</span></span></p><p class="bibliography"><span><span>QB595 .H596 1647</span></span><span>   </span><span>1) <span>Vault</span></span></p></div></div></div></div></div><div class="entry" data-date="1489-11-14" data-author="" data-src-index="3" itemtype="http://schema.org/CreativeWork"><div class="panel-group" id="w2ab3b3b3b7-group"><div class="panel panel-default"><div class="panel-heading"><h2 class="bibliography panel-title accordion-toggle collapsed" data-toggle="collapse" data-target="#w2ab3b3b3b7" data-parent="#w2ab3b3b3b7-group"><span>Biblia Bohemica</span></h2></div><p class="bibliography"><span><span><span itemprop="author"></span><span itemprop="name">[BIBLE. CZECH.]</span><span>. </span><span></span><span itemprop="editor"></span><span itemprop="contributor"><span></span><span></span></span><i><span><span itemtype="http://schema.org/Place" itemprop="name"><span><span data-ed-ref="kuttenberg" id="w2ab3b3b3b7b5b1c11b1a">Kuttenberg</span></span></span><span>, </span><span itemprop="publisher"><span data-ed-ref="m_tischniowa" id="w2ab3b3b3b7b5b1c11b3a"><a id="w2ab3b3b3b7b5b1c11b3a-a" href="#" data-toggle="tooltip">Martin of Tischniowa</a></span></span><span>, </span><span></span><span itemprop="datePublished">14 November
+                                1489</span></span></i></span></span></p><p class="bibliography"><span><span><span>2°, [1224] p. Double columns, 50 lines each. 50 hand-colored woodcuts
+                                with silver. Book initials in two and three colors and chapter
+                                initials and paragraph marks in red or blue; initials in yellow.
+                                Missing initial blank and 83 printed leaves; several leaves have
+                                loss of text, others with repairs and minor restoration. Eight
+                                leaves with 18th-century or later marginalia in Latin; three leaves
+                                with modern marginalia in Czech.<span> </span></span><span>Bound in modern full brown morocco, blind-stamped to resemble
+                                15th-century Viennese bindings; rebacked; front hinge cracked, front
+                                cover cracked down the middle; one brass clasp surviving.<span> </span></span></span><span></span></span></p><div id="w2ab3b3b3b7" class="panel-collapse collapse"><div class="panel-body"><p class="bibliography"><span>The text of the 1489 Biblia Bohemica follows that of the 1488 Prague Bible
+                        translated and revised by <span><span data-ed-ref="j_hus" id="w2ab3b3b3b7c11b1b1"><a id="w2ab3b3b3b7c11b1b1-a" href="#" data-toggle="tooltip">Jan Hus</a></span></span> and his
+                        followers, with corrections and amended orthography, and the addition of the
+                        Epistle to the Laodiceans. The additional woodcut illustrations are
+                        hand-colored and were strongly influenced by the illustrations of the
+                            <span><span data-ed-ref="cologne" id="w2ab3b3b3b7c11b1b3">Cologne</span></span> Bible of 1478, or possibly
+                        they were taken from bibles produced in <span><span data-ed-ref="cologne" id="w2ab3b3b3b7c11b1b5">Cologne</span></span> during the late 1470's. This is the first Czech
+                        illustrated bible.<span> </span>This work represents one of only two works printed in <span><span data-ed-ref="kuttenberg" id="w2ab3b3b3b7c11b3b1">Kuttenberg</span></span> in the 15th century and the
+                        only printer known to have worked there, <span><span data-ed-ref="m_tischniowa" id="w2ab3b3b3b7c11b3b3">Martin of Tischniova</span></span>. The book concludes with a large
+                        printer's device of a crowned W, for <span><span data-ed-ref="k_wladislaw" id="w2ab3b3b3b7c11b3b5"><a id="w2ab3b3b3b7c11b3b5-a" href="#" data-toggle="tooltip">King
+                            Wladislaw</a></span></span> of Bohemia, above the arms of <span><span data-ed-ref="kuttenberg" id="w2ab3b3b3b7c11b3b7">Kuttenberg</span></span> supported by two miners. The
+                        device was possibly a token of debt to the Town Council, from whom the
+                        printer borrowed a large sum in order to complete the work.<span> </span></span></p><p class="bibliography"><span>References: </span><span><span>BM 15th cent., III, p. 816 (IB.51804)</span><span>; </span><span>Darlow &amp; Moule, 2178</span><span>; </span><span>The Bible at the Lilly</span><span>; </span><span>Pet Stoleti</span></span></p><p class="bibliography"><span><span>BS220 .C9 1489</span></span><span>   </span><span>1) <span>Vault</span></span></p></div></div></div></div></div><div class="entry" data-date="1535-01-01" data-author="MACIEJ, Z. of Miechowa." data-src-index="4" itemtype="http://schema.org/CreativeWork"><div class="panel-group" id="w2ab3b3b3b9-group"><div class="panel panel-default"><div class="panel-heading"><h2 class="bibliography panel-title accordion-toggle collapsed" data-toggle="collapse" data-target="#w2ab3b3b3b9" data-parent="#w2ab3b3b3b9-group"><span>Health and Nutrition</span></h2></div><p class="bibliography"><span><span><span itemprop="author"><span><span data-ed-ref="z_maciej" id="w2ab3b3b3b9b5b1b1a">MACIEJ, Z. of Miechowa.</span></span></span><span>. </span><span itemprop="name">[Conservatio sanitatis] Editio venerabilis D.
+                            Mathie de Miechow artivm et medicinae doctoris eximij. Canonici
+                            Cracouien. &amp; c. Pro conseruanda hominum sanitate familiarissimo
+                            collecta stilbo</span><span>. </span><span></span><span itemprop="editor"></span><span itemprop="contributor"><span></span><span></span></span><i><span><span itemtype="http://schema.org/Place" itemprop="name"><span><span data-ed-ref="krakow" id="w2ab3b3b3b9b5b1c11b1a">Krakow</span></span></span><span>, </span><span itemprop="publisher"><span data-ed-ref="matthias_scharffenberg" id="w2ab3b3b3b9b5b1c11b3a">Mathias
+                                    Scharffenberg</span></span><span>, </span><span></span><span itemprop="datePublished">1535</span></span></i></span></span></p><p class="bibliography"><span><span>Contents: Tractatus I. De aere -- Tractatus II. De pane et panificis et
+                            quibusdam commestibilibus -- Tractatus III. De vino et potibus --
+                            Tractatus de aqua.<span> </span></span><span><span>12°, [136] p. Fore edge close trimmed, affecting some side notes and
+                                early handwritten annotations.<span> </span></span><span>Bound in modern vellum, black leather labels on gilt spine, edges
+                                gilt.<span> </span></span></span><span><span>Bookplate of <span><span data-ed-ref="jt_gernon" id="w2ab3b3b3b9b7c13b1b1"><a id="w2ab3b3b3b9b7c13b1b1-a" href="#" data-toggle="tooltip">John Talbot
+                                Gernon</a></span></span></span><span>. </span><span><span><span data-ed-ref="jt_gernon" id="w2ab3b3b3b9b7c13b3a">John Talbot Gernon</span></span>, a
+                            well-known collector of books on gastronomy and the culinary arts, began
+                            collecting in 1940 and by 1970s assembled one of the most important
+                            collections of cookbooks from the 16th through the 18th centuries. The
+                            Lilly acquired the Gernon collection in 1979.</span></span></span></p><div id="w2ab3b3b3b9" class="panel-collapse collapse"><div class="panel-body"><p class="bibliography"><span>First edition of a rare book on health and nutrition by the Polish
+                        Renaissance scholar <span><span data-ed-ref="mz_miechowa" id="w2ab3b3b3b9c11b1b1">Maciej Z
+                            Miechowa</span></span> (1457-1523) in which he discusses food and wine and
+                        their effects on health. <span><span data-ed-ref="mz_miechowa" id="w2ab3b3b3b9c11b1b3">Maciej</span></span> also
+                        addresses medicinal uses for food and wine, in particular the benefits of a
+                        wine derived from absinthe that miraculously relieves pain, restores
+                        appetite, and works as a cure for epilepsy. <span><span data-ed-ref="mz_miechowa" id="w2ab3b3b3b9c11b1b5">Maciej</span></span> was the physician to the kings of Poland and Hungary,
+                        as well as the founder of several colleges and libraries, and is most known
+                        for his Chronica Polonorum, a valuable history of Poland, and his Tractatus
+                        de duabus Sarmatiis, considered the first accurate geographical and
+                        ethnographical description of Eastern Europe.<span> </span></span></p><p class="bibliography"><span>References: </span><span><span>Oberlé, G. Fastes de Bacchus et de Comus, 323(2)</span><span>; </span><span>Cagle, W.R. Matter of taste (2nd ed.), 1202</span><span>; </span><span>Harrison, Une Affaire de Gout</span></span></p><p class="bibliography"><span><span>R128.6 .M15 1535</span></span><span>   </span><span>1) <span>John Talbot Gernon</span></span></p></div></div></div></div></div><div class="entry" data-date="1577-01-01" data-author="" data-src-index="5" itemtype="http://schema.org/CreativeWork"><div class="panel-group" id="w2ab3b3b3c11-group"><div class="panel panel-default"><div class="panel-heading"><h2 class="bibliography panel-title accordion-toggle collapsed" data-toggle="collapse" data-target="#w2ab3b3b3c11" data-parent="#w2ab3b3b3c11-group"><span>Biblia Leopolity</span></h2></div><p class="bibliography"><span><span><span itemprop="author"></span><span itemprop="name">[BIBLE. POLISH.] Biblia, to iest, Kxieęgi
+                            Stharego y Nowego Zakonu: ná Polski ięzyk: z pilnośćią według
+                            jáćińskiego powssechnego przyięthey, nowo wyłożona....</span><span>. </span><span></span><span itemprop="editor"></span><span itemprop="contributor"><span></span><span></span></span><i><span><span itemtype="http://schema.org/Place" itemprop="name"><span><span data-ed-ref="krakow" id="w2ab3b3b3c11b5b1c11b1a">Krakovie</span></span></span><span>, </span><span itemprop="publisher"><span data-ed-ref="marcus_scharffenberg" id="w2ab3b3b3c11b5b1c11b3a"><a id="w2ab3b3b3c11b5b1c11b3a-a" href="#" data-toggle="tooltip">M.
+                                    Szarffenberg</a></span></span><span>, </span><span></span><span itemprop="datePublished">1577</span></span></i></span></span></p><p class="bibliography"><span><span><span>2°, [1228] p. Title page printed in red and black with woodcut
+                                border, large coat of arms on verso. Verso of Old Testament contents
+                                page has large woodcut depicting creation. New Testament has
+                                separate title page printed in red and black with woodcut border.
+                                Historiated initials, numerous woodcuts. <span> </span></span><span>Bound in full brown calf over boards.<span> </span></span></span><span></span></span></p><div id="w2ab3b3b3c11" class="panel-collapse collapse"><div class="panel-body"><p class="bibliography"><span>A reprint of the Biblia Leopolity originally printed in 1561 by <span><span data-ed-ref="marcus_szarffenberg" id="w2ab3b3b3c11c11b1b1">Marek Szarffenberg</span></span> and son
+                            <span><span data-ed-ref="s_scharffenberg" id="w2ab3b3b3c11c11b1b3"><a id="w2ab3b3b3c11c11b1b3-a" href="#" data-toggle="tooltip">Stanisława</a></span></span>, sometimes called
+                        the Biblia Szarffenbergowska. Although its origins are obscure, this version
+                        of the Bible is thought to have been translated from the Vulgate by an
+                        unknown translator, but speculation has focused on the <span><span data-ed-ref="f_leonard" id="w2ab3b3b3c11c11b1b5"><a id="w2ab3b3b3c11c11b1b5-a" href="#" data-toggle="tooltip">Dominican friar Leonard</a></span></span>. <span><span data-ed-ref="f_leonard" id="w2ab3b3b3c11c11b1b7">Leonard</span></span> was the confessor of <span><span data-ed-ref="" id="w2ab3b3b3c11c11b1b9">Zygmunt II August I</span></span> (1520-1572), King of
+                        Poland and Grand Duke of Lithuania, to whom the translation is dedicated.
+                        Prepared and corrected by <span><span data-ed-ref="j_nicz" id="w2ab3b3b3c11c11b1c11"><a id="w2ab3b3b3c11c11b1c11-a" href="#" data-toggle="tooltip">Jan Nicz</a></span></span> of
+                            <span><span data-ed-ref="" id="w2ab3b3b3c11c11b1c13">Lwow (or Leopolita)</span></span>, this was the
+                        first Catholic version as well as the first complete printing of a Polish
+                        language Bible.<span> </span></span></p><p class="bibliography"><span>References: </span><span><span>Darlow &amp; Moule, 7383</span><span>; </span><span>Silver, The Bible in the Lilly Library</span></span></p><p class="bibliography"><span><span>[call number not listed]</span></span></p></div></div></div></div></div><div class="entry" data-date="1579-01-01" data-author="" data-src-index="6" itemtype="http://schema.org/CreativeWork"><div class="panel-group" id="w2ab3b3b3c13-group"><div class="panel panel-default"><div class="panel-heading"><h2 class="bibliography panel-title accordion-toggle collapsed" data-toggle="collapse" data-target="#w2ab3b3b3c13" data-parent="#w2ab3b3b3c13-group"><span>Kralitz Bible</span></h2></div><p class="bibliography"><span><span><span itemprop="author"></span><span itemprop="name">[BIBLE. CZECH.] Biblj české. V nowé
+                            wydané</span><span>. </span><span></span><span itemprop="editor"></span><span itemprop="contributor"><span></span><span></span></span><i><span><span itemtype="http://schema.org/Place" itemprop="name"><span><span data-ed-ref="kralice" id="w2ab3b3b3c13b5b1c11b1a">Kralice</span></span></span><span>, </span><span itemprop="publisher"><span data-ed-ref="z_solin" id="w2ab3b3b3c13b5b1c11b3a"><a id="w2ab3b3b3c13b5b1c11b3a-a" href="#" data-toggle="tooltip">Z. Solín</a></span></span><span>, </span><span></span><span itemprop="datePublished">1579-1601</span></span></i></span></span></p><p class="bibliography"><span><span><span>6 volumes, 4°, [2214] leaves. Title pages have decorative woodcut
+                                border of fruit, lamb in crown of thorn at top and face of puti at
+                                bottom. Title pages of volumes 2, 6 in facsimile.<span> </span></span><span>Half bound in black calf, black cloth, spine lettered in gilt, red
+                                edges.<span> </span></span></span><span></span></span></p><div id="w2ab3b3b3c13" class="panel-collapse collapse"><div class="panel-body"><p class="bibliography"><span>The first edition of the Unitas Fratrum (later, the Moravian Church) version
+                        of the Bible, known as the Kralitz Bible. Translated into Czech from the
+                        original languages, the translators worked from the Antwerp Polyglot bible,
+                        as well as existing Latin commentaries. The Bible was printed at the
+                            <span><span data-ed-ref="kralice" id="w2ab3b3b3c13c11b1b1">Kralice Castle</span></span> by the printer
+                            <span><span data-ed-ref="z_solin" id="w2ab3b3b3c13c11b1b3">Zacharius Solin</span></span>, and funded by
+                            <span><span data-ed-ref="j_vzerotin" id="w2ab3b3b3c13c11b1b5"><a id="w2ab3b3b3c13c11b1b5-a" href="#" data-toggle="tooltip">John von Zerotin</a></span></span>, an influential
+                        baron and owner of the <span><span data-ed-ref="kralice" id="w2ab3b3b3c13c11b1b7">castle</span></span>. This
+                        version marks the first time the apocrypha and canonical books are separated
+                        in a Bohemian bible. With prefaces, summaries, marginal annotations,
+                        references, tables, and commentaries. This celebrated translation became the
+                        model for classical Czech and at the same time a highlight of Czech
+                        typography.<span> </span></span></p><p class="bibliography"><span>References: </span><span><span>Darlow &amp; Moule, 2186</span><span>; </span><span>Silver, The Bible in the Lilly Library</span></span></p><p class="bibliography"><span><span>BS220 .C9</span></span></p></div></div></div></div></div><div class="entry" data-date="1581-01-01" data-author="" data-src-index="7" itemtype="http://schema.org/CreativeWork"><div class="panel-group" id="w2ab3b3b3c15-group"><div class="panel panel-default"><div class="panel-heading"><h2 class="bibliography panel-title accordion-toggle collapsed" data-toggle="collapse" data-target="#w2ab3b3b3c15" data-parent="#w2ab3b3b3c15-group"><span>Ostrih Bible</span></h2></div><p class="bibliography"><span><span><span itemprop="author"></span><span itemprop="name">[BIBLE. CHURCH SLAVONIC.] Biblia sirech knigy
+                            vetkhago i novago zaveta poiazyku slovensku</span><span>. </span><span></span><span itemprop="editor"></span><span itemprop="contributor"><span></span><span></span></span><i><span><span itemtype="http://schema.org/Place" itemprop="name"><span><span data-ed-ref="ostrog" id="w2ab3b3b3c15b5b1c11b1a">Ostrog</span></span></span><span>, </span><span itemprop="publisher"><span data-ed-ref="i_federov" id="w2ab3b3b3c15b5b1c11b3a"><a id="w2ab3b3b3c15b5b1c11b3a-a" href="#" data-toggle="tooltip">Ivan Federov</a></span></span><span>, </span><span></span><span itemprop="datePublished">1581</span></span></i></span></span></p><p class="bibliography"><span><span><span>2°, [628] leaves. Double columns, t.p. with architectural border.
+                                Woodcuts: Coat of arms of <span><span data-ed-ref="k_ostrozhskii" id="w2ab3b3b3c15b7b7b1b1b1"><a id="w2ab3b3b3c15b7b7b1b1b1-a" href="#" data-toggle="tooltip">Konstantine
+                                    Ostrozhskii</a></span></span>, printer's mark (in colophon), head- and
+                                tailpieces. A brief note in the form of a prayer by <span><span data-ed-ref="i_federov" id="w2ab3b3b3c15b7b7b1b1b3">Ivan Fedorov</span></span> precedes the colophon.
+                                Part of the preface, <span><span data-ed-ref="i_federov" id="w2ab3b3b3c15b7b7b1b1b5">Fedorov</span></span>'s
+                                note and the colophon are printed in Greek and Church Slavic.
+                                Printed in red and black, without signatures, imprint date and
+                                foliation expressed in Church Slavic characters.<span> </span></span><span>Bound in sheep leather with metal fore-edge clasps.<span> </span></span><span>In a green cloth box.</span></span><span></span></span></p><div id="w2ab3b3b3c15" class="panel-collapse collapse"><div class="panel-body"><p class="bibliography"><span>First edition of the Ostrih Bible printed in 1581 at <span><span data-ed-ref="ostrog" id="w2ab3b3b3c15c11b1b1">Ostrog</span></span>, Poland by <span><span data-ed-ref="i_federov" id="w2ab3b3b3c15c11b1b3">Ivan
+                            Federov</span></span> (d. 1583). Also called the ‘Slavonic Gutenberg,’ it
+                        is the first complete printed Bible in Church Slavonic. In 1575, <span><span data-ed-ref="i_federov" id="w2ab3b3b3c15c11b1b5">Federov</span></span>, one of the fathers of Russian and
+                        Ukrainian printing, was placed in charge of the Derman Monastery by
+                            <span><span data-ed-ref="k_ostrozhskii" id="w2ab3b3b3c15c11b1b7">Prince Konstantine
+                        Ostrozhskii</span></span>, where he established the Ostrih Press. Here,
+                            <span>Federov</span> published his Ostrih Bible among other
+                        books.<span> </span></span></p><p class="bibliography"><span>References: </span><span><span>Darlow &amp; Moule, 8370</span></span></p><p class="bibliography"><span><span>BS110 1581</span></span><span>   </span><span>1) <span>Vault</span></span></p></div></div></div></div></div><div class="entry" data-date="1691-01-01" data-author="CHRYSOTOM, John, Saint." data-src-index="8" itemtype="http://schema.org/CreativeWork"><div class="panel-group" id="w2ab3b3b3c17-group"><div class="panel panel-default"><div class="panel-heading"><h2 class="bibliography panel-title accordion-toggle collapsed" data-toggle="collapse" data-target="#w2ab3b3b3c17" data-parent="#w2ab3b3b3c17-group"><span>Pearls</span></h2></div><p class="bibliography"><span><span><span itemprop="author"><span><span data-ed-ref="j_chrysotom" id="w2ab3b3b3c17b5b1b1a">CHRYSOTOM, John, Saint.</span></span></span><span>. </span><span itemprop="name">Margaritare, a deka kuvinte de multe fieliuri
+                            a chelui atru sfintsi parintelui nostru Ioan Arkhiepiskopul
+                            charigradului a lui Zlatoust.</span><span>. </span><span></span><span itemprop="editor"></span><span itemprop="contributor"><span></span><span></span></span><i><span><span itemtype="http://schema.org/Place" itemprop="name"><span><span data-ed-ref="bucharest" id="w2ab3b3b3c17b5b1c11b1a">Bucharest</span></span></span><span>, </span><span itemprop="publisher">[s.n.]</span><span>, </span><span></span><span itemprop="datePublished">1691</span></span></i></span></span></p><p class="bibliography"><span><span><span>2°, [184] leaves. Signed in 45 Cyrillic characters of Church
+                                Slavic.<span> </span></span><span>Bound in contemporary calf leather, tooled and blind stamped, one
+                                clasp surviving. <span> </span></span></span><span></span></span></p><div id="w2ab3b3b3c17" class="panel-collapse collapse"><div class="panel-body"><p class="bibliography"><span>Margaritare, or Pearls, is an anthology of the religious homilies of
+                            <span><span data-ed-ref="j_chrysotom" id="w2ab3b3b3c17c11b1b1">St. John Chrysostom</span></span>, the 4th
+                        century Archbishop of <span><span data-ed-ref="constantinople" id="w2ab3b3b3c17c11b1b3">Constantinople</span></span>, compiled by, and possibly printed under the
+                        direction of the Romanian <span><span data-ed-ref="anthimus" id="w2ab3b3b3c17c11b1b5"><a id="w2ab3b3b3c17c11b1b5-a" href="#" data-toggle="tooltip">Anthimus</a></span></span> of
+                        Iberia. <span><span data-ed-ref="anthimus" id="w2ab3b3b3c17c11b1b7">Anthimus</span></span>, a linguist,
+                        typographer, and writer, compiled the Margaritare as a guide to living a
+                        Christian life. This version of the anthology was translated into Romanian
+                        by the brothers <span><span data-ed-ref="s_grecenu" id="w2ab3b3b3c17c11b1b9"><a id="w2ab3b3b3c17c11b1b9-a" href="#" data-toggle="tooltip">Serban</a></span></span> and <span><span data-ed-ref="r_grecenu" id="w2ab3b3b3c17c11b1c11"><a id="w2ab3b3b3c17c11b1c11-a" href="#" data-toggle="tooltip">Radul</a></span></span> Grecénu, publishers of first Romanian
+                        edition of the complete Bible (1688), which is considered a monument of 17th
+                        century Romanian literature for its elegant style and diction.<span> </span></span></p><p class="bibliography"><span>References: </span><span><span>Bianu, I., and Hodos, N. Bibliografia românésca veche 1508-1830, 91</span></span></p><p class="bibliography"><span><span>BR63 .M327 1691</span></span></p></div></div></div></div></div></div>
+<div id="footer">
+<span>Dawn Childress, 2014, University Park, PA</span> | <span>Published using the <a href="https://github.com/kirschbombe/openbibl" target="_blank">Open &lt;bibl&gt;</a> Project</span>
+</div>
+</div>
+</div>
+<!--[if lt IE 9]<>![endif]-->
+<script data-main="../../js/main.js" src="../../js/lib/require-2.1.11.js"></script>
+<script type="text/javascript" language="javascript" id="obp-load-script">
+//<![CDATA[
+    require.config({
+          
+        paths : {
+              'obp'      : 'js/openbibl/obp'
+            , 'obpstate' : 'js/openbibl/state'
+        }
+    });
+    require(['obp','obpstate'], function(obp,obpstate) {
+        obpstate.rebase({
+              paths : { root : '../../' }
+            , bibliographies : {
+                  count    : 9
+                , xml      : 'spec/javascripts/fixtures/otherEurope.xml'
+                , xsl_load : false
+            }
+        });
+    });
+//]]>                                                               
 </script>
-    </body>
+<script type="text/javascript" language="javascript" src="../../js/lib/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" language="javascript" src="../../js/lib/bootstrap-3.1.1.js"></script> 
+</body>
 </html>

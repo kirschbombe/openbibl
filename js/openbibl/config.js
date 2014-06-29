@@ -12,8 +12,8 @@
  *
  * @module openbibl/config
  */
-define( []
-, function() {
+define( ['obpstate']
+, function(obpstate) {
     'use strict';
     /**
      * Flags for which configuration items are serialized when an
@@ -22,20 +22,40 @@ define( []
      * @constant
      */
     var serialize = {
-          debug             : true
+          async             : true
+        , debug             : true
         , console           : false
         , saxonLogLevel     : false
         , saxonPollInterval : false
         , paths             : true
         , scroll_speed      : true
         , query             : true
-        , templates         : false
-        , template_pattern  : true
         , typeahead         : true
         , rebase            : false
         , stringify         : false
+    },
+    /**
+     * File-system paths for resources referenced in the Openbibl JS code.
+     * The values in this file are relative to the Openbibl root directory, and
+     * made absolute at runtime, or by a call to 'rebase()'.
+     * @property
+     * @private
+     * @constant
+     */
+    project_paths = {
+          entry_xsl       : 'xsl/openbibl.entry.xsl'
+        , query_xsl       : 'xsl/openbibl.query.xsl'
+        , tooltip_xsl     : 'xsl/partials/tooltip.xsl'
+        , search_xsl      : 'xsl/partials/search-list.xsl'
     };
     return {
+        /**
+         * Whether or not to perform async requests.
+         * @default true
+         * @property
+         * @public
+         */
+        async : true,
         /**
          * Debug state of Openbibl javascript code.
          * @default false
@@ -69,19 +89,6 @@ define( []
          */
         saxonPollInterval: 100,
         /**
-         * File-system paths for resources referenced in the Openbibl JS code.
-         * The values in this file are relative to the Openbibl root directory, and
-         * made absolute at runtime.
-         * @property
-         * @public
-         * @constant
-         */
-        paths : {
-              obp_root        : ''
-            , template_dir    : 'js/templates'
-            , query_xsl       : 'xsl/openbibl.query.xsl'
-        },
-        /**
          * Milisecond speed of the scrolling done when a TOC entry is clicked.
          * @default 200 ms
          * @property
@@ -99,20 +106,16 @@ define( []
              file  : 'obp.query.json'               // serialized json file
         },
         /**
-         * Runtime cache of HTML partial-view templates.
+         * Configuration points for the Bootstrap Tooltips widgetry.
          * @property
          * @public
          */
-        templates : {},
-        /**
-         * String to use as RegExp pattern for the Underscore partial-view templating. This
-         * regex enables Handlebars-style templates.
-         * @default "\\{\\{(.+?)\\}\\}"
-         * @property
-         * @public
-         * @constant
-         */
-        template_pattern : "\\{\\{(.+?)\\}\\}",
+        tooltip : {
+              show      : 500
+            , hide      : 100
+            , hover     : 500
+            , placement : 'top'
+        },
         /**
          * Configuration for the Bootstrap/Typeahead auto-suggestion used in the search-term field.
          * "list_len" : maximum number of items to use for suggestions
@@ -127,22 +130,26 @@ define( []
          * Method to re-base configuration values, used when JSON data is re-hydrated
          * from window.obp serialization for an HTML-based view of a bibliography
          * during main.js initialization.
+         * @param {object} config values to use for rebasing (optional)
+         * @param {boolean} flag indicating whether to rebase file paths
          * @method
          * @public
          * @instance
          */
         rebase : function(obj) {
             var config = this;
-            if (typeof obj !== "object") {
-                throw "obp.config.rebase() requires an object";
+            if (typeof obj === "object") {
+                Object.keys(obj).map(function(key){
+                    if (config.hasOwnProperty(key)) {
+                        config[key] = obj[key];
+                    } else {
+                        throw "Unsupported config key in obp.config.rebase: " + key;
+                    }
+                });
             }
-            Object.keys(obj).map(function(key){
-                if (config.hasOwnProperty(key)) {
-                    config[key] = obj[key];
-                } else {
-                    throw "Unsupported config key in obp.config.rebase: " + key;
-                }
-            });
+            this.console = (typeof console === 'object')
+                  ? console
+                  : { log : function(){ return; } };
         },
         /**
          * Method to stringify Openbibl configuration data as JSON for serialization.
@@ -154,12 +161,36 @@ define( []
         stringify : function() {
             var config = this
               , ret = {};
-            Object.keys(this).map(function(key) {
-                if (serialize[key]) {
-                    ret[key] = config[key];
+            Object.keys(this).map(function(entry) {
+                if (typeof serialize[entry] === 'boolean') {
+                    if (serialize[entry]) {
+                        ret[entry] = config[entry];
+                    }
+                } else if (typeof serialize[entry] === 'object') {
+                    ret[entry] = {};
+                    Object.keys(serialize[entry]).map(function(key) {
+                        if (serialize[entry][key]) {
+                            ret[entry][key] = config[entry][key];
+                        }
+                    });
                 }
             });
             return JSON.stringify(ret);
+        },
+        /**
+         * Return path to requested resource.
+         * @param {string} item requested
+         * @returns {string} URI of requested resource
+         * @throws
+         * @method
+         * @public
+         * @instance
+         */
+        path : function(resource) {
+            if (!project_paths.hasOwnProperty(resource)) {
+                throw "Unknown resource requested: " + resource;
+            }
+            return "".concat(obpstate.paths.root).concat('/').concat(project_paths[resource]);
         }
     };
 });

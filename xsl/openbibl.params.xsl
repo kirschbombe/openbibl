@@ -14,27 +14,17 @@
 
     <!-- Path to use for the root of the Openbibl framework files, i.e., the
          'openbibl' directory containing the xsl/, js/, etc subdirectories.
-
-         Try to use the stylesheet's uri for the path, otherwise fall back to
-         a relative url, since unparsed-entity-uri is not implemented in FireFox
     -->
     <xsl:variable name="obp-boot-rel-path"  select="'xsl/openbibl.boot.xsl'"/>
     <xsl:variable name="obp-root">
-        <xsl:variable name="pi-quote"           select="substring(substring-after(processing-instruction('xml-stylesheet'), 'href='),1,1)"/>
-        <xsl:variable name="obp-boot-root"      select="substring-before(substring-before(substring-after(processing-instruction('xml-stylesheet'), concat('href=', $pi-quote)), $pi-quote), $obp-boot-rel-path)"/>
-        <xsl:choose>
-            <xsl:when test="function-available('unparsed-entity-uri')">
-                <xsl:value-of select="concat(unparsed-entity-uri(''),$obp-boot-root)"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="$obp-boot-root"/>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:variable name="pi-quote" select="substring(substring-after(processing-instruction('xml-stylesheet'), 'href='),1,1)"/>
+        <xsl:value-of                 select="substring-before(substring-before(substring-after(processing-instruction('xml-stylesheet'), concat('href=', $pi-quote)), $pi-quote), $obp-boot-rel-path)"/>
     </xsl:variable>
-    <xsl:variable name="obp-root-js"    select="concat($obp-root, 'js/')"/>
-    <xsl:variable name="obp-js-main"    select="concat($obp-root-js, 'main.js')"/>
-    <xsl:variable name="require-js"     select="concat($obp-root-js, 'lib/require-2.1.11.js')"/>
+    <xsl:variable name="obp-root-js"      select="concat($obp-root, 'js/')"/>
+    <xsl:variable name="obp-require-main" select="concat($obp-root-js, 'main.js')"/>
+    <xsl:variable name="require-js"       select="concat($obp-root-js, 'lib/require-2.1.11.js')"/>
 
+    <xsl:variable name="uri-js"         select="concat($obp-root-js, 'lib/URI-1.13.2.min.js')"/>
     <xsl:variable name="jquery-js"      select="concat($obp-root-js, 'lib/jquery-2.1.0.min.js')"/>
     <xsl:variable name="bootstrap-js"   select="concat($obp-root-js, 'lib/bootstrap-3.1.1.min.js')"/>
     <xsl:variable name="offcanvas-js"   select="concat($obp-root-js, 'lib/bootstrap-offcanvas-3.1.0.js')"/>
@@ -50,6 +40,7 @@
 
     <!-- TODO: parameterize debug status -->
     <xsl:variable name="saxon-nocache"         select="concat($obp-root, $saxon-nocache-prod)"/>
+    <!--<xsl:variable name="saxon-nocache"         select="concat($obp-root, $saxon-nocache-debug)"/>-->
     <!-- /TODO -->
 
     <!-- TODO: parameters; values to be externalized -->
@@ -67,8 +58,5 @@
     <xsl:variable name="bootstrap-css"     select="concat($obp-root, 'css/lib/bootstrap.css')"/>
     <xsl:variable name="navmenu-css"       select="concat($obp-root, 'css/lib/navmenu.css')"/>
     <!-- /TODO -->
-
-
-
 
 </xsl:stylesheet>

@@ -5,37 +5,28 @@
 * License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
 */
 /*jslint white: true, todo: true, nomen: true */
-/*global define: true, window: true */
+/*global define: true*/
 /**
  * Object representing current application state for Javascript
  * code in framework.
  *
  * @module openbibl/state
  */
-define([]
-, function() {
+define(['jquery']
+, function($) {
     'use strict';
-    // The xsl->js handoff is done by means of an 'obp' property
-    // attached to the global window object
-    // TODO: handle better
-    var global_bib_data = window.hasOwnProperty('obp')
-        ? window.obp
-        :   { bibliographies : {
-                  xml : ''
-                , xsl : ''
-            }
-    },
     /**
      * Flags for which items are serialized when an XML-based rendering is serialized to HTML.
      * @private
      * @constant
      */
-    serialize = {
-        bibliographies  : true
-        , saxonInterval : false
-        , query         : true
-        , rebase        : true
-        , stringify     : true
+    var serialize = {
+          bibliographies : true
+        , paths          : true
+        , saxonInterval  : false
+        , query          : false
+        , rebase         : true
+        , stringify      : true
     };
     return {
         /**
@@ -43,13 +34,14 @@ define([]
          * "xml" : xml document path
          * "xsl" : xslt 2.0 stylesheet path
          * "count" : number of bibliography entries displayed
+         * "xsl_load" : whether the bibliographies were loaded by an XSL transform
          * @property
          * @public
          */
         bibliographies : {
               count         : 0
-            , xml           : global_bib_data.bibliographies.xml
-            , xsl           : global_bib_data.bibliographies.xsl
+            , xml           : ''
+            , xsl_load      : true
         },
         /**
          * Value of active interval ID from window.setInterval() call used in
@@ -86,6 +78,15 @@ define([]
             return JSON.stringify(ret);
         },
         /**
+         * Current application paths.
+         * root: URI for the openbibl/ directory
+         * @property
+         * @public
+         */
+        paths : {
+            root : ''
+        },
+        /**
          * Method to re-base configuration values, used when JSON data is re-hydrated
          * from window.obp serialization for an HTML-based view of a bibliography
          * during main.js initialization.
@@ -100,11 +101,18 @@ define([]
             }
             Object.keys(obj).map(function(key){
                 if (state.hasOwnProperty(key)) {
-                    state[key] = obj[key];
+                    if (typeof obj === "object") {
+                        $.extend(state[key], obj[key]);
+                    } else {
+                        state[key] = obj[key];
+                    }
                 } else {
                     throw "Unsupported config key in obp.config.rebase: " + key;
                 }
             });
-        }
+            if (state.paths.root !== undefined && state.paths.root.match(/\/$/)) {
+                state.paths.root = state.paths.root.replace(/\/$/, '');
+            }
+        },
     };
 });

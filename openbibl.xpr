@@ -2,7 +2,16 @@
 <project version="14.1">
     <meta>
         <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
-        <options/>
+        <options>
+            <serialized version="14.1" xml:space="preserve">
+                <map>
+                    <entry>
+                        <String>validation.scenarios</String>
+                        <validationScenario-array/>
+                    </entry>
+                </map>
+            </serialized>
+        </options>
     </meta>
     <projectTree name="openbibl.xpr">
         <folder path="css/"/>
@@ -11,6 +20,7 @@
         <folder path="examples/"/>
         <folder path="js/"/>
         <folder path="lod/"/>
+        <folder path="notices/"/>
         <folder path="TEI/"/>
         <folder path="tests/"/>
         <folder path="xsl/"/>

@@ -15,17 +15,23 @@
     exclude-result-prefixes="xs obp tei schema ixsl"
     version="2.0">
 
-    <xsl:import href="openbibl.date.xsl"/>
-
     <xsl:strip-space elements="*"/>
     <xsl:output method="xhtml" indent="yes"/>
 
-    <!-- #result is the wrapper element used in the JS -->
+    <!-- value of @id attribute where Saxon-CE produced content should be appended -->
+    <xsl:param name="append-target-id" as="xs:string"/>
+
+    <!-- value to use when an entry's date is missing (or in an unhandled attribute)
+         TODO: devise a better scheme for handling missing dates
+    -->
+    <xsl:variable name="date-sort-key-default" select="'0000-00-00'"/>
+
+    <!-- $append-target-id wrapper element used in the JS -->
     <xsl:template match="/">
         <xsl:choose>
             <!-- for use in browser: have js processor handle result content -->
             <xsl:when test="system-property('xsl:product-name') = 'Saxon-CE'">
-                <xsl:result-document href="#bibliographies" method="ixsl:append-content">
+                <xsl:result-document href="{$append-target-id}" method="ixsl:append-content">
                     <xsl:apply-templates select="//tei:div"/>
                 </xsl:result-document>
             </xsl:when>
@@ -44,11 +50,7 @@
 
         <!-- add data-* attributes to simplify sorting -->
         <xsl:variable name="div-index" select="count(preceding-sibling::tei:div[@type='entry'])"/>
-        <xsl:variable name="sort-date">
-            <xsl:call-template name="date-sort-key">
-                <xsl:with-param name="date-elt" select="tei:biblStruct/tei:monogr/tei:imprint/tei:date"/>
-            </xsl:call-template>
-        </xsl:variable>
+        <xsl:variable name="sort-date" select="obp:date-sort-key(tei:biblStruct/tei:monogr/tei:imprint/tei:date)"/>
         <xsl:variable name="sort-author" select="normalize-space(tei:biblStruct/tei:monogr/tei:author/tei:persName)"/>
 
         <!-- id for collapsed notes/refs panels -->
@@ -209,29 +211,12 @@
         <span>.&#x0020;</span>
     </xsl:template>
 
-    <!-- make tooltip text -->
-    <xsl:key name="tooltip-note" match="*[@xml:id]" use="@xml:id"/>
+    <!-- wrap tooltip-able content in a span for async tagging -->
     <xsl:template match="text()[parent::*[@ref]]" mode="web">
         <xsl:variable name="ref" select="string(parent::*/@ref)" as="xs:string"/>
-        <xsl:variable name="tooltip-text" select="string(key('tooltip-note',substring-after($ref,'#'))/tei:note)" as="xs:string"/>
-        <xsl:choose>
-            <!-- add a tooltip anchor only for the first occurrence of the mention within a tei:div -->
-            <xsl:when test="
-                (generate-id((ancestor::tei:div[@type='entry']//@ref[.=$ref])[1]) = generate-id(parent::*/@ref))
-                and string-length($tooltip-text) &gt; 0
-            ">
-                <a href="#" data-toggle="tooltip" title="{$tooltip-text}">
-                    <span data-ed-ref="{substring-after($ref,'#')}">
-                        <xsl:value-of select="."/>
-                    </span>
-                </a>
-            </xsl:when>
-            <xsl:otherwise>
-                <span data-ed-ref="{substring-after($ref,'#')}">
-                    <xsl:value-of select="."/>
-                </span>
-            </xsl:otherwise>
-        </xsl:choose>
+        <span data-ed-ref="{substring-after($ref,'#')}" id="{generate-id(parent::*)}">
+            <xsl:value-of select="."/>
+        </span>
     </xsl:template>
 
     <!-- suppress attribute text() nodes; this template is required for the previous
@@ -259,6 +244,7 @@
 
     <!-- output <tei:p> elements in a <span>, adding a trailing period if
          one was not provided in the original
+         TODO: externalize/parameterize punctuation here
     -->
     <xsl:template match="tei:p" mode="web">
         <xsl:apply-templates select="@*|node()" mode="web"/>
@@ -276,5 +262,66 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
+
+    <!-- return a 'yyyy-mm-dd'-formatted string representing the date for the
+        bibliography entry to use as a sorting-key
+    -->
+    <xsl:function name="obp:date-sort-key" as="xs:string">
+
+        <!-- tei:biblStruct/tei:monogr/tei:imprint/tei:date -->
+        <xsl:param name="date-elt" as="element()*"/>
+        <xsl:choose>
+
+            <!-- tei:date element is missing -->
+            <xsl:when test="empty($date-elt)">
+                <xsl:value-of select="$date-sort-key-default"/>
+            </xsl:when>
+
+            <!-- use @when-iso, padding as necessary -->
+            <xsl:when test="$date-elt/@when-iso">
+                <xsl:value-of select="obp:str-to-yyyymmdd(string($date-elt/@when-iso))"/>
+            </xsl:when>
+
+            <!--  use @notBefore, padding as necessary -->
+            <xsl:when test="$date-elt/@notBefore">
+                <xsl:value-of select="obp:str-to-yyyymmdd(string($date-elt/@notBefore))"/>
+            </xsl:when>
+
+            <!-- fallback value, neither @when* attribute is available
+                 TODO: evaluate missing date scenario for entry sorting
+            -->
+            <xsl:otherwise>
+                <xsl:value-of select="$date-sort-key-default"/>
+            </xsl:otherwise>
+
+        </xsl:choose>
+
+    </xsl:function>
+
+    <!-- normalize date values for sorting : pad a date out to yyyy-mm-dd with 01s as
+         necessary when month/day are missing
+         TODO: review TEI guidelines on date formatting and date elmeents in the schema
+               and make this parsing more robust
+    -->
+    <xsl:function name="obp:str-to-yyyymmdd" as="xs:string">
+        <xsl:param name="str" as="xs:string*"/>
+        <xsl:choose>
+            <xsl:when test="empty($str) or $str = ''">
+                <xsl:value-of select="$date-sort-key-default"/>
+            </xsl:when>
+            <xsl:when test="matches($str,'\d{4}-\d{2}-\d{2}')">
+                <xsl:value-of select="$str"/>
+            </xsl:when>
+            <xsl:when test="matches($str,'\d{4}-\d{2}')">
+                <xsl:value-of select="concat($str,'-01')"/>
+            </xsl:when>
+            <xsl:when test="matches($str,'\d{4}')">
+                <xsl:value-of select="concat($str,'-01-01')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$date-sort-key-default"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
 
 </xsl:stylesheet>

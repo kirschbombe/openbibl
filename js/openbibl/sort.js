@@ -53,6 +53,7 @@ define(
         /**
          * Method causing a re-sort of bibliography entries.
          * @param key {string} sort key to use
+         * @todo support config-based locale specification, as well as other compare params
          * @method
          * @public
          * @instance
