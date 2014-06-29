@@ -15,7 +15,6 @@ define(
   [ 'module', 'jquery', 'obpev', 'obpconfig', 'obpstate', 'saxon' ]
 , function(module,$,obpev,obpconfig,obpstate, saxon) {
     'use strict';
-    var tooltip;
     return {
         /**
          * Initialize tooltip by registering callbacks for Openbibl
@@ -25,7 +24,7 @@ define(
          * @instance
          */
         init : function() {
-            tooltip = this;
+            var tooltip = this;
             obpev.subscribe("obp:bibliography-added", module.id, function() {
                 tooltip.enable_tooltips();
             });
@@ -62,8 +61,8 @@ define(
          */
         register_title : function(a_id,script_id,tt_id) {
             $('#' + script_id).remove();
-            tooltip.titles[a_id] = $('#' + tt_id).remove().html();
-            tooltip.enable_tooltip(a_id);
+            this.titles[a_id] = $('#' + tt_id).remove().html();
+            this.enable_tooltip(a_id);
         },
         /**
          * Register DOM events on tooltip-able elements, which may have just
@@ -73,6 +72,7 @@ define(
          * @instance
          */
         enable_tooltips : function() {
+            var tooltip = this;
             /*jslint unparam: true */
             $('[data-toggle="tooltip"]').each(function(i,elt){
                 tooltip.enable_tooltip(elt.getAttribute('id'));
@@ -87,7 +87,8 @@ define(
          */
         enable_tooltip : function(id) {
             /*jslint unparam: true */
-            var $elt = $('#' + id);
+            var $elt = $('#' + id)
+              , tooltip = this;
             $elt.click(function(e){
                 e.preventDefault();
             });
