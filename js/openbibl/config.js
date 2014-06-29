@@ -22,7 +22,8 @@ define( ['obpstate']
      * @constant
      */
     var serialize = {
-          debug             : true
+          async             : true
+        , debug             : true
         , console           : false
         , saxonLogLevel     : false
         , saxonPollInterval : false
@@ -54,7 +55,7 @@ define( ['obpstate']
          * @property
          * @public
          */
-        async : false,
+        async : true,
         /**
          * Debug state of Openbibl javascript code.
          * @default false
