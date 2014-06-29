@@ -36,7 +36,7 @@ define(
           , xml_uri = URI(obpstate.bibliographies.xml)
           , state_clone = $.extend({}, obpstate)
           , config_clone = $.extend({}, obpconfig)
-          , text, blob, filename;
+          , text, blob, filename, update_path;
 
         // remove Download link from page
         $clone.find('.obp-download-page').closest('li').remove();
@@ -61,14 +61,16 @@ define(
         $clone.find('#obp-load-script').remove();
 
         // make all @src and @rel values absolute
-        $clone.find('*[src]').each(function(i,elt) {
-            var $elt = $(elt);
-            var src = URI($elt.attr('src'));
+        var update_path = function($elt,att) {
+            var src = URI($elt.attr(att));
             if (src.is('relative')) {
                 src = src.absoluteTo(xml_uri);
             }
-            $elt.attr('src', src.toString());
-        });
+            $elt.attr(att, src.toString());
+        };
+        $clone.find('*[src]'      ).each(function(i,elt) { update_path($(elt), 'src'       ) });
+        $clone.find('*[data-main]').each(function(i,elt) { update_path($(elt), 'data-main' ) });
+        $clone.find('*[href]'     ).each(function(i,elt) { update_path($(elt), 'href'      ) });
 
         // this flag is false for a serialize HTML document
         state_clone.bibliographies.xsl_load = false;
