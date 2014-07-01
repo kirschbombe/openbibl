@@ -16,11 +16,11 @@ define(
                  expect(spyEvent).toHaveBeenTriggered();
             }); // it
 
-/*
-TODO: determine how to determine whether FileSaver.js has downloaded a file
+            /*
+            TODO: determine how to determine whether FileSaver.js has downloaded a file
             it('data-url download click', function(){
             }); // it
-*/
+            */
         }); // describe
 
     }); // describe
