@@ -88,38 +88,45 @@ define(
         enable_tooltip : function(id) {
             /*jslint unparam: true */
             var $elt = $('#' + id)
-              , tooltip = this;
+              , ttid = id.concat('-ttid')
+              , tooltip = this
+              , template;
+            template = '<div id="' + ttid + '" class="tooltip" role="tooltip">'
+                     +  '<div class="tooltip-arrow"></div>'
+                     +  '<div class="tooltip-inner"></div>'
+                     + '</div>';
             $elt.click(function(e){
                 e.preventDefault();
             });
             $elt.tooltip({
                   html      : true
-                , container : $elt
+                , container : 'body'
                 , placement : obpconfig.tooltip.placement
                 , trigger   : 'manual'
                 , delay     : {
                       show    : obpconfig.tooltip.show
                     , hide    : obpconfig.tooltip.hide
                 }
+                , template  : template
                 , title     : function() {
                     return tooltip.titles[id];
                 }
             // mouse events are explicitly set to attempt to
             // keep flicker down
             }).mouseenter(function(e) {
-                if($elt.find('div.tooltip').length === 0) {
+                if($('#' + ttid).length === 0) {
                     $elt.tooltip('show');
                 }
             }).mouseleave(function(e) {
                 setTimeout(function() {
-                    if ($elt.find('div.tooltip').length !== 0) {
+                    if ($('#' + ttid).length !== 0) {
                         $elt.tooltip('hide');
                      }
                 }, obpconfig.tooltip.hover);
             });
             // enable link in the tooltip, if any
             $elt.on('shown.bs.tooltip', function() {
-                $elt.find('a').click(function(e){
+                $('#' + ttid).click(function(e){
                     // TODO: factor this and openbibl/toc code
                     var $target = $('div[data-src-index="' + $(e.target).attr('data-src-index') + '"]');
                     if ($target.length === 0) {
