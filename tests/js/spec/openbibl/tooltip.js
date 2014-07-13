@@ -134,10 +134,13 @@ define(
                 // override the injected script callback that installs the tooltip title
                 // for tracking here
                 var a_called = {};
-                var orig_register_title = tooltip.register_title;
+                // this method is required to be attached to the tooltip object, because
+                // otherwise the call to register_title() will have its 'this' object
+                // pointing to window
+                tooltip.orig_register_title = tooltip.register_title;
                 var new_register_title = function(a_id,script_id,tt_id) {
                     a_called[a_id] = '';
-                    orig_register_title(a_id,script_id,tt_id);
+                    tooltip.orig_register_title(a_id,script_id,tt_id);
                 };
                 tooltip.register_title = new_register_title;
                 

@@ -6,6 +6,7 @@ define(
 
         describe('load/initialization', function() {
             beforeEach(function() {
+                obpev.init();
                 highlight.init();
             });
             it('load', function(){

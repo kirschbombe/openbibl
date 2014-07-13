@@ -66,7 +66,7 @@
 
   var specs = [
         'tests/js/spec/openbibl/browse'
-      ,'tests/js/spec/openbibl/config'
+      , 'tests/js/spec/openbibl/config'
       , 'tests/js/spec/openbibl/download'
       , 'tests/js/spec/openbibl/event'
       , 'tests/js/spec/openbibl/filter'
