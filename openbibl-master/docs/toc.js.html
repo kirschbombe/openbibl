@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: openbibl/toc.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: openbibl/toc.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+* Openbibl Framework v0.1.0
+* Copyright 2014, Dawn Childress
+* Contact: https://github.com/kirschbombe/openbibl
+* License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
+*/
+/*jslint white: true, todo: true, nomen: true */
+/*global define: true */
+/**
+ * Controller for TOC functionality.
+ *
+ * @module openbibl/toc
+ */
+define(
+  [ 'module', 'jquery', 'obpev', 'obpconfig' ]
+, function(module,$,obpev,obpconfig) {
+    'use strict';
+    return {
+        /**
+         * Initialize TOC controller by subscribing to Openbibl
+         * framework events.
+         * @method
+         * @public
+         * @instance
+         */
+        init : function() {
+            var toc = this;
+            obpev.subscribe("obp:filter-complete", module.id, function() {
+                toc.update_toc();
+                toc.enable_click();
+            });
+            obpev.subscribe("obp:bibliography-added", module.id, function() {
+                toc.update_toc();
+                toc.enable_click();
+            });
+            toc.enable_click();
+        },
+        /**
+         * Register click-handler callbacks on the TOC entries, which may
+         * have just re-appeared in the DOM.
+         * @method
+         * @public
+         * @instance
+         */
+        enable_click : function() {
+            $('a.toc-click').click(function(e) {
+                var $target = $('div[data-src-index="' + $(e.target).attr('data-src-index') + '"]');
+                if ($target.length === 0) {
+                    return;
+                }
+                $('html,body').animate({
+                    scrollTop: ($target.offset().top - $('#bibliographies').offset().top)
+                    }, obpconfig.scroll_speed
+                );
+            });
+        },
+        /**
+         * Update which TOC entries are visible based on which bibliography
+         * entries are visible.
+         * @method
+         * @public
+         * @instance
+         */
+        update_toc : function () {
+            var $wrapper = $('#bibliographies'),
+            src_sequence = $.map($wrapper.children('div.entry:visible'), function(elt) {
+               return $(elt).attr('data-src-index');
+            }),
+            $toc = $('#toc'),
+            $toc_entries = $toc.children('li.toc').remove(),
+            aInd,bInd;
+            $toc_entries.sort(function(a,b){
+                aInd = src_sequence.indexOf(a.getAttribute('data-src-index'));
+                bInd = src_sequence.indexOf(b.getAttribute('data-src-index'));
+                return aInd &lt; bInd
+                    ? -1
+                    : aInd === bInd
+                        ? 0
+                        : 1;
+            });
+            /*jslint unparam: true*/
+            $toc_entries.each(function(i,elt){
+                $(elt).show();
+                if (src_sequence.indexOf(elt.getAttribute('data-src-index')) === -1) {
+                    $(elt).hide();
+                }
+            });
+            $toc.append($toc_entries);
+        }
+    };
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="module-openbibl.html">openbibl</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="download.html">openbibl/download</a></li><li><a href="event.html">openbibl/event</a></li><li><a href="filter.html">openbibl/filter</a></li><li><a href="highlight.html">openbibl/highlight</a></li><li><a href="query.html">openbibl/query</a></li><li><a href="saxon.html">openbibl/saxon</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li><li><a href="sort.html">openbibl/sort</a></li><li><a href="state.html">openbibl/state</a></li><li><a href="theme.html">openbibl/theme</a></li><li><a href="toc.html">openbibl/toc</a></li><li><a href="tooltip.html">openbibl/tooltip</a></li></ul><h3>Global</h3><ul><li><a href="global.html#obp:bibliography-added">obp:bibliography-added</a></li><li><a href="global.html#obp:browse-term-change">obp:browse-term-change</a></li><li><a href="global.html#obp:filter-change">obp:filter-change</a></li><li><a href="global.html#obp:filter-complete">obp:filter-complete</a></li><li><a href="global.html#obp:filter-mode-change">obp:filter-mode-change</a></li><li><a href="global.html#obp:search-term-change">obp:search-term-change</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Mon Jun 09 2014 18:55:33 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

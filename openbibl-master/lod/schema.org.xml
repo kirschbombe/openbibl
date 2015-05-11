@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema-mappings xmlns:schema="http://schema.org">
+
+    <!--
+        NOTES:
+
+        1) Schema doesn't handle rights and access restrictions gracefully yet, so I
+        have no attributes for this one
+        /tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability/tei:ab
+
+        2) source information here; better yet, use a <biblStruct> instead
+        /tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:bibl
+
+        3) Schema doesn't extend to physical description attributes except for books,
+        so we can't do much here right now.
+        /tei:TEI/tei:text/tei:body/tei:div/tei:msDesc/tei:physDesc
+
+        4) What types of people are described in this section of the TEI document?
+        Not sure what the roles are here that aren't covered in the front matter.
+        /tei:TEI/tei:text/tei:back/tei:div[@type='editorial']
+    -->
+
+    <schema-mapping>
+        <xpath>//tei:teiHeader</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/CreativeWork</schema:itemtype>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title</xpath>
+        <itemdata>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <!-- The itemprop here refers back to the contents of <resp>. Currently-possible values in schema.org are
+            contributor
+            editor
+            publisher
+        For now it seems like any non-authorial role would need to fall under 'contributor' unless editorship is explicitly stated.
+        We could potentially extend this at some point to account for various roles related to TEI development.  -->
+    <schema-mapping>
+        <xpath>//tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author/tei:persName</xpath>
+        <itemdata>
+            <schema:itemprop>author</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:respStmt/tei:persName</xpath>
+        <itemdata>
+            <schema:itemprop>contributor</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date</xpath>
+        <itemdata>
+            <schema:itemprop>datePublished</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:pubPlace</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/Place</schema:itemtype>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:publisher</xpath>
+        <itemdata>
+            <schema:itemprop>publisher</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <!--
+        This is where we start to run into trouble; there aren't item types or properties
+        for special collections or manuscripts just yet.
+        For now it's probably okay to assign them as CreativeWork,
+        but we may want to try and extend it at some point.
+    -->
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/CreativeWork</schema:itemtype>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:author</xpath>
+        <itemdata>
+            <schema:itemprop>author</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:title</xpath>
+        <itemdata>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:editor</xpath>
+        <itemdata>
+            <schema:itemprop>editor</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <!-- Same as above; marking as 'contributor' until we build a larger vocab extension -->
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:respStmt</xpath>
+        <itemdata>
+            <schema:itemprop>contributor</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:imprint/tei:pubPlace</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/Place</schema:itemtype>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:imprint/tei:publisher</xpath>
+        <itemdata>
+            <schema:itemprop>publisher</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:biblStruct/tei:monogr/tei:imprint/tei:date</xpath>
+        <itemdata>
+            <schema:itemprop>datePublished</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+    <schema-mapping>
+        <xpath>//tei:text/tei:body/tei:div[@type='entry']/tei:msDesc/tei:msIdentifier/tei:repository</xpath>
+        <itemdata>
+            <schema:itemtype>http://schema.org/Place</schema:itemtype>
+            <schema:itemprop>name</schema:itemprop>
+        </itemdata>
+    </schema-mapping>
+
+</schema-mappings>

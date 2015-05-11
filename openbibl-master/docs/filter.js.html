@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: openbibl/filter.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: openbibl/filter.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+* Openbibl Framework v0.1.0
+* Copyright 2014, Dawn Childress
+* Contact: https://github.com/kirschbombe/openbibl
+* License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
+*/
+/*jslint white: true, todo: true, nomen: true, plusplus: true */
+/*global define: true */
+/**
+ * Bibliography entry filter controller.
+ *
+ * @module openbibl/filter
+ */
+define(
+  [ 'module', 'underscore', 'obpstate', 'jquery', 'obpev' ]
+, function(module,_,obpstate,$,obpev) {
+    'use strict';
+    return {
+        /**
+         * Initialize the filter controller.
+         * @sources {array} sources of bibliography entry index lists, e.g., the openbibl/browse controller
+         * @method
+         * @public
+         * @instance
+         */
+        init : function(sources) {
+            var filter = this;
+            if (sources instanceof Array) {
+                this.sources = sources;
+            } else if (typeof sources === 'string') {
+                this.sources = [sources];
+            } else {
+                this.sources = [];
+            }
+            obpev.subscribe("obp:filter-change", module.id, function() {
+                filter.filter_entries();
+            });
+        },
+        /**
+         * Array of sources (e.g., openbibl/browse controller object) providing
+         * filter data for a filter operation. A filter source implements a method
+         * 'filter_indices()' that is called whenever a filtering operation occurs,
+         * which provides the indices reflecting the current subset for that provider.
+         * @property
+         * @private
+         */
+        sources : [],
+        /**
+         * Name of the filtering mode for a set-union operation. Used both in
+         * JS code and in the xsl/openbibl.boot.xsl stylesheet.
+         * @constant
+         * @public
+         */
+        filter_mode_union         : 'obp-filter-union',
+        /**
+         * Name of the filtering mode for a set-intersection operation. Used both in
+         * JS code and in the xsl/openbibl.boot.xsl stylesheet.
+         * @constant
+         * @public
+         */
+        filter_mode_intersection  : 'obp-filter-intersection',
+        /**
+         * Name of the default filtering mode.
+         * @constant
+         * @public
+         */
+        filter_mode_default       : 'obp-filter-intersection',
+        /**
+         * Method to return an array of values of the div[class="entry"]/@data-src-index
+         * attributes for all bibliography entries in the bibliography. Used as a
+         * starting point for set operations in the filter-source providers.
+         * @returns {array} list of integers corresponding to all entries
+         * @method
+         * @public
+         * @instance
+         */
+        all_filter_indices : function() {
+            var max = obpstate.bibliographies.count - 1
+              , ret = []
+              , i;
+            for(i = 0; i &lt;= max; i++) {
+                ret.push(i);
+            }
+            return ret;
+        },
+        /**
+         * Method invoked on the 'obp:filter-change' event. Results in each of the
+         * providers of filtering data being queried for their current bibliography
+         * entries to be considered "active" according to their (browse/search)
+         * functionality. Performs updates to the HTML view.
+         * @method
+         * @public
+         * @instance
+         */
+        filter_entries : function() {
+            var i = 0
+              , result_indices = []    // indices that should be displayed
+              , all_indices = []       // just a list of all bibl entries
+              , current_indices, store_indices, $div;
+            // restore all hidden entries
+            /*jslint unparam: true*/
+            $('#bibliographies').find('div.entry').each(function(i,elt) {
+                $(elt).show();
+            });
+            obpev.raise("obp:bibliography-added", module.id);
+            all_indices = result_indices = this.all_filter_indices();
+            for (i = 0; i &lt; this.sources.length; i++) {
+                current_indices = this.sources[i].filter_indices();
+                result_indices = _.intersection(result_indices, current_indices);
+            }
+            store_indices = _.difference(all_indices,result_indices);
+            // entries to be moved from the #bibliographies to storage
+            for (i = 0; i &lt; store_indices.length; i++) {
+                $div = $('div[data-src-index="' + store_indices[i] + '"]');
+                if ($div.length > 0) {
+                    $div.hide();
+                }
+            }
+            obpev.raise("obp:filter-complete", module.id);
+        }
+    };
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-main.html">main</a></li><li><a href="module-openbibl.html">openbibl</a></li><li><a href="browse.html">openbibl/browse</a></li><li><a href="model.html">openbibl/browse/model</a></li><li><a href="view.html">openbibl/browse/view</a></li><li><a href="config.html">openbibl/config</a></li><li><a href="download.html">openbibl/download</a></li><li><a href="event.html">openbibl/event</a></li><li><a href="filter.html">openbibl/filter</a></li><li><a href="highlight.html">openbibl/highlight</a></li><li><a href="query.html">openbibl/query</a></li><li><a href="saxon.html">openbibl/saxon</a></li><li><a href="search.html">openbibl/search</a></li><li><a href="model_.html">openbibl/search/model</a></li><li><a href="view_.html">openbibl/search/view</a></li><li><a href="sort.html">openbibl/sort</a></li><li><a href="state.html">openbibl/state</a></li><li><a href="theme.html">openbibl/theme</a></li><li><a href="toc.html">openbibl/toc</a></li><li><a href="tooltip.html">openbibl/tooltip</a></li></ul><h3>Global</h3><ul><li><a href="global.html#obp:bibliography-added">obp:bibliography-added</a></li><li><a href="global.html#obp:browse-term-change">obp:browse-term-change</a></li><li><a href="global.html#obp:filter-change">obp:filter-change</a></li><li><a href="global.html#obp:filter-complete">obp:filter-complete</a></li><li><a href="global.html#obp:filter-mode-change">obp:filter-mode-change</a></li><li><a href="global.html#obp:search-term-change">obp:search-term-change</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Mon Jun 09 2014 18:55:33 GMT-0500 (CDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

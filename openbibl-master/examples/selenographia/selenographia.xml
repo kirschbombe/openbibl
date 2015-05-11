@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_ms.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_ms.rng" type="application/xml"
+       schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-stylesheet type="text/xsl" href="../../xsl/openbibl.boot.xsl"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Printing from the Other Europe: Central and East European Printing from <date>1484</date>
+                    to <date>1697</date> in the Lilly Library</title>
+                <author>
+                    <persName>Dawn Childress</persName>
+                </author>
+                <respStmt>
+                    <persName/>
+                    <resp><!--Transcription, translation, editor, etc.--></resp>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <authority>Dawn Childress</authority>
+                <availability>
+                    <ab><!-- copyright or copyleft information here --></ab>
+                </availability>
+                <date when-iso="2014">2014</date>
+                <distributor/>
+                <pubPlace>University Park, PA</pubPlace>
+            </publicationStmt>
+            <sourceDesc>
+                <bibl>
+                    <!-- source information here; better yet, use a <biblStruct> instead -->
+                </bibl>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <front>
+            <!-- front matter, if any, goes in <div>s, here -->
+            <head><!--for example, Introduction or About--></head>
+            <div>
+                <p><!--introductory or About information here--></p>
+            </div>
+        </front>
+        <body>
+            <div type="entry">
+                <!-- Form will have buttons to tag contextual info in all fields -->
+
+                <!-- Label or heading for the entry -->
+                <head>Selenographia</head>
+
+                <!-- Bibliographic info of the work or title transcription. These elements should display together as one paragraph -->
+                <biblStruct>
+                    <monogr>
+                        <author>HEVELIUS, Johannes</author>
+                        <title>Selenographia, sive, Lunae descriptio; atque accurata, tam macularum
+                            ejus, quam mottum diversorum, aliarumque omnium vicissitudinum,
+                            phasiumque, telescopii ope deprehensarum, delineatio : in quâsimul
+                            caeterorum omnium planetarum nativa facies, variaeque observationes ...
+                            sub aspectum ponuntur ... : Addita est, lentes expoliendi nova
+                            ratio...</title>
+                        <edition><!--Edition--></edition>
+                        <editor><!--Last, First--></editor>
+                        <respStmt>
+                            <name><!--Last, First--></name>
+                            <resp><!--Translator, printer, editor, etc.--></resp>
+                        </respStmt>
+                        <imprint>
+                            <pubPlace>Gdansk</pubPlace>
+                            <publisher>Hünefeldianis</publisher>
+                            <distributor><!--or Distributor name--></distributor>
+                            <date when-iso="1647">1647</date>
+                        </imprint>
+                    </monogr>
+                </biblStruct>
+
+                <!--Repository, call number, identifier, location, etc.-->
+                <msDesc>
+                    <msIdentifier>
+                        <repository>Lilly Library</repository>
+                        <collection>Vault</collection>
+                        <idno>QB595 .H596</idno>
+                    </msIdentifier>
+
+                    <!-- Collation, physical description, provenance. These elements should display together as one paragraph -->
+                    <physDesc>
+                        <objectDesc>
+                            <p>2°, [593] p., 95 leaves of plates, with 3 double-page plates, 19
+                                leaves printed on both sides. Extra engraved title inserted after
+                                half-title.</p>
+                        </objectDesc>
+                        <bindingDesc>
+                            <p>Bound in old vellum, handwritten title on spine</p>
+                            <condition/>
+                            <decoNote/>
+                        </bindingDesc>
+                        <accMat/>
+                    </physDesc>
+                    <history>
+                        <provenance>Bookplates of Ferdinand Faber and Samuel Verplanck
+                            Hoffman</provenance>
+                        <acquisition/>
+                    </history>
+                </msDesc>
+
+                <!-- Notes and annotations -->
+                <note>
+                    <p>The first detailed lunar atlas, depicting more than 200 lunar formations.
+                        With the invention of the telescope in the early 17th century, astronomers
+                        could map the planets and constellations just as cartographers were mapping
+                        the geography of the earth. As the closest object to the earth, the moon
+                        quickly became a favorite object of study for many astronomers. One of the
+                        greatest of these astronomers was Jan Hevelius
+                            (<date>1611</date>-<date>1687</date>), born in Gdansk. In Selenographia,
+                        Hevelius created an authoritative atlas and study of the moon derived from
+                        his own observations. Hevelius had one of the most well-equiped
+                        observatories in Europe, covering the rooftops of several buildings,
+                        complete with a revolving observation hut, telescopes and astronomical
+                        intruments which he made himself, and even a printing press to produce his
+                        copperplate engravings. The majority of plates were engraved by Hevelius in
+                        his observatory where he could produce the most detailed and accurate
+                        illustrations. The volume contains 133 engraved plates depicting the moon
+                        and its phases, as well as illustrations of the instruments he created. This
+                        is perhaps Hevelius’ greatest work.</p>
+                </note>
+
+                <!-- References -->
+                <listBibl type="refs">
+                    <bibl>NUC pre-1956, 244:266</bibl>
+                    <bibl>BM, 103:256</bibl>
+                    <bibl>Sotheran, Bibl. chem.-math., 1913</bibl>
+                </listBibl>
+            </div>
+        </body>
+        <back>
+            <!-- here is a sample place for contextual information: -->
+            <div type="editorial">
+                <listPerson>
+                    <person>
+                        <persName><!-- canonical name --></persName>
+                        <birth>
+                            <placeName><!-- where born; date on when= of <birth> --></placeName>
+                        </birth>
+                        <death>
+                            <placeName><!-- where died; date on when= of <death> --></placeName>
+                        </death>
+                    </person>
+                </listPerson>
+            </div>
+        </back>
+    </text>
+</TEI>

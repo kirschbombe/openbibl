@@ -1,0 +1,181 @@
+/*
+* Openbibl Framework v0.1.0
+* Copyright 2014, Dawn Childress
+* Contact: https://github.com/kirschbombe/openbibl
+* License: GNU AGPL v3 (https://github.com/kirschbombe/openbibl/LICENSE)
+*/
+/*jslint white: true, todo: true, nomen: true, plusplus: true */
+/*global define: true, document: true */
+/**
+ * Openbibl search term and browse item highlighter.
+ *
+ * @module openbibl/highlight
+ */
+define(
+  [ 'jquery', 'obpev' ]
+, function($,obpev) {
+    'use strict';
+    return {
+        /**
+         * Register highlight module with Openbibl application events.
+         * @todo work out the uncollapse/recollapse logic (see reported issue)
+         * @method
+         * @public
+         * @instance
+         */
+        init : function(sources) {
+            var highlight = this;
+            highlight.sources = sources;
+            obpev.subscribe("obp:bibliography-added", highlight.id, function() {
+                highlight.hide_filter_items();
+                highlight.unhighlight_filter_items();
+                highlight.highlight_filter_items();
+                highlight.unhide_filter_items();
+            });
+        },
+        /**
+         * Attribute name for for a <span> representing a highlighted match.
+         * @property
+         * @constant
+         */
+        match_attr_name : 'data-match',
+        /**
+         * Class name for a span representing a highlighted match.
+         * @property
+         * @constant
+         */
+        match_class : 'obp-match',
+        /**
+         * Preprocessor for the value of a @data-match attribute value.
+         * @method
+         * @private
+         * @instance
+         */
+        match_attr_preproc : function(str) {
+            return str.toUpperCase().trim();
+        },
+        /**
+         * Method to display a highlighted item that is in a collapsed Bootstrap panel.
+         * @todo correct display and uncollapse behavior, which is inconsistent.
+         * @method
+         * @private
+         * @instance
+         */
+        hide_filter_items : function() {
+            /*jslint unparam: true */
+            $('#bibliographies').find('div.panel-collapse.collapse.in,div.panel-collapse.collapse.collapsing').each(function(i,elt){
+                $(elt).closest('.panel').find('h2').click();
+            });
+        },
+        /**
+         * Method to hide a highlighted item (collapse an encolsing Bootstrap panel).
+         * @todo correct display and collapse behavior, which is inconsistent
+         * @method
+         * @private
+         * @instance
+         */
+        unhide_filter_items : function() {
+            /*jslint unparam: true */
+            $('.obp-match:hidden').each(function(i,elt) {
+                $(elt).closest('.panel').find('h2').click();
+            });
+        },
+        /**
+         * Method to collect items to be highlighted from subscribed objects (i.e., browse
+         * and search controllers).
+         * @method
+         * @public
+         * @instance
+         */
+        highlight_filter_items : function() {
+            var items = { element: [], term: [] }
+              , i, result;
+            this.sources.forEach(function(source){
+                result = source.highlight_items();
+                Object.keys(result).map(function(k){
+                    items[k] = items[k].concat(result[k]);
+                });
+            });
+            for (i = 0; i < items.element.length; i++) {
+                this.highlight_elt(items.element[i]);
+            }
+            for (i = 0; i < items.term.length; i++) {
+                this.highlight_term(items.term[i]);
+            }
+        },
+        /**
+         * Highlight an element (<span>).
+         * @param {string} jQuery selector pattern for matching
+         * @method
+         * @private
+         * @instance
+         */
+        highlight_elt : function(selector) {
+            /*jslint unparam: true*/
+            var highlight = this;
+            $(selector).map(function(i,elt) {
+                $(elt).addClass(highlight.match_class);
+            });
+        },
+        /**
+         * Highlight a term.
+         * @param {string} term to highlight
+         * @todo parameterize whole-word, case-insensitive search
+         * @method
+         * @private
+         * @instance
+         */
+        highlight_term : function(term) {
+            var highlighter = this
+              , re = new RegExp('\\b' + term + '\\b','i')
+              , match, span, node_after;
+            $('#bibliographies').find('*').contents().filter(function() {
+                return this.nodeType === 3 // Node.TEXT_NODE
+                    && this.textContent.match(re);
+            }).map(function() {
+                match = re.exec(this.textContent);
+                while(match) {
+                    span = document.createElement('span');
+                    span.appendChild(document.createTextNode(match[0]));
+                    span.setAttribute(
+                        'class',
+                        highlighter.match_class
+                    );
+                    span.setAttribute(
+                        highlighter.match_attr_name,
+                        highlighter.match_attr_preproc(term)
+                    );
+                    node_after = this.splitText(match.index);
+                    node_after.textContent = node_after.textContent.substr(match[0].length);
+                    this.parentNode.insertBefore(this,node_after);
+                    this.parentNode.insertBefore(span,node_after);
+                    // next loop
+                    match = re.exec(this.textContent);
+                }
+            });
+        },
+        /**
+         * Remove highlighting from all currently highlighted terms.
+         * @method
+         * @private
+         * @instance
+         */
+        unhighlight_filter_items : function() {
+            /*jslint unparam: true*/
+            var highlight = this
+              , text, text_node, $elt;
+            $('#bibliographies').find('.'  + highlight.match_class).map(function(i,elt) {
+                $elt = $(elt);
+                // if it is a highlighted search term, remove the highlight <span> wrapper
+                if ($elt.hasClass(highlight.match_attr_name)) {
+                    text = this.textContent || this.innerText;
+                    text_node = document.createTextNode(text);
+                    this.parentNode.replaceChild(text_node,this);
+                // a pre-existing highlighted <span>, just remove class
+                } else {
+                    $(elt).removeClass(highlight.match_class);
+                }
+            });
+        }
+    };
+});
