@@ -2,8 +2,7 @@ title:            open bibl
 tagline:          lightweight web publishing of annotated and descriptive bibliographies
 description:      open bibl project page
 #Comment out url when working locally to resolve base urls correctly
-<<<<<<< HEAD
-url: http://dawnchildress.com
+url: http://dawnchildress.com/openbibl
 
 # Owner/author information
 owner:
