@@ -3,6 +3,7 @@ tagline:          lightweight web publishing of annotated and descriptive biblio
 description:      open bibl project page
 #Comment out url when working locally to resolve base urls correctly
 url: http://kirschbombe.github.io/openbibl/
+baseurl: http://kirschbombe.github.io/openbibl/
 
 # Owner/author information
 owner:
