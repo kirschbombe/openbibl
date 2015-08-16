@@ -1,14 +1,11 @@
 title:            open bibl
 tagline:          lightweight web publishing of annotated and descriptive bibliographies
-# description:      Insouciant.
 #Comment out url when working locally to resolve base urls correctly
-# url: http://jekyll.gtat.me
+url: http://dawnchildress/openbibl
 
 # Owner/author information
 owner:
   name:           Dawn Childress
-  # avatar:         avatar.png
-  # bio:            "Insouciant"
   email:          kirschbombe@gmail.com
   # Plug in your disqus shortname!
   
