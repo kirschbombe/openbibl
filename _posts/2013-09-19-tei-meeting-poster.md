@@ -7,4 +7,4 @@ Come visit our poster at the TEI Members Meeting and Conference in Rome!
 
 Here's a preview of the poster:
 
-![OpenBibl poster](/images/poster.png)
+![OpenBibl poster]({{ site.baseurl }}/images/poster.png)
