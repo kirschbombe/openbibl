@@ -1,5 +1,0 @@
-
-From http://medialize.github.io/URI.js/
-
-License
-URI.js is published under the MIT license (http://www.opensource.org/licenses/mit-license) and GPL v3 (http://opensource.org/licenses/GPL-3.0).
