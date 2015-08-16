@@ -1,7 +1,8 @@
 title:            open bibl
 tagline:          lightweight web publishing of annotated and descriptive bibliographies
+description:      open bibl project page
 #Comment out url when working locally to resolve base urls correctly
-url: http://dawnchildress/openbibl
+# url: http://dawnchildress.com
 
 # Owner/author information
 owner:
@@ -14,7 +15,7 @@ owner:
 # For external links add external: true
 links:
   - title: About
-    url: /about
+    url: /about/index.html
   - title: Demo
     url: http://rnathanday.github.io/openbibl/examples/otherEurope/otherEurope.html
     external: true
